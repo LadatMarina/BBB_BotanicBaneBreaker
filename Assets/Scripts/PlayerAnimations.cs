@@ -9,15 +9,20 @@ public class PlayerAnimations : MonoBehaviour
     
     private Animator _animator;
     private GameInput gameInput;
+    public Player playerScript;
     private void Awake()
     {
+        playerScript = GetComponentInParent<Player>();
         _animator = GetComponent<Animator>();
         gameInput = FindObjectOfType<GameInput>();
     }
 
     public void Update()
     {
-        _animator.SetInteger(H_AXIS, (int)gameInput.GetInputVectorNormalized().x);
-        _animator.SetInteger(V_AXIS, (int)gameInput.GetInputVectorNormalized().y);
+        _animator.SetFloat(H_AXIS, gameInput.GetInputVectorNormalized().x);
+        _animator.SetFloat(V_AXIS, gameInput.GetInputVectorNormalized().y);
+        _animator.SetBool("isWalking", playerScript.GetIsWalking());
+        _animator.SetFloat("Last_V", playerScript.GetLastMovement().y);
+        _animator.SetFloat("Last_H", playerScript.GetLastMovement().x);
     }
 }
