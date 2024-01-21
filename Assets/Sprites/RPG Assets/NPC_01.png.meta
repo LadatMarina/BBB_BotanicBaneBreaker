@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 1482271b00a7a7c469502e3b25229ebb
+guid: 53eac93222cd7694699a01e6c8f57c06
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -110,13 +110,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: devilWitch_0
+      name: NPC_01_0
       rect:
         serializedVersion: 2
         x: 2
         y: 108
         width: 28
-        height: 36
+        height: 34
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -124,20 +124,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 1a383bac64221ab4a8d73bba145c5840
-      internalID: 369780576
+      spriteID: 50b92d5c8830a6d4aa18d429ddb088d1
+      internalID: 1189930574
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: devilWitch_1
+      name: NPC_01_1
       rect:
         serializedVersion: 2
-        x: 34
+        x: 35
         y: 108
         width: 28
-        height: 36
+        height: 34
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -145,20 +145,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 75c2f7cec55f8bc47ac98b37e01236ab
-      internalID: -447580046
+      spriteID: 9ad126183a19c6442a8489528c457e16
+      internalID: 1822219556
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: devilWitch_2
+      name: NPC_01_2
       rect:
         serializedVersion: 2
-        x: 66
+        x: 68
         y: 108
         width: 28
-        height: 36
+        height: 34
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -166,20 +166,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 8b8d1801d46d0f74c975f9d249051579
-      internalID: 1482421437
+      spriteID: 6ba4789776cf4584fbcc5b5cc583246f
+      internalID: 1436612142
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: devilWitch_3
+      name: NPC_01_3
       rect:
         serializedVersion: 2
         x: 2
         y: 72
         width: 28
-        height: 36
+        height: 34
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -187,20 +187,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: e788e0ca781c5d847a866206dd4fabd1
-      internalID: 1533912095
+      spriteID: 5859e016f9e134c49ac5d605afc78939
+      internalID: 1578036057
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: devilWitch_4
+      name: NPC_01_4
       rect:
         serializedVersion: 2
-        x: 34
+        x: 35
         y: 72
         width: 28
-        height: 36
+        height: 34
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -208,20 +208,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 949d168ea6ebc484eb50b8116c45237d
-      internalID: -1493319345
+      spriteID: afa7e9da5dae6b048a6aa51162b78758
+      internalID: -601548207
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: devilWitch_5
+      name: NPC_01_5
       rect:
         serializedVersion: 2
-        x: 66
+        x: 68
         y: 72
         width: 28
-        height: 36
+        height: 34
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -229,20 +229,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: f068e373aab9e9340925c5d7d28ffa24
-      internalID: -1472703828
+      spriteID: c6148841af02ebe48a6cd89d86e824f5
+      internalID: 1459052870
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: devilWitch_6
+      name: NPC_01_6
       rect:
         serializedVersion: 2
         x: 2
         y: 36
         width: 28
-        height: 36
+        height: 34
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -250,20 +250,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c5cb4358ed9d00a4d84afbaf21c3d5c6
-      internalID: -712820471
+      spriteID: 9c88bcc74279bbb40b80550b7638530e
+      internalID: -54138258
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: devilWitch_7
+      name: NPC_01_7
       rect:
         serializedVersion: 2
-        x: 34
+        x: 35
         y: 36
         width: 28
-        height: 36
+        height: 34
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -271,20 +271,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 5a16b1def68f6fe4ba0378e3c099f514
-      internalID: -1573545355
+      spriteID: 8938736c51b9d394cadd897cdd611dfd
+      internalID: 1247943164
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: devilWitch_8
+      name: NPC_01_8
       rect:
         serializedVersion: 2
-        x: 66
+        x: 68
         y: 36
         width: 28
-        height: 36
+        height: 34
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -292,20 +292,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c3ebf3bb8ed6ee44285ec89291f21c75
-      internalID: -633199865
+      spriteID: fc5e325df7068f54cbc007517322753b
+      internalID: 903376903
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: devilWitch_9
+      name: NPC_01_9
       rect:
         serializedVersion: 2
         x: 2
         y: 0
         width: 28
-        height: 36
+        height: 34
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -313,20 +313,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 204cee6032cc3c74cad2a7333739dadd
-      internalID: 1737915078
+      spriteID: 72be8eb8b03233e489801d2774ca3e22
+      internalID: 1711610703
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: devilWitch_10
+      name: NPC_01_10
       rect:
         serializedVersion: 2
-        x: 34
+        x: 35
         y: 0
         width: 28
-        height: 36
+        height: 34
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -334,20 +334,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: f1a398bd9589fc847aa2349d82093fe2
-      internalID: -1321958775
+      spriteID: d57349a16f04f534d80364ec589cb24d
+      internalID: 1630463411
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: devilWitch_11
+      name: NPC_01_11
       rect:
         serializedVersion: 2
-        x: 66
+        x: 68
         y: 0
         width: 28
-        height: 36
+        height: 34
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -355,8 +355,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 7ca30d6340ffa274eb2d35484f50d98a
-      internalID: 225599293
+      spriteID: 4570f434f1a84c148acdf50f20957666
+      internalID: 1982838473
       vertices: []
       indices: 
       edges: []
@@ -372,18 +372,18 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      devilWitch_0: 369780576
-      devilWitch_1: -447580046
-      devilWitch_10: -1321958775
-      devilWitch_11: 225599293
-      devilWitch_2: 1482421437
-      devilWitch_3: 1533912095
-      devilWitch_4: -1493319345
-      devilWitch_5: -1472703828
-      devilWitch_6: -712820471
-      devilWitch_7: -1573545355
-      devilWitch_8: -633199865
-      devilWitch_9: 1737915078
+      NPC_01_0: 1189930574
+      NPC_01_1: 1822219556
+      NPC_01_10: 1630463411
+      NPC_01_11: 1982838473
+      NPC_01_2: 1436612142
+      NPC_01_3: 1578036057
+      NPC_01_4: -601548207
+      NPC_01_5: 1459052870
+      NPC_01_6: -54138258
+      NPC_01_7: 1247943164
+      NPC_01_8: 903376903
+      NPC_01_9: 1711610703
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

@@ -8,9 +8,11 @@ public class Player : MonoBehaviour
 
     private bool isWalking = false;
     private Vector2 lastMovement;
+    private Rigidbody2D _rbPlayer;
 
     private void Awake()
     {
+        _rbPlayer = GetComponent<Rigidbody2D>();
         lastMovement = Vector2.down;
     }
     void Update()
@@ -20,12 +22,17 @@ public class Player : MonoBehaviour
         if ((Vector3)inputVector != Vector3.zero)
         {
             //Vector3 moveDir = new Vector3(inputVector.x, inputVector.y, 0);
-            transform.position += (Vector3)inputVector * moveSpeed * Time.deltaTime;
+            //transform.position += (Vector3)inputVector * moveSpeed * Time.deltaTime;
+            _rbPlayer.velocity = (Vector3)inputVector * moveSpeed;
             isWalking = true;
             lastMovement = inputVector;
         }
     }
-
+    private void LateUpdate()
+    {
+        //other ways to write it down: _rbPlayer.velocity = isWalking ? _rbPlayer.velocity : Vector2.zero;
+        if (isWalking == false) {_rbPlayer.velocity = Vector2.zero; }
+    }
     public bool GetIsWalking()
     {
         return isWalking;
