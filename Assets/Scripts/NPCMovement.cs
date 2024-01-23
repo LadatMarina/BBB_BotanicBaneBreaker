@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class NPCMovement : MonoBehaviour
 {
-    private float speed = 2f;
+    //private float speed = 2f;
     private Rigidbody2D _rigidbody;
     public bool isWalking = false;
     public float walkTime = 2f;
