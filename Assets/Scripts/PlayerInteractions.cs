@@ -23,11 +23,11 @@ public class PlayerInteractions : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other != null) 
+        if (other != null) //&& (Input.GetKeyDown(KeyCode.X)))
         {
             //add this scriptable object to the inventory
             //recollectableDisplay = GetComponent<RecollectableDisplay>();
-            switch (other.gameObject.GetComponent<RecollectableDisplay>().type)
+            switch (other.gameObject.GetComponent<RecollectableDisplay>().GetRecollectableType())
             {
                 case ATTACK_POTION:
                     Debug.Log($"you have recollected an attack potion named {other.gameObject.name}");

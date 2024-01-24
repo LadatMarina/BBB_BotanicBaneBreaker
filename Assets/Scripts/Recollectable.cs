@@ -15,12 +15,12 @@ public class Recollectable : ScriptableObject
     public new string name;
     public string type;
     public Sprite sprite;
-    public ParticleSystem particleSystem;
+    //public ParticleSystem particleSystem;
 
     //HEALTH POTION && ATTACK POTION
     public string cureOf;
     public ScriptableObject[] ingredientsForMakeThePotion;
-    public string potionThatUnlocks;
+    public ScriptableObject potionThatUnlocks;
 
     public int damage;
 

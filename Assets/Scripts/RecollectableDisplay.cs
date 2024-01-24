@@ -4,12 +4,14 @@ using UnityEngine;
 
 [RequireComponent (typeof(SpriteRenderer))]
 [RequireComponent (typeof(CircleCollider2D))]
+[RequireComponent (typeof(RecollectableBehaviour))]
 public class RecollectableDisplay : MonoBehaviour
 {
-    [SerializeField] private Recollectable scriptableObject;
+    public Recollectable scriptableObject;
     private SpriteRenderer spriteRenderer;
     private CircleCollider2D circleCollider;
-    public string type;
+    [SerializeField] private string type;
+    [SerializeField] private new ParticleSystem particleSystem;
 
     void Start()
     {
@@ -25,5 +27,21 @@ public class RecollectableDisplay : MonoBehaviour
         spriteRenderer.sprite = scriptableObject.sprite;
         this.name = scriptableObject.name;
         this.type = scriptableObject.type;
+        //particleSystem = scriptableObject.particleSystem;
+    }
+
+    public Sprite GetRecollectableSprite()
+    {
+        return spriteRenderer.sprite;
+    }
+
+    public ParticleSystem GetRecollectableParticleSystem()
+    {
+        return particleSystem;
+    }
+
+    public string GetRecollectableType()
+    {
+        return type;
     }
 }
