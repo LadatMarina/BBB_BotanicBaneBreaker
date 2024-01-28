@@ -13,7 +13,16 @@ public class Recollectable : ScriptableObject
 
     //GENERIC FOR ALL:
     public new string name;
-    public string type;
+
+    public string recollectableType;
+
+    /*public enum RecollectableType
+    {
+        attackPotion,
+        healthInteractions,
+        ingredients
+    }*/
+
     public Sprite sprite;
     //public ParticleSystem particleSystem;
 

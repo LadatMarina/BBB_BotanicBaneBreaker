@@ -13,9 +13,8 @@ MonoBehaviour:
   m_Name: Bean
   m_EditorClassIdentifier: 
   name: Bean
-  type: ingredient
+  recollectableType: ingredient
   sprite: {fileID: 462494604, guid: 3b37751737c7529449844c9d142c01f8, type: 3}
-  particleSystem: {fileID: 0}
   cureOf: 
   ingredientsForMakeThePotion: []
   potionThatUnlocks: {fileID: 0}

@@ -10,7 +10,7 @@ public class RecollectableDisplay : MonoBehaviour
     public Recollectable scriptableObject;
     private SpriteRenderer spriteRenderer;
     private CircleCollider2D circleCollider;
-    [SerializeField] private string type;
+    [SerializeField] private string recollectableType;
     [SerializeField] private new ParticleSystem particleSystem;
 
     void Start()
@@ -26,7 +26,7 @@ public class RecollectableDisplay : MonoBehaviour
         circleCollider.isTrigger = true;
         spriteRenderer.sprite = scriptableObject.sprite;
         this.name = scriptableObject.name;
-        this.type = scriptableObject.type;
+        this.recollectableType = scriptableObject.recollectableType;
         //particleSystem = scriptableObject.particleSystem;
     }
 
@@ -42,6 +42,6 @@ public class RecollectableDisplay : MonoBehaviour
 
     public string GetRecollectableType()
     {
-        return type;
+        return recollectableType;
     }
 }

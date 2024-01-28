@@ -13,9 +13,8 @@ MonoBehaviour:
   m_Name: AttackPotion_1
   m_EditorClassIdentifier: 
   name: AttackPotion_1
-  type: attackPotion
+  recollectableType: attackPotion
   sprite: {fileID: 626381747, guid: 08652569bdb28544e8d8707695b3b7d4, type: 3}
-  particleSystem: {fileID: 0}
   cureOf: 
   ingredientsForMakeThePotion:
   - {fileID: 0}
