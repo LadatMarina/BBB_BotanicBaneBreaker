@@ -31,6 +31,8 @@ public class PlayerInteractions : MonoBehaviour
         {
             //accedir a s'element de sa llista i Item.AddAmount();
             Debug.Log("li falta afegir un amount a s'objecte perquè ja està dins sa llista");
+            other.gameObject.GetComponent<Item>().AddOneToAmount();
+            Debug.Log($"the object was already in the inventory, so now the amount has increased to {other.gameObject.GetComponent<Item>().GetAmount()}");
         }
         //si no està a sa llista simplement li afegesc a sa llista i li sum 1 de amount
         else
