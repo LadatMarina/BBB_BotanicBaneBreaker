@@ -27,7 +27,7 @@ public class PlayerInteractions : MonoBehaviour
         {
             //add this scriptable object to the inventory
             //recollectableDisplay = GetComponent<RecollectableDisplay>();
-            switch (other.gameObject.GetComponent<RecollectableDisplay>().GetRecollectableType())
+            /*switch (other.gameObject.GetComponent<RecollectableDisplay>().GetRecollectableType())
             {
                 case ATTACK_POTION:
                     Debug.Log($"you have recollected an attack potion named {other.gameObject.name}");
@@ -39,7 +39,7 @@ public class PlayerInteractions : MonoBehaviour
                     Debug.Log($"you have recollected an ingredient named {other.gameObject.name}");
                     break;
 
-            }
+            }*/
             Destroy(other.gameObject);
         }
         else

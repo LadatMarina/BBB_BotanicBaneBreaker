@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static Recollectable;
 
 [RequireComponent (typeof(SpriteRenderer))]
 [RequireComponent (typeof(CircleCollider2D))]
@@ -10,7 +11,7 @@ public class RecollectableDisplay : MonoBehaviour
     public Recollectable scriptableObject;
     private SpriteRenderer spriteRenderer;
     private CircleCollider2D circleCollider;
-    [SerializeField] private string recollectableType;
+    [SerializeField] private Recollectable.RecollectableType recollectableType;
     [SerializeField] private new ParticleSystem particleSystem;
 
     void Start()
@@ -20,7 +21,7 @@ public class RecollectableDisplay : MonoBehaviour
         SetAllTheValues();
     }
 
-    private void SetAllTheValues()
+    private void SetAllTheValues() 
     {
         circleCollider.radius = 0.5f;
         circleCollider.isTrigger = true;
@@ -40,7 +41,7 @@ public class RecollectableDisplay : MonoBehaviour
         return particleSystem;
     }
 
-    public string GetRecollectableType()
+    public Recollectable.RecollectableType GetRecollectableType()
     {
         return recollectableType;
     }

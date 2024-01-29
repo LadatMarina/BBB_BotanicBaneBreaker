@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Bean
   m_EditorClassIdentifier: 
   name: Bean
-  recollectableType: ingredient
+  recollectableType: 2
   sprite: {fileID: 462494604, guid: 3b37751737c7529449844c9d142c01f8, type: 3}
   cureOf: 
   ingredientsForMakeThePotion: []

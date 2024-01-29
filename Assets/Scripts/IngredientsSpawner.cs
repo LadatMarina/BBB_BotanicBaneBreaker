@@ -20,6 +20,7 @@ public class IngredientsSpawner : MonoBehaviour
             recollectableDisplay.scriptableObject = gameAssets.ingredients[i];
             Debug.Log("ingredient 1 has been created.");
         }
+        
     }
 
     // Update is called once per frame

@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class UI_Inventory : MonoBehaviour
 {
+    //posar això serialized i llevar es Find
     private Inventory inventory;
     private Transform recollectableContainer;
     private Transform containerTemplate;
