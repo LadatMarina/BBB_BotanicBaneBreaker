@@ -19,3 +19,4 @@ MonoBehaviour:
   ingredientsForMakeThePotion: []
   potionThatUnlocks: {fileID: 0}
   damage: 0
+  stackable: 1

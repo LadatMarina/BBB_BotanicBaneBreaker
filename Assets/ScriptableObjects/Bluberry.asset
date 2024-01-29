@@ -13,9 +13,10 @@ MonoBehaviour:
   m_Name: Bluberry
   m_EditorClassIdentifier: 
   name: Bluberry
-  recollectableType: ingredient
+  recollectableType: 2
   sprite: {fileID: 21440463, guid: 3b37751737c7529449844c9d142c01f8, type: 3}
   cureOf: 
   ingredientsForMakeThePotion: []
   potionThatUnlocks: {fileID: 0}
   damage: 0
+  stackable: 1

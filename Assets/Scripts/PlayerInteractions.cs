@@ -4,15 +4,17 @@ using UnityEngine;
 
 public class PlayerInteractions : MonoBehaviour
 {
-    const string ATTACK_POTION = "attackPotion";
-    const string HEALTH_POTION = "healthPotion";
-    const string INGREDIENT = "ingredient";
-
     //RecollectableDisplay recollectableDisplay;
     // Start is called before the first frame update
-    void Start()
+
+    public GameManager gameManager;
+    public Inventory inventory;
+
+
+    void Awake()
     {
-        
+        gameManager = FindObjectOfType<GameManager>();
+        inventory = gameManager.GetInventory();
     }
 
     // Update is called once per frame
@@ -23,23 +25,37 @@ public class PlayerInteractions : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
+        
+        //si a s'inventario hi ha s'element que jo he colisionat
+        if(inventory.GetRecolletableList().Contains(other.gameObject.GetComponent<RecollectableDisplay>().scriptableObject))
+        {
+            //accedir a s'element de sa llista i Item.AddAmount();
+            Debug.Log("li falta afegir un amount a s'objecte perquè ja està dins sa llista");
+        }
+        //si no està a sa llista simplement li afegesc a sa llista i li sum 1 de amount
+        else
+        {
+            gameManager.GetInventory().AddRecollectableToTheInventory(other.gameObject.GetComponent<RecollectableDisplay>().scriptableObject);
+            other.gameObject.GetComponent<Item>().AddOneToAmount();
+        }
+
         if (other != null) //&& (Input.GetKeyDown(KeyCode.X)))
         {
             //add this scriptable object to the inventory
             //recollectableDisplay = GetComponent<RecollectableDisplay>();
-            /*switch (other.gameObject.GetComponent<RecollectableDisplay>().GetRecollectableType())
+            switch (other.gameObject.GetComponent<RecollectableDisplay>().GetRecollectableType())
             {
-                case ATTACK_POTION:
+                case Recollectable.RecollectableType.attackPotion:
                     Debug.Log($"you have recollected an attack potion named {other.gameObject.name}");
                     break;
-                case HEALTH_POTION:
+                case Recollectable.RecollectableType.healthPotion:
                     Debug.Log($"you have recollected an health potion named {other.gameObject.name}");
                     break;
-                case INGREDIENT:
+                case Recollectable.RecollectableType.ingredients:
                     Debug.Log($"you have recollected an ingredient named {other.gameObject.name}");
                     break;
 
-            }*/
+            }
             Destroy(other.gameObject);
         }
         else

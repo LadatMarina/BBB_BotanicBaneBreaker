@@ -20,7 +20,7 @@ public class Recollectable : ScriptableObject
     public enum RecollectableType
     {
         attackPotion,
-        healthInteractions,
+        healthPotion,
         ingredients
     }
 
@@ -34,13 +34,7 @@ public class Recollectable : ScriptableObject
 
     public int damage;
 
-    //INGREDIENT
+    public bool stackable;
 
-    //public int amount;
-
-    //public class[] typeOfRecolectable;
-    /*public class HealthPotion
-    {
-        
-    }*/
+   
 }

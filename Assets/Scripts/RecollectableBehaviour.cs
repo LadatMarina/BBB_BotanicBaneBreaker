@@ -33,12 +33,12 @@ public class RecollectableBehaviour :MonoBehaviour
         if (zone1)
         {
             //particle system play or light is shown
-            Debug.Log("the player has entered in the zone 1 ");
+            //Debug.Log("the player has entered in the zone 1 ");
         }
         if (zone2)
         {
             //descrition pop-up
-            Debug.Log("the player has entered in the zone 2");
+            //Debug.Log("the player has entered in the zone 2");
         }
     }
 
