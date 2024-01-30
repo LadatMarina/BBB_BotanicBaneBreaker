@@ -11,7 +11,7 @@ public class RecollectableDisplay : MonoBehaviour
     public Recollectable scriptableObject;
     private SpriteRenderer spriteRenderer;
     private CircleCollider2D circleCollider;
-    [SerializeField] private Recollectable.RecollectableType recollectableType;
+    [SerializeField] private RecollectableType recollectableType;
     [SerializeField] private new ParticleSystem particleSystem;
 
     void Start()
@@ -21,7 +21,7 @@ public class RecollectableDisplay : MonoBehaviour
         SetAllTheValues();
     }
 
-    private void SetAllTheValues() 
+    private void SetAllTheValues() //jo he de rebre sa info des de item, no de s'criptable object
     {
         circleCollider.radius = 0.5f;
         circleCollider.isTrigger = true;
@@ -41,7 +41,7 @@ public class RecollectableDisplay : MonoBehaviour
         return particleSystem;
     }
 
-    public Recollectable.RecollectableType GetRecollectableType()
+    public RecollectableType GetRecollectableType()
     {
         return recollectableType;
     }

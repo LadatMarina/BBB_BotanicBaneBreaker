@@ -43,4 +43,14 @@ public class UI_Inventory : MonoBehaviour
             }
         }
     }
+
+    public void Refrescar()
+    {
+        List<Item> itemlsit2 = inventory.ObtenirLlistaItems();
+        foreach(Item item in itemlsit2)
+        {
+            //
+            Sprite spriteOfTheScroptableObject = item.GetItemSO().sprite;
+        }
+    }
 }

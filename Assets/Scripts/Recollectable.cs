@@ -2,7 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-
+public enum RecollectableType //ho posam fora de sa clase pq és usat per tot es projecte
+{
+    attackPotion,
+    healthPotion,
+    ingredients
+}
 
 [CreateAssetMenu(fileName ="New Recolectable",menuName ="Recollectable")]
 public class Recollectable : ScriptableObject
@@ -16,13 +21,6 @@ public class Recollectable : ScriptableObject
 
     //això guarda es tipus de enum
     public RecollectableType recollectableType;
-
-    public enum RecollectableType
-    {
-        attackPotion,
-        healthPotion,
-        ingredients
-    }
 
     public Sprite sprite;
     //public ParticleSystem particleSystem;

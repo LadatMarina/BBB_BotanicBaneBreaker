@@ -13,13 +13,15 @@ public class IngredientsSpawner : MonoBehaviour
     }
     void Start()
     {
-        for(int i = 0; i < 2; i++)
+        for(int i = 0; i < 5; i++)
         {
             GameObject instantiatedItem = Instantiate(itemWorld, new Vector3(2*i, 5*i, 0), Quaternion.identity);
 
             RecollectableDisplay recollectableDisplay = instantiatedItem.AddComponent<RecollectableDisplay>();
-            Item itemScript = instantiatedItem.AddComponent<Item>();
-            itemScript.ResetAmount();
+
+            Item item = new Item { };
+            // Item itemScript = instantiatedItem.AddComponent<Item>();
+            //itemScript.ResetAmount();
             //Debug.Log(itemScript.GetAmount());
             //li deim quin scriptable object ha d'agafar sa referència
             recollectableDisplay.scriptableObject = gameAssets.bean;
