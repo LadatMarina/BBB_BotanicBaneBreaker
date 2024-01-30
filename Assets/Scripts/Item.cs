@@ -2,10 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Item
+public class Item : MonoBehaviour
 {
     [SerializeField]private int amount;
-    [SerializeField]private Recollectable itemSO; //sa meva info esta`tica
+    //[SerializeField]private Recollectable itemSO; //sa meva info esta`tica
     
     public void ResetAmount()
     {
@@ -23,9 +23,9 @@ public class Item
         Debug.Log($"the amount now is {amount}");
     }
 
-    public Recollectable GetItemSO() 
+    /*public Recollectable GetItemSO() 
     {
 
         return itemSO;
-    }
+    }*/
 }

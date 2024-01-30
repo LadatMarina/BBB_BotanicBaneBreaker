@@ -50,7 +50,7 @@ public class UI_Inventory : MonoBehaviour
         foreach(Item item in itemlsit2)
         {
             //
-            Sprite spriteOfTheScroptableObject = item.GetItemSO().sprite;
+            //Sprite spriteOfTheScroptableObject = item.GetItemSO().sprite;
         }
     }
 }

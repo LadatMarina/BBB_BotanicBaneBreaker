@@ -19,7 +19,7 @@ public class IngredientsSpawner : MonoBehaviour
 
             RecollectableDisplay recollectableDisplay = instantiatedItem.AddComponent<RecollectableDisplay>();
 
-            Item item = new Item { };
+            //Item item = new Item { };
             // Item itemScript = instantiatedItem.AddComponent<Item>();
             //itemScript.ResetAmount();
             //Debug.Log(itemScript.GetAmount());

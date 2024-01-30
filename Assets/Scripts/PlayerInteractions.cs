@@ -31,7 +31,7 @@ public class PlayerInteractions : MonoBehaviour
         if(inventory.GetRecolletableList().Contains(other.gameObject.GetComponent<RecollectableDisplay>().scriptableObject))
         {
             Debug.Log($"previous amount = {itemScript.GetAmount()}");
-            itemScript.AddOneToAmount();
+            //itemScript.AddOneToAmount();
 
             // inventory.AfegirItem()
 
