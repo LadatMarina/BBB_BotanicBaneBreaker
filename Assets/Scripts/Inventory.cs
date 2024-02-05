@@ -1,7 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
+using UnityEngine;
 
+[Serializable]
 public class Inventory
 {
     private List<Recollectable> recollectableList;
@@ -31,11 +34,11 @@ public class Inventory
         return recollectableList;
     }
 
-    public void AfegirItem(Item item)
+    public void AddItem(Item item)
     {
         itemList.Add(item);
     }
-    public List<Item> ObtenirLlistaItems()
+    public List<Item> GetItemList()
     {
         return itemList;
     }

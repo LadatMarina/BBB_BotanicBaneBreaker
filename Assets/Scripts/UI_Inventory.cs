@@ -1,27 +1,47 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class UI_Inventory : MonoBehaviour
 {
     //posar això serialized i llevar es Find
     private Inventory inventory;
-    private Transform recollectableContainer;
-    private Transform containerTemplate;
+
+
+    //no estic segura de necessitar això:
+    [SerializeField] private Transform UiInventory;
+    private GameManager gameManager;
+
+    //asignar per inspector
+    [SerializeField] private GameObject recollectableButtonPrefab;
+    [SerializeField] private GameObject panelBackground;
+
+    private List<Item> itemList;
+
+    //private Transform containerTemplate;
 
     private void Awake()
     {
-        //make a constant of this
+        gameManager = FindAnyObjectByType<GameManager>();
+
+        inventory = gameManager.GetInventory();
+
+        itemList = inventory.GetItemList();
+        /*make a constant of this
         recollectableContainer = transform.Find("recollectableContainer");
-        recollectableContainer = transform.Find("containerTemplate");
+        recollectableContainer = transform.Find("containerTemplate");*/
+
     }
+
     public void SetInventory(Inventory inventory)
     {
         this.inventory = inventory;
-        RefreshInventoryRecollectables();
+        //RefreshInventoryRecollectables();
+        RefreshUiInventory();
     }
 
-    public void RefreshInventoryRecollectables()
+    /*public void RefreshInventoryRecollectables()
     {
         //update all the components of the list with a foreach, to update one by one
         foreach (Recollectable recollectable in inventory.GetRecolletableList())
@@ -52,5 +72,44 @@ public class UI_Inventory : MonoBehaviour
             //
             //Sprite spriteOfTheScroptableObject = item.GetItemSO().sprite;
         }
+    }*/
+
+    public void RefreshUiInventory()
+    {
+        //fist destroy all the childs in the panel backround
+        DestroyAllChildren(panelBackground);
+        //then instantiate a new version of the prefab with the information of the adquired item (with the set item
+        //FillInventory();
+    }
+
+    public void DestroyAllChildren(GameObject parent)
+    {
+        //while the parent has some child, they will be destroyed.
+        for (int i = 0; parent.transform.GetChild(0) != null; i++)
+        {
+            Transform child = parent.transform.GetChild(i);
+            Destroy(child);
+        }
+    }
+
+    public void FillInventory(Transform parent, List<Item> itemList)
+    {
+        for(int i = 0; i== itemList.Count; i++)
+        {
+            //instantiate a child inside the parent
+            GameObject instantiation = Instantiate(recollectableButtonPrefab, parent);
+
+            //get the sprite of the just instantiated
+            Transform image = instantiation.gameObject.transform.GetChild(0);
+            Sprite sprite = image.GetComponent<Sprite>();
+
+            //set that this sprite is the same as the inventory item sprite
+            sprite = itemList[i].GetItemSO().sprite;
+        }
+    }
+
+    public void ToggleInventoryButton()
+    {
+        panelBackground.SetActive(!panelBackground.activeInHierarchy);
     }
 }

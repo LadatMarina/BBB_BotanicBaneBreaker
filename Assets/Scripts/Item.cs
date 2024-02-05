@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class Item : MonoBehaviour
 {
-    [SerializeField]private int amount;
-    //[SerializeField]private Recollectable itemSO; //sa meva info esta`tica
+    public int amount;
+    public Recollectable itemSO; //sa meva info esta`tica
     
     public void ResetAmount()
     {
@@ -23,9 +23,13 @@ public class Item : MonoBehaviour
         Debug.Log($"the amount now is {amount}");
     }
 
-    /*public Recollectable GetItemSO() 
+    public Item GetItem() 
     {
+        return this;
+    }
 
+    public Recollectable GetItemSO() 
+    {
         return itemSO;
-    }*/
+    }
 }
