@@ -99,7 +99,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7e4a61fd431d94d48b10ac0202c21197, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  scriptableObject: {fileID: 11400000, guid: ff0be65b5f0e0184698281e6adcb7c26, type: 2}
+  scriptableObject: {fileID: 11400000, guid: 2a545c07f7f1cb4458bca294a2e8bb6b, type: 2}
   recollectableType: 0
   particleSystem: {fileID: 0}
 --- !u!58 &9151058121668666253

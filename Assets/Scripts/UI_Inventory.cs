@@ -94,22 +94,49 @@ public class UI_Inventory : MonoBehaviour
 
     public void FillInventory(Transform parent, List<Item> itemList)
     {
-        for(int i = 0; i== itemList.Count; i++)
+        if(itemList.Count > 0)
         {
-            //instantiate a child inside the parent
-            GameObject instantiation = Instantiate(recollectableButtonPrefab, parent);
+            for (int i = 0; i == itemList.Count; i++)
+            {
+                //instantiate a child inside the parent
+                GameObject instantiation = Instantiate(recollectableButtonPrefab, parent);
 
-            //get the sprite of the just instantiated
-            Transform image = instantiation.gameObject.transform.GetChild(0);
-            Sprite sprite = image.GetComponent<Sprite>();
+                //get the sprite of the just instantiated
+                Transform image = instantiation.gameObject.transform.GetChild(0);
+                Sprite sprite = image.GetComponent<Sprite>();
 
-            //set that this sprite is the same as the inventory item sprite
-            sprite = itemList[i].GetItemSO().sprite;
+                //set that this sprite is the same as the inventory item sprite
+                sprite = itemList[i].GetItemSO().sprite;
+            }
+        }
+        else
+        {
+            Debug.Log("cannot fill the inventory because there's nothing in");
         }
     }
 
     public void ToggleInventoryButton()
     {
-        panelBackground.SetActive(!panelBackground.activeInHierarchy);
+        if(inventory.GetItemList().Count >0)
+        {
+            if (panelBackground.activeInHierarchy==true) //if it's true, will be closed so we have to destroiy all the elements
+            {
+                DestroyAllChildren(panelBackground);
+                Debug.Log("all the childrens og the panel background have been destroyed");
+            }
+            else
+            {
+                FillInventory(panelBackground.transform, inventory.GetItemList());
+                Debug.Log("the inventory has been refreshed with the item list");
+            }
+
+            panelBackground.SetActive(!panelBackground.activeInHierarchy);
+        }
+        else
+        {
+            Debug.Log("the inventory is empty");
+        }
+        
+
     }
 }

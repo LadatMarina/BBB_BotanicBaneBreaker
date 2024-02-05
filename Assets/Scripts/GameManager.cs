@@ -25,7 +25,7 @@ public class GameManager : MonoBehaviour
         inventory.AddItem(new Item { amount = 10, itemSO = recollectableTesting });
         inventory.AddItem(new Item { amount = 2, itemSO = recollectableTesting1 });
 
-        Debug.Log(inventory.GetItemList().Count);
+        Debug.Log("the count of the list now is " + inventory.GetItemList().Count);
     }
 
     public Inventory GetInventory()

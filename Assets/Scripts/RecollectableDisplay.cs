@@ -14,6 +14,9 @@ public class RecollectableDisplay : MonoBehaviour
     [SerializeField] private RecollectableType recollectableType;
     [SerializeField] private new ParticleSystem particleSystem;
 
+    private Item item;
+    private Recollectable itemSO;
+
     void Start()
     {
         spriteRenderer = GetComponent<SpriteRenderer> ();
@@ -25,9 +28,10 @@ public class RecollectableDisplay : MonoBehaviour
     {
         circleCollider.radius = 0.5f;
         circleCollider.isTrigger = true;
-        spriteRenderer.sprite = scriptableObject.sprite;
-        this.name = scriptableObject.name;
-        this.recollectableType = scriptableObject.recollectableType;
+        
+        spriteRenderer.sprite = item.itemSO.sprite;
+        this.name = item.itemSO.name;
+        this.recollectableType = item.itemSO.recollectableType;
         //particleSystem = scriptableObject.particleSystem;
     }
 
@@ -44,5 +48,17 @@ public class RecollectableDisplay : MonoBehaviour
     public RecollectableType GetRecollectableType()
     {
         return recollectableType;
+    }
+
+    public void SetItem2(Item item)
+    {
+        this.item.amount = item.amount;
+        this.itemSO = item.itemSO;
+
+    }
+
+    public Item GetItem()
+    {
+        return item;
     }
 }

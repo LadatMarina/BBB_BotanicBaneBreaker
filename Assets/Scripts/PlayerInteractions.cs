@@ -26,9 +26,12 @@ public class PlayerInteractions : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        
+        Item otherItem = other.gameObject.GetComponent<RecollectableDisplay>().GetItem();
+
+        gameManager.GetInventory().AddItem(otherItem);
+
         //si a s'inventario hi ha s'element que jo he colisionat
-        if(inventory.GetRecolletableList().Contains(other.gameObject.GetComponent<RecollectableDisplay>().scriptableObject))
+        /*if (inventory.GetItemList().Contains(otherItem))
         {
             Debug.Log($"previous amount = {itemScript.GetAmount()}");
             //itemScript.AddOneToAmount();
@@ -43,16 +46,17 @@ public class PlayerInteractions : MonoBehaviour
         //si no està a sa llista simplement li afegesc a sa llista i li sum 1 de amount
         else
         {
-            gameManager.GetInventory().AddRecollectableToTheInventory(other.gameObject.GetComponent<RecollectableDisplay>().scriptableObject);
+            gameManager.GetInventory().AddItem(otherItem);
             //other.gameObject.GetComponent<Item>().AddOneToAmount();
-            itemScript.AddOneToAmount();
-        }
+            //otherItem.AddOneToAmount();
+        }*/
 
         if (other != null) //&& (Input.GetKeyDown(KeyCode.X)))
         {
             //add this scriptable object to the inventory
             //recollectableDisplay = GetComponent<RecollectableDisplay>();
-            switch (other.gameObject.GetComponent<RecollectableDisplay>().GetRecollectableType())
+
+            switch (otherItem.itemSO.recollectableType)
             {
                 case RecollectableType.attackPotion:
                     Debug.Log($"you have recollected an attack potion named {other.gameObject.name}");
