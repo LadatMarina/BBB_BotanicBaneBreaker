@@ -5,7 +5,7 @@ using System;
 
 public class Inventory
 {
-    private List<Item> itemList;
+    public List<Item> itemList;
 
     public Inventory()
     {
@@ -17,15 +17,15 @@ public class Inventory
     public void AddItem(Item item)
     {
         bool itemInInventory = false;
-        foreach (Item inventoryitem in itemList)
+        foreach (Item inventoryItem in itemList)
         {
             //if theitem was already amount+ / true
-            if (item.itemSO.recollectableType == inventoryitem.itemSO.recollectableType)
+            if (item.itemSO == inventoryItem.itemSO)
             {
-                inventoryitem.amount = inventoryitem.amount + item.amount;
+                inventoryItem.amount = inventoryItem.amount + item.amount;
                 itemInInventory = true;
                 Debug.Log("due to the item was already in the list, we only have increased the sum of the amount");
-                Debug.Log($"you have added a {inventoryitem.itemSO.name} / {item.itemSO.name} to the inventory with amount {inventoryitem.amount}");
+                Debug.Log($"you have added a {inventoryItem.itemSO.name} / {item.itemSO.name} to the inventory with amount {inventoryItem.amount}");
             }
             
         }
@@ -33,7 +33,7 @@ public class Inventory
         {
             itemList.Add(item);
             Debug.Log("the item was not in the list. we have added the item to the list");
-            Debug.Log($"you have added a {item} to the inventory with amount {item.amount}");
+            //Debug.Log($"you have added a {item} to the inventory with amount {item.amount}");
         }
     }
 

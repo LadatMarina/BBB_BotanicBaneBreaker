@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 using UnityEngine.UI;
 
 public class UI_Inventory : MonoBehaviour
@@ -12,10 +13,11 @@ public class UI_Inventory : MonoBehaviour
     //asignar per inspector
     [SerializeField] private GameObject recollectableButtonPrefab;
     [SerializeField] private GameObject panelBackground;
-    [SerializeField] private Text amountText;
+    //[SerializeField] private TextMeshPro amountText;
 
     private List<Item> itemList;
 
+    public Sprite testingSprite;
     //private Transform containerTemplate;
 
     private void Awake()
@@ -23,14 +25,12 @@ public class UI_Inventory : MonoBehaviour
         player = FindAnyObjectByType<Player>();
 
         inventory = player.GetInventory();
-
-        itemList = inventory.GetItemList();
     }
-
+    
     public void SetInventory(Inventory inventory)
     {
         this.inventory = inventory;
-        RefreshUiInventory();
+        //RefreshUiInventory();
     }
 
     public void RefreshUiInventory()
@@ -77,27 +77,76 @@ public class UI_Inventory : MonoBehaviour
         }
     }
 
+
+    
     public void ToggleInventoryButton()
     {
-        DestroyAllChildren(panelBackground);
-        if (inventory.GetItemList().Count >0)
+        if (player.GetInventory().GetItemList().Count > 0)
         {
-            if (panelBackground.activeInHierarchy==true) //if it's true, will be closed so we have to destroiy all the elements
+            if (panelBackground.activeInHierarchy == true) //if it's true, will be closed so we have to destroy all the elements
             {
-                DestroyAllChildren(panelBackground);
-                Debug.Log("all the childrens og the panel background have been destroyed");
+                panelBackground.SetActive(false);
+                HideAllChildren();
+                Debug.Log("all the childrens of the panel background have been destroyed");
             }
             else
             {
-                //FillInventory(panelBackground.transform, inventory.GetItemList());
+                panelBackground.SetActive(true);
+                RefreshItems();
+                    
                 Debug.Log("the inventory has been refreshed with the item list");
             }
-
-            panelBackground.SetActive(!panelBackground.activeInHierarchy);
         }
         else
         {
             Debug.Log("the inventory is empty");
         }
+
+    }
+
+    private void HideAllChildren()
+    {
+        foreach (Transform child in recollectableButtonPrefab.transform)
+        {
+            child.gameObject.SetActive(false);
+        }
+    }
+
+    private void RefreshItems()
+    {
+        // HideAllChildren();
+        itemList = player.GetInventory().GetItemList();
+
+        for (int i = 0; i < itemList.Count; i++)
+        {
+            Item item = itemList[i];
+
+            Transform recollectableButton = panelBackground.transform.GetChild(i);
+            Debug.Log($"element {i} has been set active");
+            recollectableButton.gameObject.SetActive(true);
+
+            RefreshButton(item, recollectableButton);
+        }
+    }
+
+    private void RefreshButton(Item item, Transform recollectableButton)
+    {
+        //visual
+        recollectableButton.transform.GetChild(0).GetComponent<Image>().sprite = item.itemSO.sprite;
+        TextMeshProUGUI text = recollectableButton.transform.GetChild(1).GetComponent<TextMeshProUGUI>();
+        text.SetText($"{item.amount}");
+        //= $"{item.amount}"
+        //logic
+        Button buttonComponent = recollectableButton.gameObject.GetComponent<Button>();
+        buttonComponent.onClick.AddListener(() => ShowPopUp(item.itemSO));
+    }
+
+    public void ShowPopUp(Recollectable itemSO)
+    {
+        //show the pop up panel --> with the name of the recollectable that
+        //the button represents --> we need the reference to the item because
+        // the buttons of the pop up will drop the element (like a direct reference to not complicate all) or show the description 
+        Debug.Log("now the pop up should shown");
+
     }
 }

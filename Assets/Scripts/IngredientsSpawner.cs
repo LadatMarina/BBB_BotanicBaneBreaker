@@ -16,22 +16,22 @@ public class IngredientsSpawner : MonoBehaviour
     }
     void Start()
     {
-        for(int i = 0; i < 3; i++)
-        {
-            GameObject instantiatedItem = Instantiate(itemWorld, new Vector3(i, 5*i, 0), Quaternion.identity);
+        CreateNewItem(gameAssets.bean, new Vector3(0,3,0), 1);
+        CreateNewItem(gameAssets.bean, new Vector3(0,4,0), 1);
+        CreateNewItem(gameAssets.apple, new Vector3(-5,3,0), 3);
+        CreateNewItem(gameAssets.apple, new Vector3(-5,5,0), 3);
+        CreateNewItem(gameAssets.bluberry, Vector3.zero, 1);
+        CreateNewItem(gameAssets.strawberry, new Vector3(-5,-3,0), 2);
+    }
 
-            Item item = new Item { amount = 1, itemSO = gameAssets.apple };
+    private GameObject CreateNewItem(Recollectable itemSO, Vector3 position, int amount)
+    {
+        GameObject newObject = Instantiate(itemWorld, position, Quaternion.identity);
 
-            instantiatedItem.GetComponent<RecollectableDisplay>().SetItem(item);
+        Item item = new Item { amount = amount, itemSO = itemSO };
 
-            //------
+        newObject.GetComponent<RecollectableDisplay>().SetItem(item);
 
-            GameObject instantiatedItem2 = Instantiate(itemWorld, new Vector3(-2* i, 1 * i, 0), Quaternion.identity);
-
-            Item item2 = new Item { amount = 1, itemSO = gameAssets.bean };
-
-            instantiatedItem2.GetComponent<RecollectableDisplay>().SetItem(item2);
-        }
-
+        return newObject;
     }
 }

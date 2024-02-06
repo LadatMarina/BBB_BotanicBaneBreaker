@@ -46,7 +46,7 @@ public class RecollectableDisplay : MonoBehaviour
         if (amountText != null)
         {
             amountText.text = $"{item.amount}";
-            Debug.Log("amount changet succesfully");
+            //Debug.Log("amount changet succesfully");
         }
         else
         {

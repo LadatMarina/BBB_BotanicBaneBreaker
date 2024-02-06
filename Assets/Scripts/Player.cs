@@ -13,6 +13,8 @@ public class Player : MonoBehaviour
     //inventory
     public Inventory inventory;
 
+    public bool listInitialized = false;
+
     private void Awake()
     {
         _rbPlayer = GetComponent<Rigidbody2D>();
@@ -21,6 +23,13 @@ public class Player : MonoBehaviour
         //initialize the inventory
         inventory = new Inventory();
 
+    }
+    private void Start()
+    {
+        if(inventory != null)
+        {
+            listInitialized = true;
+        }
     }
     void Update()
     {
@@ -34,14 +43,11 @@ public class Player : MonoBehaviour
             isWalking = true;
             lastMovement = inputVector;
         }
-
-
-        
        
-            if (Input.GetKeyUp(KeyCode.J))
-            {
-                GameManager.DisplayInventoryItemList(inventory.GetItemList());
-            }
+        if (Input.GetKeyUp(KeyCode.J))
+        {
+            GameManager.DisplayInventoryItemList(inventory.GetItemList());
+        }
         
     }
     private void LateUpdate()

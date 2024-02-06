@@ -20,7 +20,7 @@ public class Item
     public void AddOneToAmount()
     {
         amount++;
-        Debug.Log($"THE AMOUNT HAS BEEN CHANGED!! the amount now is {amount}");
+        //Debug.Log($"THE AMOUNT HAS BEEN CHANGED!! the amount now is {amount}");
     }
 
     public void IncreaseDrecreaseAmount(int amountToUse)
