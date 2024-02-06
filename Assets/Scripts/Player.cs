@@ -10,10 +10,17 @@ public class Player : MonoBehaviour
     private Vector2 lastMovement;
     private Rigidbody2D _rbPlayer;
 
+    //inventory
+    public Inventory inventory;
+
     private void Awake()
     {
         _rbPlayer = GetComponent<Rigidbody2D>();
         lastMovement = Vector2.down;
+
+        //initialize the inventory
+        inventory = new Inventory();
+
     }
     void Update()
     {
@@ -27,6 +34,15 @@ public class Player : MonoBehaviour
             isWalking = true;
             lastMovement = inputVector;
         }
+
+
+        
+       
+            if (Input.GetKeyUp(KeyCode.J))
+            {
+                GameManager.DisplayInventoryItemList(inventory.GetItemList());
+            }
+        
     }
     private void LateUpdate()
     {
@@ -40,6 +56,11 @@ public class Player : MonoBehaviour
     public Vector2 GetLastMovement()
     {
         return lastMovement;
+    }
+
+    public Inventory GetInventory()
+    {
+        return inventory;
     }
 }
 

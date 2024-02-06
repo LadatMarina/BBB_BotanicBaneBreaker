@@ -5,17 +5,14 @@ using UnityEngine.UI;
 
 public class UI_Inventory : MonoBehaviour
 {
-    //posar això serialized i llevar es Find
     private Inventory inventory;
 
-
-    //no estic segura de necessitar això:
-    [SerializeField] private Transform UiInventory;
-    private GameManager gameManager;
+    private Player player;
 
     //asignar per inspector
     [SerializeField] private GameObject recollectableButtonPrefab;
     [SerializeField] private GameObject panelBackground;
+    [SerializeField] private Text amountText;
 
     private List<Item> itemList;
 
@@ -23,56 +20,18 @@ public class UI_Inventory : MonoBehaviour
 
     private void Awake()
     {
-        gameManager = FindAnyObjectByType<GameManager>();
+        player = FindAnyObjectByType<Player>();
 
-        inventory = gameManager.GetInventory();
+        inventory = player.GetInventory();
 
         itemList = inventory.GetItemList();
-        /*make a constant of this
-        recollectableContainer = transform.Find("recollectableContainer");
-        recollectableContainer = transform.Find("containerTemplate");*/
-
     }
 
     public void SetInventory(Inventory inventory)
     {
         this.inventory = inventory;
-        //RefreshInventoryRecollectables();
         RefreshUiInventory();
     }
-
-    /*public void RefreshInventoryRecollectables()
-    {
-        //update all the components of the list with a foreach, to update one by one
-        foreach (Recollectable recollectable in inventory.GetRecolletableList())
-        {
-            int x = 0;
-            int y = 0;
-            int recollectableSize = 85; //here's 5points bigger in order to separate a little bit the items each other
-            //syntax --> Instantiate(Object original, Transform parent);
-            // in evry intantiation of a new containerTemplate we get it's rect transform to modify it's position and set the element active
-            RectTransform recollectableRectTransform = Instantiate(containerTemplate, recollectableContainer).GetComponent<RectTransform>();
-            recollectableRectTransform.gameObject.SetActive(true);
-             
-            recollectableRectTransform.anchoredPosition = new Vector2(x * recollectableSize, y * recollectableSize);
-            x++;
-            if (x > 4)
-            {
-                x = 0;
-                y++;
-            }
-        }
-    }
-
-    public void Refrescar()
-    {
-        List<Item> itemlsit2 = inventory.ObtenirLlistaItems();
-        foreach(Item item in itemlsit2)
-        {
-            //
-            //Sprite spriteOfTheScroptableObject = item.GetItemSO().sprite;
-        }
-    }*/
 
     public void RefreshUiInventory()
     {
@@ -85,18 +44,21 @@ public class UI_Inventory : MonoBehaviour
     public void DestroyAllChildren(GameObject parent)
     {
         //while the parent has some child, they will be destroyed.
-        for (int i = 0; parent.transform.GetChild(0) != null; i++)
+        for (int i = 0; parent.transform.GetChild(0) == null; i++)
         {
             Transform child = parent.transform.GetChild(i);
-            Destroy(child);
+            Destroy(child.gameObject);
+            Debug.Log("destroyed!");
         }
     }
 
     public void FillInventory(Transform parent, List<Item> itemList)
     {
+        //canvair mecànica a sa de activar/desactivar es objectes
+
         if(itemList.Count > 0)
         {
-            for (int i = 0; i == itemList.Count; i++)
+            for (int i = 0; i < itemList.Count; i++)
             {
                 //instantiate a child inside the parent
                 GameObject instantiation = Instantiate(recollectableButtonPrefab, parent);
@@ -117,7 +79,8 @@ public class UI_Inventory : MonoBehaviour
 
     public void ToggleInventoryButton()
     {
-        if(inventory.GetItemList().Count >0)
+        DestroyAllChildren(panelBackground);
+        if (inventory.GetItemList().Count >0)
         {
             if (panelBackground.activeInHierarchy==true) //if it's true, will be closed so we have to destroiy all the elements
             {
@@ -126,7 +89,7 @@ public class UI_Inventory : MonoBehaviour
             }
             else
             {
-                FillInventory(panelBackground.transform, inventory.GetItemList());
+                //FillInventory(panelBackground.transform, inventory.GetItemList());
                 Debug.Log("the inventory has been refreshed with the item list");
             }
 
@@ -136,7 +99,5 @@ public class UI_Inventory : MonoBehaviour
         {
             Debug.Log("the inventory is empty");
         }
-        
-
     }
 }

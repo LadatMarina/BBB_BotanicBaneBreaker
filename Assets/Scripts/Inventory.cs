@@ -3,61 +3,38 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
-[Serializable]
 public class Inventory
 {
-    private List<Recollectable> recollectableList;
     private List<Item> itemList;
-
 
     public Inventory()
     {
-        recollectableList = new List<Recollectable>();
-        
         itemList = new List<Item>();
 
-        //AddRecollectableToTheInventory()
         Debug.Log("the inventory has been initialized");
-        //Debug.Log(recollectableList.Count);
-    }
-
-    public void AddRecollectableToTheInventory(Recollectable recollectable)
-    {
-        recollectableList.Add(recollectable);
-        
-        Debug.Log($"you have added a {recollectable} to the inventory");
-    }
-
-    public void AddItemToTheInventory(Item item)
-    {
-        itemList.Add(item);
-
-        Debug.Log($"you have added a {item} to the inventory");
-    }
-
-    public List<Recollectable> GetRecolletableList()
-    {
-        return recollectableList;
     }
 
     public void AddItem(Item item)
     {
-        foreach( Item inventoryItem in itemList)
+        bool itemInInventory = false;
+        foreach (Item inventoryitem in itemList)
         {
-            if (item.itemSO.recollectableType == inventoryItem.itemSO.recollectableType)
+            //if theitem was already amount+ / true
+            if (item.itemSO.recollectableType == inventoryitem.itemSO.recollectableType)
             {
-                inventoryItem.amount = inventoryItem.amount + item.amount;
-                Debug.Log("due to the item was already in the list, we onliy have increased the sum of the amount");
+                inventoryitem.amount = inventoryitem.amount + item.amount;
+                itemInInventory = true;
+                Debug.Log("due to the item was already in the list, we only have increased the sum of the amount");
+                Debug.Log($"you have added a {inventoryitem.itemSO.name} / {item.itemSO.name} to the inventory with amount {inventoryitem.amount}");
             }
-            else
-            {
-                itemList.Add(item);
-                Debug.Log("the item was not in the list. We have added the item to the list");
-            }
+            
         }
-
-        itemList.Add(item);
-        Debug.Log("the item was not in the list. We have added the item to the list");
+        if(!itemInInventory)
+        {
+            itemList.Add(item);
+            Debug.Log("the item was not in the list. we have added the item to the list");
+            Debug.Log($"you have added a {item} to the inventory with amount {item.amount}");
+        }
     }
 
     public List<Item> GetItemList()

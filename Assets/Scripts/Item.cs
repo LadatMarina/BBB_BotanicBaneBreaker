@@ -23,6 +23,11 @@ public class Item
         Debug.Log($"THE AMOUNT HAS BEEN CHANGED!! the amount now is {amount}");
     }
 
+    public void IncreaseDrecreaseAmount(int amountToUse)
+    {
+        amount = amountToUse + amount;
+    }
+
     public Item GetItem() 
     {
         return this;

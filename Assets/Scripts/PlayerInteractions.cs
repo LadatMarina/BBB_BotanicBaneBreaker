@@ -4,59 +4,26 @@ using UnityEngine;
 
 public class PlayerInteractions : MonoBehaviour
 {
-    //RecollectableDisplay recollectableDisplay;
-    // Start is called before the first frame update
-
-    public GameManager gameManager;
+    public Player player;
     public Inventory inventory;
 
     public Item itemScript;
 
     void Awake()
     {
-        gameManager = FindObjectOfType<GameManager>();
-        inventory = gameManager.GetInventory();
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        player = FindObjectOfType<Player>();
+        inventory = player.GetInventory();
     }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
         Item otherItem = other.gameObject.GetComponent<RecollectableDisplay>().GetItem();
 
-        gameManager.GetInventory().AddItem(otherItem);
-
-        //si a s'inventario hi ha s'element que jo he colisionat
-        /*if (inventory.GetItemList().Contains(otherItem))
-        {
-            Debug.Log($"previous amount = {itemScript.GetAmount()}");
-            //itemScript.AddOneToAmount();
-
-            // inventory.AfegirItem()
-
-            //accedir a s'element de sa llista i Item.AddAmount();
-            //Debug.Log("li falta afegir un amount a s'objecte perquè ja està dins sa llista");
-            //other.gameObject.GetComponent<Item>().AddOneToAmount();
-            //Debug.Log($"the object was already in the inventory, so now the amount has increased to {other.gameObject.GetComponent<Item>().GetAmount()}");
-        }
-        //si no està a sa llista simplement li afegesc a sa llista i li sum 1 de amount
-        else
-        {
-            gameManager.GetInventory().AddItem(otherItem);
-            //other.gameObject.GetComponent<Item>().AddOneToAmount();
-            //otherItem.AddOneToAmount();
-        }*/
-
         if (other != null) //&& (Input.GetKeyDown(KeyCode.X)))
         {
-            //add this scriptable object to the inventory
-            //recollectableDisplay = GetComponent<RecollectableDisplay>();
+            player.inventory.AddItem(otherItem);
 
-            switch (otherItem.itemSO.recollectableType)
+            /*switch (otherItem.itemSO.recollectableType)
             {
                 case RecollectableType.attackPotion:
                     Debug.Log($"you have recollected an attack potion named {other.gameObject.name}");
@@ -68,7 +35,7 @@ public class PlayerInteractions : MonoBehaviour
                     Debug.Log($"you have recollected an ingredient named {other.gameObject.name}");
                     break;
 
-            }
+            }*/
             Destroy(other.gameObject);
         }
         else
