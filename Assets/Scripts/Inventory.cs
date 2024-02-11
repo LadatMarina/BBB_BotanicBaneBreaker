@@ -41,4 +41,16 @@ public class Inventory
     {
         return itemList;
     }
+
+    public void RemoveItemFromList(Item itemToRemove)
+    {
+        foreach(Item item in itemList)
+        {
+            if(item == itemToRemove)
+            {
+                itemList.Remove(itemToRemove);
+                Debug.Log("the item {itemToRemove} has been deleted of the list");
+            }
+        }
+    }
 }

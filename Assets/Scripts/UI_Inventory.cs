@@ -20,13 +20,18 @@ public class UI_Inventory : MonoBehaviour
     public Sprite testingSprite;
     //private Transform containerTemplate;
 
+    public GameObject popUpPanel;
+
+    public IngredientsSpawner ingredientSpawner;
+
     private void Awake()
     {
         player = FindAnyObjectByType<Player>();
 
         inventory = player.GetInventory();
+        ingredientSpawner = FindAnyObjectByType<IngredientsSpawner>();
     }
-    
+
     public void SetInventory(Inventory inventory)
     {
         this.inventory = inventory;
@@ -56,7 +61,7 @@ public class UI_Inventory : MonoBehaviour
     {
         //canvair mecànica a sa de activar/desactivar es objectes
 
-        if(itemList.Count > 0)
+        if (itemList.Count > 0)
         {
             for (int i = 0; i < itemList.Count; i++)
             {
@@ -78,7 +83,7 @@ public class UI_Inventory : MonoBehaviour
     }
 
 
-    
+
     public void ToggleInventoryButton()
     {
         if (player.GetInventory().GetItemList().Count > 0)
@@ -93,7 +98,7 @@ public class UI_Inventory : MonoBehaviour
             {
                 panelBackground.SetActive(true);
                 RefreshItems();
-                    
+
                 Debug.Log("the inventory has been refreshed with the item list");
             }
         }
@@ -135,18 +140,27 @@ public class UI_Inventory : MonoBehaviour
         recollectableButton.transform.GetChild(0).GetComponent<Image>().sprite = item.itemSO.sprite;
         TextMeshProUGUI text = recollectableButton.transform.GetChild(1).GetComponent<TextMeshProUGUI>();
         text.SetText($"{item.amount}");
+
+        //RectTransform recollectableButtonRectTransform = recollectableButton.GetComponent<RectTransform>();
         //= $"{item.amount}"
         //logic
         Button buttonComponent = recollectableButton.gameObject.GetComponent<Button>();
-        buttonComponent.onClick.AddListener(() => ShowPopUp(item.itemSO));
-    }
+        //buttonComponent.onClick.AddListener(() => ShowPopUp(item.itemSO, recollectableButtonRectTransform));
+        buttonComponent.onClick.AddListener(() => ingredientSpawner.CreateNewItem(item.itemSO, player.transform.position + Vector3.up * 2, item.amount));
+        buttonComponent.onClick.AddListener(() => player.Remove(item));
+        buttonComponent.onClick.AddListener(() => RefreshButton(item,recollectableButton));
 
-    public void ShowPopUp(Recollectable itemSO)
-    {
-        //show the pop up panel --> with the name of the recollectable that
-        //the button represents --> we need the reference to the item because
-        // the buttons of the pop up will drop the element (like a direct reference to not complicate all) or show the description 
-        Debug.Log("now the pop up should shown");
+        /*public void ShowPopUp(GameObject popUpPanel)
+        {
+            //Recollectable itemSO, RectTransform recollectableButtonRectTransform
+            //RectTransform popUpPanelRectTransform = popUpPanel.GetComponent<RectTransform>();
+            //popUpPanelRectTransform.anchoredPosition = recollectableButtonRectTransform.anchoredPosition;
+            popUpPanel.gameObject.SetActive(true);
+            //show the pop up panel --> with the name of the recollectable that
+            //the button represents --> we need the reference to the item because
+            // the buttons of the pop up will drop the element (like a direct reference to not complicate all) or show the description 
+            Debug.Log("now the pop up should shown");
 
+        }*/
     }
 }

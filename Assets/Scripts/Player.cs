@@ -68,5 +68,10 @@ public class Player : MonoBehaviour
     {
         return inventory;
     }
+
+    public void Remove(Item item)
+    {
+        inventory.RemoveItemFromList(item);        
+    }
 }
 
