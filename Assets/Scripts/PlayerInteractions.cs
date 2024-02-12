@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerInteractions : MonoBehaviour
 {
@@ -9,10 +10,13 @@ public class PlayerInteractions : MonoBehaviour
 
     public Item itemScript;
 
+    public GameManager gameManager;
+
     void Awake()
     {
         player = FindObjectOfType<Player>();
         inventory = player.GetInventory();
+        gameManager = FindObjectOfType<GameManager>();  
     }
 
     private void OnTriggerEnter2D(Collider2D other)
@@ -27,6 +31,22 @@ public class PlayerInteractions : MonoBehaviour
         else
         {
             Debug.LogError("something gone wrong, the other game object is null");
+        }
+
+        string tag = other.gameObject.tag;
+        switch(tag) {
+            case "house_1":
+                gameManager.LoadHouseScene((int)SceneIndex.Villagers, gameManager.village);
+                break;
+            case "house_2":
+                ///
+                break;
+            case "house_3":
+                ///
+                break;
+            case "house_4":
+                ///
+                break;
         }
         
     }
