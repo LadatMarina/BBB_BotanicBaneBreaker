@@ -47,7 +47,7 @@ public class GameManager : MonoBehaviour
 
         Debug.Log($"the villager : '{village}' has been set to the load scene '{(int)SceneIndex.Villagers}'");
                 
-        hasLoaded = true;
+        //hasLoaded = true;
 
         SceneManager.LoadScene((int)SceneIndex.Villagers);
 
