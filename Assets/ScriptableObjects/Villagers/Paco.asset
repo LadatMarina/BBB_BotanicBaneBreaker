@@ -15,4 +15,6 @@ MonoBehaviour:
   name: Paco
   age: 76
   disease: 0
+  potion: 
   sprite: {fileID: 1247943164, guid: 53eac93222cd7694699a01e6c8f57c06, type: 3}
+  backgroundColor: {r: 0.44775718, g: 0.6940801, b: 0.735849, a: 0}

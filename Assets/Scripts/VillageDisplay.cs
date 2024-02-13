@@ -3,30 +3,36 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
+using UnityEngine.Video;
 
 public class VillageDisplay : MonoBehaviour
 {
-    public TextMeshPro nameText;
-    public TextMeshPro diseaseText;
-    public TextMeshPro potionText;
-    public Sprite npcSprite;
+    public TextMeshProUGUI nameText;
+    public TextMeshProUGUI diseaseText;
+    public TextMeshProUGUI potionText;
+    public Image npcImage;
     public GameObject background;
 
-    public GameManager gameManager;
+    public Village villageee;
+
 
     void Start()
     {
-        SetVillage(gameManager.village);
+        //Village myVillage = gameManager.village;
+        //no me agafa es village :((((
+        villageee = GameManager.Instance.village;
+        SetVillage(villageee);
     }
 
     public void SetVillage(Village village)
     {
-        nameText.text = village.name;
+        Debug.Log($"en paco ara tocaria sortir : '{village}' ");
+        /*nameText.text = village.name;
         diseaseText.text = $"{village.disease}";
-        potionText.text = village.potion;
-        npcSprite = village.sprite;
+        //potionText.text = village.potion;
+        npcImage.sprite = village.sprite;
 
         Image imageBackground = background.GetComponent<Image>();
-        imageBackground.color = village.backgroundColor;
+        imageBackground.color = village.backgroundColor;*/
     }
 }

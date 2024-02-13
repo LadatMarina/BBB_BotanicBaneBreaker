@@ -1,7 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UIElements;
 
 public enum SceneIndex //en teoria posar aquests valors o no és lo mateix.
 {
@@ -14,8 +17,23 @@ public enum SceneIndex //en teoria posar aquests valors o no és lo mateix.
 public class GameManager : MonoBehaviour
 {
     public Village village;
-    
-    public static void DisplayInventoryItemList(List<Item> itemList)
+    public bool hasLoaded;
+
+    public static GameManager Instance { get; private set; }
+    private void Awake()
+    {
+        // If there is an instance, and it's not me, delete myself.
+
+        if (Instance != null )
+        {
+            Destroy(this);
+        }
+        else
+        {
+            Instance = this;
+        }
+    }
+    public void DisplayInventoryItemList(List<Item> itemList)
     {
         foreach (Item item in itemList)
         {
@@ -23,10 +41,25 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public void LoadHouseScene(int numberOfTheHouse, Village village)
+    public void LoadHouseScene(Village village)
     {
-        SceneManager.LoadScene(numberOfTheHouse);
-        //aquí vull fer que se cridi sa funció de "set values of the scene" amb es valor que li digui jo, en plan, amb es nom de sa escena que se vol cridar.
         this.village = village;
+
+        Debug.Log($"the villager : '{village}' has been set to the load scene '{(int)SceneIndex.Villagers}'");
+                
+        hasLoaded = true;
+
+        SceneManager.LoadScene((int)SceneIndex.Villagers);
+
+        Debug.Log(this.village);
+
+    }
+
+    private void Update()
+    {
+        if(Input.GetKeyDown(KeyCode.Y))
+        {
+            LoadHouseScene(village);
+        }
     }
 }

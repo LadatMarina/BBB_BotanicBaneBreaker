@@ -5,15 +5,21 @@ using UnityEngine.UI;
 
 public class GameAssets : MonoBehaviour
 {
-    public Recollectable apple, bean, bluberry, strawberry, attackPotion1, healthPotion1;
-    public Village paco,maria,bel,toni;
-    public enum Ingredients
+    public static GameAssets Instance { get; private set; }
+    private void Awake()
     {
-        apple,
-        bean,
-        bluberry,
-        strawberry
+        // If there is an instance, and it's not me, delete myself.
+
+        if (Instance != null)
+        {
+            Destroy(this);
+        }
+        else
+        {
+            Instance = this;
+        }
     }
 
-    //public GameObject amountText;
+    public Recollectable apple, bean, bluberry, strawberry, attackPotion1, healthPotion1;
+    public Village paco,maria,bel,toni;
 }

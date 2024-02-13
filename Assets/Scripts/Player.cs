@@ -46,7 +46,7 @@ public class Player : MonoBehaviour
        
         if (Input.GetKeyUp(KeyCode.J))
         {
-            GameManager.DisplayInventoryItemList(inventory.GetItemList());
+            GameManager.Instance.DisplayInventoryItemList(inventory.GetItemList());
         }
         
     }
