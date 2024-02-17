@@ -60,7 +60,7 @@ public class Player : MonoBehaviour
 
     public bool RecollectableInFrontOf(Vector3 direction)
     {
-        return Physics2D.Raycast(transform.position, direction ,recollectableLayer);
+        return Physics2D.Raycast(transform.position, direction ,3f,recollectableLayer);
     }
 
 
@@ -83,9 +83,9 @@ public class Player : MonoBehaviour
         inventory.RemoveItemFromList(item);        
     }
 
-    public Vector2 GetPosition()
+    public Vector2 GetPlayerPos()
     {
-        return new Vector2(transform.position.x, transform.position.y);
+        return transform.position;
     }
 }
 

@@ -11,14 +11,10 @@ public class PlayerInteractions : MonoBehaviour
 
     public Item itemScript;
 
-
-
     void Awake()
     {
         player = FindObjectOfType<Player>();
         inventory = player.GetInventory();
-
-
     }
 
     private void OnTriggerEnter2D(Collider2D other)
@@ -53,6 +49,5 @@ public class PlayerInteractions : MonoBehaviour
                 }
                 break;
         }
-        
     }
 }

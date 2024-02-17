@@ -24,12 +24,33 @@ public class UI_Inventory : MonoBehaviour
 
     public IngredientsSpawner ingredientSpawner;
 
+    private Vector2 playerPosition;
+    private bool hasThePlayerPos = false;
+
     private void Awake()
     {
         player = FindAnyObjectByType<Player>();
 
         inventory = player.GetInventory();
         ingredientSpawner = FindAnyObjectByType<IngredientsSpawner>();
+    }
+
+    private void Update()
+    {
+        //when the player moves, the inventory will close
+        if (panelBackground.activeInHierarchy == true && hasThePlayerPos==false)
+        {
+            playerPosition = player.GetPlayerPos();
+            hasThePlayerPos = true;
+
+        }
+        if((panelBackground.activeInHierarchy == true) && (player.GetPlayerPos() != playerPosition))
+        {
+            ToggleInventoryButton();
+            hasThePlayerPos = false; //reset the value
+            Debug.Log("the inventory is toggled");
+        }
+        
     }
 
     public void SetInventory(Inventory inventory)
@@ -152,26 +173,27 @@ public class UI_Inventory : MonoBehaviour
 
     public void DropItem(Item item, Transform recollectableButton)
     {
-        //drop the item to the world 
-        GameObject newItem = ingredientSpawner.CreateNewItem(item.itemSO, player.transform.position + Vector3.up * 2, item.amount);
-        newItem.GetComponent<Rigidbody2D>().AddForce(Vector2.up, ForceMode2D.Impulse);
-        //remove the item of the list
-        player.Remove(item);
-        //refresh the ui inventory by hiding the button where the element was
-        recollectableButton.gameObject.SetActive(false);
-    }
+        Vector2[] directions = { Vector2.up, Vector2.right, Vector2.down, Vector2.left };
 
-    /*public void ShowPopUp(GameObject popUpPanel)
+        foreach (Vector2 dropDirection in directions)
         {
-            //Recollectable itemSO, RectTransform recollectableButtonRectTransform
-            //RectTransform popUpPanelRectTransform = popUpPanel.GetComponent<RectTransform>();
-            //popUpPanelRectTransform.anchoredPosition = recollectableButtonRectTransform.anchoredPosition;
-            popUpPanel.gameObject.SetActive(true);
-            //show the pop up panel --> with the name of the recollectable that
-            //the button represents --> we need the reference to the item because
-            // the buttons of the pop up will drop the element (like a direct reference to not complicate all) or show the description 
-            Debug.Log("now the pop up should shown");
+            if (!player.RecollectableInFrontOf(dropDirection)) // si no hi ha res quant dropDirection, instancia i atura es bulce
+            {
+                // Drop the item to the world
+                GameObject newItem = ingredientSpawner.CreateNewItem(item.itemSO, player.transform.position + (Vector3)dropDirection * 2, item.amount);
+                newItem.GetComponent<Rigidbody2D>().AddForce(dropDirection, ForceMode2D.Impulse);
 
-        }*/
+                // Remove the item from the list
+                player.Remove(item);
 
+                // Refresh the UI inventory by hiding the button where the element was
+                recollectableButton.gameObject.SetActive(false);
+
+                break;
+            }
+        }
+
+        // If no space is available in any direction, log an error message
+        Debug.Log("The item could not be instantiated, there's no space");
+    }
 }

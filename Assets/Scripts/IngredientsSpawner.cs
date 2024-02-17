@@ -21,6 +21,7 @@ public class IngredientsSpawner : MonoBehaviour
         CreateNewItem(GameAssets.Instance.apple, new Vector3(-5, 5, 0), 3);
         CreateNewItem(GameAssets.Instance.bluberry, Vector3.zero, 1);
         CreateNewItem(GameAssets.Instance.strawberry, new Vector3(-5, -3, 0), 2);
+        CreateNewItem(GameAssets.Instance.prova, new Vector3(-8, -2, 0), 2);
 
         string tag = gameObject.tag;
 
