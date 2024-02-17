@@ -13,7 +13,8 @@ GameObject:
   - component: {fileID: 6907344195822220420}
   - component: {fileID: 9151058121668666253}
   - component: {fileID: 1467792593006268749}
-  m_Layer: 0
+  - component: {fileID: 6900913687976764918}
+  m_Layer: 6
   m_Name: itemWorld
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -102,6 +103,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   recollectableType: 0
   particleSystem: {fileID: 0}
+  amountText: {fileID: 0}
 --- !u!58 &9151058121668666253
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -149,6 +151,33 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1b0dbed98625fcd499babab25ad438a9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!50 &6900913687976764918
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3430717703935992697}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 10
+  m_AngularDrag: 100
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
 --- !u!1 &8239595817253099047
 GameObject:
   m_ObjectHideFlags: 0
@@ -160,7 +189,7 @@ GameObject:
   - component: {fileID: 4985352243812016581}
   - component: {fileID: 8184308187760520084}
   - component: {fileID: 1037065971633187969}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: amountText
   m_TagString: Untagged
   m_Icon: {fileID: 0}

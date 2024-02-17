@@ -86,8 +86,8 @@ public class UI_Inventory : MonoBehaviour
 
     public void ToggleInventoryButton()
     {
-        if (player.GetInventory().GetItemList().Count > 0)
-        {
+        //if (player.GetInventory().GetItemList().Count > 0)
+        //{
             if (panelBackground.activeInHierarchy == true) //if it's true, will be closed so we have to destroy all the elements
             {
                 panelBackground.SetActive(false);
@@ -101,11 +101,11 @@ public class UI_Inventory : MonoBehaviour
 
                 Debug.Log("the inventory has been refreshed with the item list");
             }
-        }
-        else
-        {
-            Debug.Log("the inventory is empty");
-        }
+        //}
+        //else
+        //{
+        //    Debug.Log("the inventory is empty");
+        //}
 
     }
 
@@ -141,16 +141,27 @@ public class UI_Inventory : MonoBehaviour
         TextMeshProUGUI text = recollectableButton.transform.GetChild(1).GetComponent<TextMeshProUGUI>();
         text.SetText($"{item.amount}");
 
-        //RectTransform recollectableButtonRectTransform = recollectableButton.GetComponent<RectTransform>();
-        //= $"{item.amount}"
         //logic
         Button buttonComponent = recollectableButton.gameObject.GetComponent<Button>();
-        //buttonComponent.onClick.AddListener(() => ShowPopUp(item.itemSO, recollectableButtonRectTransform));
-        buttonComponent.onClick.AddListener(() => ingredientSpawner.CreateNewItem(item.itemSO, player.transform.position + Vector3.up * 2, item.amount));
-        buttonComponent.onClick.AddListener(() => player.Remove(item));
-        buttonComponent.onClick.AddListener(() => RefreshButton(item,recollectableButton));
 
-        /*public void ShowPopUp(GameObject popUpPanel)
+        //firs we save the item reference and then reset the functions the button has
+        Item localItem = item;
+        buttonComponent.onClick.RemoveAllListeners();
+        buttonComponent.onClick.AddListener(() => DropItem(localItem, recollectableButton));
+    }
+
+    public void DropItem(Item item, Transform recollectableButton)
+    {
+        //drop the item to the world 
+        GameObject newItem = ingredientSpawner.CreateNewItem(item.itemSO, player.transform.position + Vector3.up * 2, item.amount);
+        newItem.GetComponent<Rigidbody2D>().AddForce(Vector2.up, ForceMode2D.Impulse);
+        //remove the item of the list
+        player.Remove(item);
+        //refresh the ui inventory by hiding the button where the element was
+        recollectableButton.gameObject.SetActive(false);
+    }
+
+    /*public void ShowPopUp(GameObject popUpPanel)
         {
             //Recollectable itemSO, RectTransform recollectableButtonRectTransform
             //RectTransform popUpPanelRectTransform = popUpPanel.GetComponent<RectTransform>();
@@ -162,5 +173,5 @@ public class UI_Inventory : MonoBehaviour
             Debug.Log("now the pop up should shown");
 
         }*/
-    }
+
 }

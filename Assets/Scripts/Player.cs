@@ -15,6 +15,8 @@ public class Player : MonoBehaviour
 
     public bool listInitialized = false;
 
+    public LayerMask recollectableLayer;
+
     private void Awake()
     {
         _rbPlayer = GetComponent<Rigidbody2D>();
@@ -55,6 +57,13 @@ public class Player : MonoBehaviour
         //other ways to write it down: _rbPlayer.velocity = isWalking ? _rbPlayer.velocity : Vector2.zero;
         if (isWalking == false) {_rbPlayer.velocity = Vector2.zero; }
     }
+
+    public bool RecollectableInFrontOf(Vector3 direction)
+    {
+        return Physics2D.Raycast(transform.position, direction ,recollectableLayer);
+    }
+
+
     public bool GetIsWalking()
     {
         return isWalking;
@@ -72,6 +81,11 @@ public class Player : MonoBehaviour
     public void Remove(Item item)
     {
         inventory.RemoveItemFromList(item);        
+    }
+
+    public Vector2 GetPosition()
+    {
+        return new Vector2(transform.position.x, transform.position.y);
     }
 }
 
