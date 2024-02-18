@@ -20,15 +20,15 @@ public class IngredientsSpawner : MonoBehaviour
     void Start()
     {
         SpawnTheFruits(beanSpawner, GameAssets.Instance.bean);
-        
-        CreateNewItem(GameAssets.Instance.apple, new Vector3(-5, 5, 0), 3);
+        SpawnTheFruits(appleSpawner, GameAssets.Instance.apple);
+       
         CreateNewItem(GameAssets.Instance.bluberry, Vector3.zero, 1);
         CreateNewItem(GameAssets.Instance.strawberry, new Vector3(-5, -3, 0), 2);
         CreateNewItem(GameAssets.Instance.prova, new Vector3(-8, -2, 0), 2);
 
-        string tag = gameObject.tag;
+        //string tag = gameObject.tag;
 
-        switch (tag)
+        /*switch (tag)
         {
             case "BlueberryField":
                 for(int x= 0; x < 25; x=+5)
@@ -43,7 +43,7 @@ public class IngredientsSpawner : MonoBehaviour
             case "Example2":
                 //do something
                 break;
-        }
+        }*/
     }
 
     public GameObject CreateNewItem(Recollectable itemSO, Vector3 position, int amount)
@@ -67,6 +67,6 @@ public class IngredientsSpawner : MonoBehaviour
             CreateNewItem(recollectableToSpawn, arrayOfPositions[i], 1);
             i++;
         }
-        Debug.Log($"all the {name} has been spawned");
+        Debug.Log($"all the {recollectableToSpawn.name} has been spawned");
     }
 }

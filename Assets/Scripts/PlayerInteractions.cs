@@ -40,6 +40,7 @@ public class PlayerInteractions : MonoBehaviour
 
                 if (other != null) //&& (Input.GetKeyDown(KeyCode.X)))
                 {
+                    SoundManager.Instance.PlaySFX(SoundManager.Instance.sound1); //PLAY AN SFX WHEN RECOLLECT
                     player.inventory.AddItem(otherItem);
                     Destroy(other.gameObject);
                 }

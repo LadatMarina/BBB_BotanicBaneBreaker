@@ -15,7 +15,7 @@ public class Player : MonoBehaviour
 
     public bool listInitialized = false;
 
-    public LayerMask recollectableLayer;
+    public LayerMask collisionableLayer;
 
     private void Awake()
     {
@@ -60,7 +60,7 @@ public class Player : MonoBehaviour
 
     public bool RecollectableInFrontOf(Vector3 direction)
     {
-        return Physics2D.Raycast(transform.position, direction ,3f,recollectableLayer);
+        return Physics2D.Raycast(transform.position, direction ,3f,collisionableLayer);
     }
 
 
