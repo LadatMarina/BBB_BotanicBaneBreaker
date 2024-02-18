@@ -8,6 +8,10 @@ public class IngredientsSpawner : MonoBehaviour
     //private Ingredients ingredientsEnum;
 
     [SerializeField]private GameObject itemWorld;
+    [SerializeField] private Vector2[] appleSpawner;
+    [SerializeField] private Vector2[] beanSpawner;
+    [SerializeField] private Vector2[] bluberrySpawner;
+    [SerializeField] private Vector2[] strawberrySpawner;
 
     private void Awake()
     {
@@ -15,9 +19,8 @@ public class IngredientsSpawner : MonoBehaviour
     }
     void Start()
     {
-        CreateNewItem(GameAssets.Instance.bean, new Vector3(0, 3, 0), 1);
-        CreateNewItem(GameAssets.Instance.bean, new Vector3(0, 4, 0), 1);
-        CreateNewItem(GameAssets.Instance.apple, new Vector3(-5, 3, 0), 3);
+        SpawnTheFruits(beanSpawner, GameAssets.Instance.bean);
+        
         CreateNewItem(GameAssets.Instance.apple, new Vector3(-5, 5, 0), 3);
         CreateNewItem(GameAssets.Instance.bluberry, Vector3.zero, 1);
         CreateNewItem(GameAssets.Instance.strawberry, new Vector3(-5, -3, 0), 2);
@@ -54,5 +57,16 @@ public class IngredientsSpawner : MonoBehaviour
         newObject.GetComponent<RecollectableDisplay>().SetItem(item);
 
         return newObject;
+    }
+
+    private void SpawnTheFruits(Vector2[] arrayOfPositions, Recollectable recollectableToSpawn)
+    {
+        int i = 0;
+        foreach(Vector2 pos in arrayOfPositions)
+        {
+            CreateNewItem(recollectableToSpawn, arrayOfPositions[i], 1);
+            i++;
+        }
+        Debug.Log($"all the {name} has been spawned");
     }
 }
