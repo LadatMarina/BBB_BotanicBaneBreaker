@@ -13,6 +13,8 @@ public class UI_Inventory : MonoBehaviour
     //asignar per inspector
     [SerializeField] private GameObject recollectableButtonPrefab;
     [SerializeField] private GameObject panelBackground;
+
+
     //[SerializeField] private TextMeshPro amountText;
 
     private List<Item> itemList;
@@ -107,8 +109,9 @@ public class UI_Inventory : MonoBehaviour
 
     public void ToggleInventoryButton()
     {
-        //if (player.GetInventory().GetItemList().Count > 0)
-        //{
+        //PLAY AN SFX WHEN RECOLLECT
+        SoundManager.Instance.PlaySFX(SoundManager.Instance.sound3);
+
             if (panelBackground.activeInHierarchy == true) //if it's true, will be closed so we have to destroy all the elements
             {
                 panelBackground.SetActive(false);
@@ -122,12 +125,6 @@ public class UI_Inventory : MonoBehaviour
 
                 Debug.Log("the inventory has been refreshed with the item list");
             }
-        //}
-        //else
-        //{
-        //    Debug.Log("the inventory is empty");
-        //}
-
     }
 
     private void HideAllChildren()
@@ -179,6 +176,9 @@ public class UI_Inventory : MonoBehaviour
         {
             if (!player.RecollectableInFrontOf(dropDirection)) // si no hi ha res quant dropDirection, instancia i atura es bulce
             {
+                //PLAY AN SFX WHEN RECOLLECT
+                SoundManager.Instance.PlaySFX(SoundManager.Instance.sound4); 
+
                 // Drop the item to the world
                 GameObject newItem = ingredientSpawner.CreateNewItem(item.itemSO, player.transform.position + (Vector3)dropDirection * 2, item.amount);
                 newItem.GetComponent<Rigidbody2D>().AddForce(dropDirection, ForceMode2D.Impulse);
@@ -196,4 +196,6 @@ public class UI_Inventory : MonoBehaviour
         // If no space is available in any direction, log an error message
         Debug.Log("The item could not be instantiated, there's no space");
     }
+
+
 }
