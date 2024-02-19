@@ -3,12 +3,16 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class UI_Inventory : MonoBehaviour
 {
     private Inventory inventory;
 
     private Player player;
+
+    private VillageDisplay villageDisplay;
+    private bool hasSelectedAPotion;
 
     //asignar per inspector
     [SerializeField] private GameObject recollectableButtonPrefab;
@@ -29,12 +33,35 @@ public class UI_Inventory : MonoBehaviour
     private Vector2 playerPosition;
     private bool hasThePlayerPos = false;
 
+    public static UI_Inventory Instance { get; private set; }
+
     private void Awake()
     {
+        //singleton
+        // If there is an instance, and it's not me, delete myself.
+
+        if (Instance != null)
+        {
+            Destroy(this);
+        }
+        else
+        {
+            Instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+
+        //-----------------------------
+
         player = FindAnyObjectByType<Player>();
 
         inventory = player.GetInventory();
         ingredientSpawner = FindAnyObjectByType<IngredientsSpawner>();
+
+        if(SceneManager.GetActiveScene().buildIndex == (int)SceneIndex.Villagers)
+        {
+            villageDisplay = FindObjectOfType<VillageDisplay>();
+            hasSelectedAPotion = false;
+        }
     }
 
     private void Update()
@@ -61,25 +88,6 @@ public class UI_Inventory : MonoBehaviour
         //RefreshUiInventory();
     }
 
-    public void RefreshUiInventory()
-    {
-        //fist destroy all the childs in the panel backround
-        DestroyAllChildren(panelBackground);
-        //then instantiate a new version of the prefab with the information of the adquired item (with the set item
-        //FillInventory();
-    }
-
-    public void DestroyAllChildren(GameObject parent)
-    {
-        //while the parent has some child, they will be destroyed.
-        for (int i = 0; parent.transform.GetChild(0) == null; i++)
-        {
-            Transform child = parent.transform.GetChild(i);
-            Destroy(child.gameObject);
-            Debug.Log("destroyed!");
-        }
-    }
-
     public void FillInventory(Transform parent, List<Item> itemList)
     {
         //canvair mecànica a sa de activar/desactivar es objectes
@@ -104,8 +112,6 @@ public class UI_Inventory : MonoBehaviour
             Debug.Log("cannot fill the inventory because there's nothing in");
         }
     }
-
-
 
     public void ToggleInventoryButton()
     {
@@ -137,7 +143,6 @@ public class UI_Inventory : MonoBehaviour
 
     private void RefreshItems()
     {
-        // HideAllChildren();
         itemList = player.GetInventory().GetItemList();
 
         for (int i = 0; i < itemList.Count; i++)
@@ -162,10 +167,20 @@ public class UI_Inventory : MonoBehaviour
         //logic
         Button buttonComponent = recollectableButton.gameObject.GetComponent<Button>();
 
-        //firs we save the item reference and then reset the functions the button has
+        //first we save the item reference and then reset the functions the button has
         Item localItem = item;
         buttonComponent.onClick.RemoveAllListeners();
-        buttonComponent.onClick.AddListener(() => DropItem(localItem, recollectableButton));
+        int buildIndex = SceneManager.GetActiveScene().buildIndex;
+        switch (buildIndex)
+        {
+            case (int)SceneIndex.Villagers:
+                buttonComponent.onClick.AddListener(() => ChooseThePotionToGive(localItem));
+                break;
+            case (int)SceneIndex.GamePlay:
+                buttonComponent.onClick.AddListener(() => DropItem(localItem, recollectableButton));
+                break;
+        }
+        
     }
 
     public void DropItem(Item item, Transform recollectableButton)
@@ -197,5 +212,15 @@ public class UI_Inventory : MonoBehaviour
         Debug.Log("The item could not be instantiated, there's no space");
     }
 
-
+    public void ChooseThePotionToGive(Item item)
+    {
+        //if the player has not selected a potion from the inventory, will add the
+        //item that the button represents to the field potion in the village display and hide the inventoy
+        if(hasSelectedAPotion == false)
+        {
+            villageDisplay.SetPotion(item.itemSO);
+            ToggleInventoryButton();
+            hasSelectedAPotion = true;
+        }
+    }
 }

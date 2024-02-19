@@ -35,22 +35,24 @@ public class Player : MonoBehaviour
     }
     void Update()
     {
-        isWalking = false;
-        Vector2 inputVector = gameInput.GetInputVectorNormalized();
-        if ((Vector3)inputVector != Vector3.zero)
+        if(GameManager.Instance.isPaused != true)
         {
-            //Vector3 moveDir = new Vector3(inputVector.x, inputVector.y, 0);
-            //transform.position += (Vector3)inputVector * moveSpeed * Time.deltaTime;
-            _rbPlayer.velocity = (Vector3)inputVector * moveSpeed;
-            isWalking = true;
-            lastMovement = inputVector;
+            isWalking = false;
+            Vector2 inputVector = gameInput.GetInputVectorNormalized();
+            if ((Vector3)inputVector != Vector3.zero)
+            {
+                //Vector3 moveDir = new Vector3(inputVector.x, inputVector.y, 0);
+                //transform.position += (Vector3)inputVector * moveSpeed * Time.deltaTime;
+                _rbPlayer.velocity = (Vector3)inputVector * moveSpeed;
+                isWalking = true;
+                lastMovement = inputVector;
+            }
+
+            if (Input.GetKeyUp(KeyCode.J))
+            {
+                GameManager.Instance.DisplayInventoryItemList(inventory.GetItemList());
+            }
         }
-       
-        if (Input.GetKeyUp(KeyCode.J))
-        {
-            GameManager.Instance.DisplayInventoryItemList(inventory.GetItemList());
-        }
-        
     }
     private void LateUpdate()
     {

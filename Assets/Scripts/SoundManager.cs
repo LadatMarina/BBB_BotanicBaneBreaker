@@ -5,6 +5,9 @@ using UnityEngine;
 
 public class SoundManager : MonoBehaviour
 {
+    public const string MUSIC_VOL = "musicVolume";
+    public const string SFX_VOL = "sfxVolume";
+
     public static SoundManager Instance { get; private set; }
 
     [SerializeField] private AudioSource musicAudioSource;
@@ -76,5 +79,11 @@ public class SoundManager : MonoBehaviour
                 //play background music 4
                 break;
         }
+    }
+
+    public void SetVolumeValue()
+    {
+        musicAudioSource.volume = PlayerPrefs.GetFloat(MUSIC_VOL);
+        sfxAudioSource.volume = PlayerPrefs.GetFloat(SFX_VOL);
     }
 }

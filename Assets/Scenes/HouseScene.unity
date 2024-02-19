@@ -935,6 +935,7 @@ MonoBehaviour:
   bean: {fileID: 0}
   bluberry: {fileID: 0}
   strawberry: {fileID: 0}
+  prova: {fileID: 0}
   attackPotion1: {fileID: 0}
   healthPotion1: {fileID: 0}
   paco: {fileID: 0}
@@ -1558,6 +1559,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   village: {fileID: 0}
   hasLoaded: 0
+  isPaused: 0
+  pausePanel: {fileID: 0}
 --- !u!4 &1538006736
 Transform:
   m_ObjectHideFlags: 0
@@ -1959,7 +1962,7 @@ Canvas:
   m_RenderMode: 0
   m_Camera: {fileID: 0}
   m_PlaneDistance: 100
-  m_PixelPerfect: 0
+  m_PixelPerfect: 1
   m_ReceivesEvents: 1
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
