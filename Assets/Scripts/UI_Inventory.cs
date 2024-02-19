@@ -144,16 +144,35 @@ public class UI_Inventory : MonoBehaviour
     private void RefreshItems()
     {
         itemList = player.GetInventory().GetItemList();
-
+        int sceneBuildIndex = SceneManager.GetActiveScene().buildIndex;
         for (int i = 0; i < itemList.Count; i++)
         {
-            Item item = itemList[i];
+            switch (sceneBuildIndex)
+            {
+                case (int)SceneIndex.Villagers:
+                    Item potionItem = itemList[i];
+                    if(potionItem.itemSO.recollectableType == RecollectableType.healthPotion)
+                    {
+                        Transform potionButton = panelBackground.transform.GetChild(i);
 
-            Transform recollectableButton = panelBackground.transform.GetChild(i);
-            Debug.Log($"element {i} has been set active");
-            recollectableButton.gameObject.SetActive(true);
+                        potionButton.gameObject.SetActive(true);
 
-            RefreshButton(item, recollectableButton);
+                        RefreshButton(potionItem, potionButton);
+                    }
+                    
+                    break;
+
+                case (int)SceneIndex.GamePlay:
+                    Item item = itemList[i];
+
+                    Transform recollectableButton = panelBackground.transform.GetChild(i);
+                    //Debug.Log($"element {i} has been set active");
+                    recollectableButton.gameObject.SetActive(true);
+
+                    RefreshButton(item, recollectableButton);
+                    break;
+            }
+            
         }
     }
 

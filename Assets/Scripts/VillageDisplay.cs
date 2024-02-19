@@ -14,18 +14,19 @@ public class VillageDisplay : MonoBehaviour
     public GameObject background;
 
     public Transform potionField;
+    public Transform givePotionButton;
     public GameObject inventoryPanel;   
 
-    public Village villageee;
+    public Village village;
 
-    private Recollectable potion;
+    private Recollectable potion = null;
 
     void Start()
     {
-        //Village myVillage = gameManager.village;
-        //no me agafa es village :((((
-        villageee = GameManager.Instance.village;
-        SetVillage(villageee);
+        givePotionButton.gameObject.SetActive(false);
+        potion = null;
+        village= GameManager.Instance.village;
+        SetVillage(village);
 
         Button potionFieldButton = potionField.GetComponent<Button>();
         potionFieldButton.interactable = true;
@@ -37,6 +38,7 @@ public class VillageDisplay : MonoBehaviour
         if(potion != null)
         {
             RefreshPotionField();
+            givePotionButton.gameObject.SetActive(true);
         }
     }
 
@@ -67,5 +69,38 @@ public class VillageDisplay : MonoBehaviour
     {
         SpriteRenderer potionFieldSpriteRenderer = potionField.GetComponent<SpriteRenderer>();
         potionFieldSpriteRenderer.sprite = potion.sprite;
+    }
+
+    public void CheckPotion()
+    {
+        //if the potion is the one that cures the village's disease,
+        
+        if (potion == GetHealthPotionFromDisease(village.disease))
+        {
+            // play particle system with congrats
+            // npc animation of "huryay!"
+            // return to main game
+            // unlock a new potion recipe 
+            Debug.Log($"CONGRAT'S YOU HAVE GIVE {village.name} THE CORRECT POTION");
+        }
+        else
+        {
+            //play particle system with death
+            // npc animation of dying
+            // --> pensar que fer
+            Debug.Log($"YOU ALMOST KILL {village.name}!!!");
+        }
+    }
+
+
+    public Recollectable GetHealthPotionFromDisease(Diseases disease)
+    {
+        switch (disease)
+        {
+            case Diseases.cold:
+                return GameAssets.Instance.healthPotion1;
+            
+        }
+        return null;
     }
 }
