@@ -4,7 +4,7 @@ using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.UIElements;
+using UnityEngine.UI;
 
 public enum SceneIndex //en teoria posar aquests valors o no és lo mateix.
 {
@@ -20,6 +20,7 @@ public class GameManager : MonoBehaviour
 
     public bool isPaused = false;
     [SerializeField] private GameObject pausePanel;
+    [SerializeField] private GameObject pauseButton;
 
     public static GameManager Instance { get; private set; }
     private void Awake()
@@ -35,6 +36,8 @@ public class GameManager : MonoBehaviour
             Instance = this;
             DontDestroyOnLoad(gameObject);
         }
+
+        SetUI();
     }
     public void DisplayInventoryItemList(List<Item> itemList)
     {
@@ -90,10 +93,41 @@ public class GameManager : MonoBehaviour
             isPaused = true;
         }
     }
-    //he de fer que pause panel sigui tb dontDestroyOnLoad?
+
+    public void ToggleInventoryButton()
+    {
+        //PLAY AN SFX WHEN RECOLLECT
+        SoundManager.Instance.PlaySFX(SoundManager.Instance.sound3);
+
+        if (UI_Inventory.Instance.panelBackground.activeInHierarchy == true) //if it's true, will be closed so we have to destroy all the elements
+        {
+            UI_Inventory.Instance.panelBackground.SetActive(false);
+            UI_Inventory.Instance.HideAllChildren();
+            Debug.Log("all the childrens of the panel background have been destroyed");
+        }
+        else
+        {
+            UI_Inventory.Instance.panelBackground.SetActive(true);
+            UI_Inventory.Instance.RefreshItems();
+
+            Debug.Log("the inventory has been refreshed with the item list");
+        }
+    }
+
     public void SetUI()
     {
-        //transform pausePanel = GameObejct.Find("PausePanel");    
+        //quant es carrega sa escena s'asignen es panels i es botons i se li posa al pause button sa funció corresponent
+        //no me serveix fer-ho des de s'inspector, perquè jo vull que se faci un toggle
+        pausePanel = GameObject.Find("PausePanel");
+
+        /*
+        pauseButton = GameObject.Find("PauseButton");
+        Button pausebuttonButtonComponent = pauseButton.GetComponent<Button>();
+        pausebuttonButtonComponent.onClick.RemoveAllListeners();
+        pausebuttonButtonComponent.onClick.AddListener(() => TogglePauseButton());
+        */
+        Debug.Log("the pausePanel has been founded and set to the game manager. Now the pause button should work");
+
         //asignar aquí es pause panel i tal per poder fer es pause. de totes formes
         //me queda pendent mirar es projecte meu de l'any passat amb en jerson o es
         //projecte de s'snake per veure com s'ha fet es pause, que segur és algo súper fàcil

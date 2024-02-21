@@ -19,6 +19,8 @@ public class IngredientsSpawner : MonoBehaviour
     }
     void Start()
     {
+        CreateNewItem(GameAssets.Instance.healthPotion1, Vector3.right,1);
+
         SpawnTheFruits(beanSpawner, GameAssets.Instance.bean);
         SpawnTheFruits(appleSpawner, GameAssets.Instance.apple);
        

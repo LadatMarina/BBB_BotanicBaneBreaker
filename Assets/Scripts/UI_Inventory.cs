@@ -12,11 +12,11 @@ public class UI_Inventory : MonoBehaviour
     private Player player;
 
     private VillageDisplay villageDisplay;
-    private bool hasSelectedAPotion;
+    public bool hasSelectedAPotion;
 
     //asignar per inspector
     [SerializeField] private GameObject recollectableButtonPrefab;
-    [SerializeField] private GameObject panelBackground;
+    public GameObject panelBackground;
 
 
     //[SerializeField] private TextMeshPro amountText;
@@ -30,8 +30,6 @@ public class UI_Inventory : MonoBehaviour
 
     public IngredientsSpawner ingredientSpawner;
 
-    private Vector2 playerPosition;
-    private bool hasThePlayerPos = false;
 
     public static UI_Inventory Instance { get; private set; }
 
@@ -64,23 +62,6 @@ public class UI_Inventory : MonoBehaviour
         }
     }
 
-    private void Update()
-    {
-        //when the player moves, the inventory will close
-        if (panelBackground.activeInHierarchy == true && hasThePlayerPos==false)
-        {
-            playerPosition = player.GetPlayerPos();
-            hasThePlayerPos = true;
-
-        }
-        if((panelBackground.activeInHierarchy == true) && (player.GetPlayerPos() != playerPosition))
-        {
-            ToggleInventoryButton();
-            hasThePlayerPos = false; //reset the value
-            Debug.Log("the inventory is toggled");
-        }
-        
-    }
 
     public void SetInventory(Inventory inventory)
     {
@@ -113,27 +94,9 @@ public class UI_Inventory : MonoBehaviour
         }
     }
 
-    public void ToggleInventoryButton()
-    {
-        //PLAY AN SFX WHEN RECOLLECT
-        SoundManager.Instance.PlaySFX(SoundManager.Instance.sound3);
 
-            if (panelBackground.activeInHierarchy == true) //if it's true, will be closed so we have to destroy all the elements
-            {
-                panelBackground.SetActive(false);
-                HideAllChildren();
-                Debug.Log("all the childrens of the panel background have been destroyed");
-            }
-            else
-            {
-                panelBackground.SetActive(true);
-                RefreshItems();
 
-                Debug.Log("the inventory has been refreshed with the item list");
-            }
-    }
-
-    private void HideAllChildren()
+    public void HideAllChildren()
     {
         foreach (Transform child in recollectableButtonPrefab.transform)
         {
@@ -141,7 +104,7 @@ public class UI_Inventory : MonoBehaviour
         }
     }
 
-    private void RefreshItems()
+    public void RefreshItems()
     {
         itemList = player.GetInventory().GetItemList();
         int sceneBuildIndex = SceneManager.GetActiveScene().buildIndex;
@@ -151,15 +114,19 @@ public class UI_Inventory : MonoBehaviour
             {
                 case (int)SceneIndex.Villagers:
                     Item potionItem = itemList[i];
-                    if(potionItem.itemSO.recollectableType == RecollectableType.healthPotion)
+                    if (potionItem.itemSO.recollectableType == RecollectableType.healthPotion)
                     {
                         Transform potionButton = panelBackground.transform.GetChild(i);
 
                         potionButton.gameObject.SetActive(true);
 
                         RefreshButton(potionItem, potionButton);
+                        Debug.Log("potion has been showed");
                     }
-                    
+                    else
+                    {
+                        Debug.Log("there's no potions to show");
+                    }
                     break;
 
                 case (int)SceneIndex.GamePlay:
@@ -237,9 +204,12 @@ public class UI_Inventory : MonoBehaviour
         //item that the button represents to the field potion in the village display and hide the inventoy
         if(hasSelectedAPotion == false)
         {
-            villageDisplay.SetPotion(item.itemSO);
-            ToggleInventoryButton();
+            //villageDisplay.potion = item.itemSO;
+            villageDisplay.SetPotion(item);
+            GameManager.Instance.ToggleInventoryButton();
             hasSelectedAPotion = true;
         }
     }
+
+
 }

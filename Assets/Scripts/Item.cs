@@ -5,7 +5,7 @@ using UnityEngine;
 public class Item
 {
     public int amount;
-    public Recollectable itemSO; //sa meva info esta`tica
+    public Recollectable itemSO; //sa meva info estàtica
     
     public void ResetAmount()
     {

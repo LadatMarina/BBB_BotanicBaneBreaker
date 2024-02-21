@@ -4,6 +4,7 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
 using UnityEngine.Video;
+using System;
 
 public class VillageDisplay : MonoBehaviour
 {
@@ -19,7 +20,7 @@ public class VillageDisplay : MonoBehaviour
 
     public Village village;
 
-    private Recollectable potion = null;
+    public Recollectable potion = null;
 
     void Start()
     {
@@ -32,14 +33,29 @@ public class VillageDisplay : MonoBehaviour
         potionFieldButton.interactable = true;
         potionFieldButton.onClick.AddListener(() => ShowInventoryAndUnableButton(potionFieldButton));
     }
-
+    bool booleanCanviarNom = false;
     private void Update()
     {
-        if(potion != null)
+        if (potion != null)
         {
-            RefreshPotionField();
-            givePotionButton.gameObject.SetActive(true);
+            if (booleanCanviarNom == false)
+            {
+                givePotionButton.gameObject.SetActive(true);
+                RefreshPotionField();
+                booleanCanviarNom = true;
+            }
         }
+        //if(UI_Inventory.Instance.hasSelectedAPotion != false)
+        //{
+        //    if (booleanCanviarNom == false)
+        //    {
+        //        booleanCanviarNom = true;
+
+        //        //RefreshPotionField();
+        //        givePotionButton.gameObject.SetActive(true);
+
+        //    }
+        //}
     }
 
     public void SetVillage(Village village)
@@ -56,13 +72,13 @@ public class VillageDisplay : MonoBehaviour
 
     private void ShowInventoryAndUnableButton(Button potionFieldButton)
     {
-        UI_Inventory.Instance.ToggleInventoryButton();
+        GameManager.Instance.ToggleInventoryButton();
         potionFieldButton.interactable = false;
     }
 
-    public void SetPotion(Recollectable potion)
+    public void SetPotion(Item potion)
     {
-        this.potion = potion;
+        this.potion = potion.itemSO;
     }
 
     private void RefreshPotionField()
