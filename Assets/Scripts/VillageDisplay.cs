@@ -36,48 +36,6 @@ public class VillageDisplay : MonoBehaviour
         potionFieldButton.onClick.AddListener(() => ShowInventoryAndUnableButton(potionFieldButton));
         hasSelectedAPotion = false;
     }
-    bool booleanCanviarNom = false;
-    private void Update()
-    {
-        //if (GameManager.Instance.pocioQueHaElegit != null)
-        //{
-        //    Debug.Log("SA POSION NO ES NULA SENIORES");
-        //    potion = GameManager.Instance.pocioQueHaElegit;
-
-        //    if (booleanCanviarNom == false)
-        //    {
-                
-        //        //givePotionButton.gameObject.SetActive(true);
-        //        RefreshPotionField();
-        //        booleanCanviarNom = true;
-        //    }
-        //}
-
-        //if(UI_Inventory.Instance.recollectableSavedForUsing == null)
-        //{
-        //    Debug.Log("SA POSION NO ES NULA SENIORES - villageDisplay");
-        //    potion = UI_Inventory.Instance.recollectableSavedForUsing;
-        //    if(booleanCanviarNom == false)
-        //    {
-        //        givePotionButton.gameObject.SetActive (true);   
-        //        RefreshPotionField();
-        //        booleanCanviarNom= true;
-        //    }
-        //}
-
-        //if(UI_Inventory.Instance.hasSelectedAPotion != false)
-        //{
-        //    if (booleanCanviarNom == false)
-        //    {
-        //        booleanCanviarNom = true;
-
-        //        //RefreshPotionField();
-        //        givePotionButton.gameObject.SetActive(true);
-
-        //    }
-        //}
-    }
-
     public void SetVillage(Village village)
     {
         Debug.Log($"en paco ara tocaria sortir : '{village}' ");
@@ -96,17 +54,16 @@ public class VillageDisplay : MonoBehaviour
         potionFieldButton.interactable = false;
     }
 
-    public void SetPotion(Recollectable potion)
-    {
-        this.potion = potion;
-    }
+    //public void SetPotion(Recollectable potion)
+    //{
+    //    this.potion = potion;
+    //}
 
     public void RefreshPotionField(Recollectable recollectableToRefresh)
     {
         Debug.Log("has entrat dins sa funció RefreshPotionField de dins VillageDisplay");
-
-        SpriteRenderer potionFieldSpriteRenderer = potionField.GetComponent<SpriteRenderer>();
-        potionFieldSpriteRenderer.sprite = recollectableToRefresh.sprite;
+        Image potionFieldImage = potionField.GetComponent<Image>();
+        potionFieldImage.sprite = recollectableToRefresh.sprite;
         potion = null;
     }
 
@@ -154,16 +111,11 @@ public class VillageDisplay : MonoBehaviour
         //item that the button represents to the field potion in the village display and hide the inventoy
         if(hasSelectedAPotion == false)
         {
-            //potion = itemSO;
-            Debug.Log("ha entrat dins sa funció ChoosePotionToGive, aquí és on s'hauria de actualitzar s'input Field");
+            potion = itemSO; //mirar si basta es temps en què transcorre
             RefreshPotionField(recollectableOfThisButton);
+            givePotionButton.gameObject.SetActive(true);
             GameManager.Instance.ToggleInventoryButton();
             hasSelectedAPotion = true;
         }
-    }
-
-    public void ProvasionDelete(int n )
-    {
-        Debug.Log($"the recollectable {n} has arrived here");
     }
 }

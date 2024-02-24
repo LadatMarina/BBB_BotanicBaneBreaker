@@ -17,7 +17,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &2093351610884379475
 RectTransform:
   m_ObjectHideFlags: 0
@@ -92,7 +92,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1560333817815317441
 RectTransform:
   m_ObjectHideFlags: 0
@@ -345,6 +345,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9846e00ab4747b64e82abfc56db6b829, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  recollectable: {fileID: 0}
 --- !u!1001 &3398867048116990250
 PrefabInstance:
   m_ObjectHideFlags: 0

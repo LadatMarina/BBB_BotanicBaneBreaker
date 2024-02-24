@@ -180,8 +180,8 @@ public class UI_Inventory : MonoBehaviour
         switch (buildIndex)
         {
             case (int)SceneIndex.House:
-                //buttonComponent.onClick.AddListener(() => villageDisplay.ChooseThePotionToGive(GameAssets.Instance.healthPotion1));
-                buttonComponent.onClick.AddListener(()=> villageDisplay.ProvasionDelete(5));
+                buttonComponent.onClick.AddListener(() => villageDisplay.ChooseThePotionToGive(item.itemSO));
+                //buttonComponent.onClick.AddListener(()=> villageDisplay.ProvasionDelete(5));
                 break;
             case (int)SceneIndex.GamePlay:
                 buttonComponent.onClick.AddListener(() => DropItem(localItem, recollectableButton));
