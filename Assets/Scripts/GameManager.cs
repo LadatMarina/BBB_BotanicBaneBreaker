@@ -10,8 +10,9 @@ public enum SceneIndex //en teoria posar aquests valors o no és lo mateix.
 {
     MainMenu = 0,
     GamePlay = 1,
-    Witch = 3,
-    Villagers = 2
+    Witch = 4,
+    House = 2,
+    Kitchen = 3,
 }
 public class GameManager : MonoBehaviour
 {
@@ -23,6 +24,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject pauseButton;
 
     public static GameManager Instance { get; private set; }
+
+    public Recollectable pocioQueHaElegit = null;
     private void Awake()
     {
         // If there is an instance, and it's not me, delete myself.
@@ -37,7 +40,6 @@ public class GameManager : MonoBehaviour
             DontDestroyOnLoad(gameObject);
         }
 
-        SetUI();
     }
     public void DisplayInventoryItemList(List<Item> itemList)
     {
@@ -51,15 +53,22 @@ public class GameManager : MonoBehaviour
     {
         this.village = village;
 
-        Debug.Log($"the villager : '{village}' has been set to the load scene '{(int)SceneIndex.Villagers}'");
+        Debug.Log($"the villager : '{village}' has been set to the load scene '{(int)SceneIndex.House}'");
                 
         //hasLoaded = true;
 
-        SceneManager.LoadScene((int)SceneIndex.Villagers);
+        SceneManager.LoadScene((int)SceneIndex.House);
 
         Debug.Log(this.village);
 
     }
+
+    public void LoadKitchen()
+    {
+        SceneManager.LoadScene((int)SceneIndex.Kitchen);
+
+    }
+
 
     private void Update()
     {
@@ -77,21 +86,6 @@ public class GameManager : MonoBehaviour
     public void LoadScene(int index)
     {
         SceneManager.LoadScene(index);
-        SetUI();
-    }
-
-    public void TogglePauseButton()
-    {
-        if (pausePanel.activeInHierarchy)
-        {
-            pausePanel.SetActive(false);
-            isPaused = false;
-        }
-        else
-        {
-            pausePanel.SetActive(true);
-            isPaused = true;
-        }
     }
 
     public void ToggleInventoryButton()
@@ -113,25 +107,4 @@ public class GameManager : MonoBehaviour
             Debug.Log("the inventory has been refreshed with the item list");
         }
     }
-
-    public void SetUI()
-    {
-        //quant es carrega sa escena s'asignen es panels i es botons i se li posa al pause button sa funció corresponent
-        //no me serveix fer-ho des de s'inspector, perquè jo vull que se faci un toggle
-        pausePanel = GameObject.Find("PausePanel");
-
-        /*
-        pauseButton = GameObject.Find("PauseButton");
-        Button pausebuttonButtonComponent = pauseButton.GetComponent<Button>();
-        pausebuttonButtonComponent.onClick.RemoveAllListeners();
-        pausebuttonButtonComponent.onClick.AddListener(() => TogglePauseButton());
-        */
-        Debug.Log("the pausePanel has been founded and set to the game manager. Now the pause button should work");
-
-        //asignar aquí es pause panel i tal per poder fer es pause. de totes formes
-        //me queda pendent mirar es projecte meu de l'any passat amb en jerson o es
-        //projecte de s'snake per veure com s'ha fet es pause, que segur és algo súper fàcil
-    }
-
-
 }

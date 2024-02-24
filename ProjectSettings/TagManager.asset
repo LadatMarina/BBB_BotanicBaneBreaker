@@ -8,6 +8,7 @@ TagManager:
   - house_2
   - house_3
   - recollectable
+  - kitchen
   layers:
   - Default
   - TransparentFX

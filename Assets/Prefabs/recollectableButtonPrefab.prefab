@@ -17,7 +17,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &2093351610884379475
 RectTransform:
   m_ObjectHideFlags: 0
@@ -92,7 +92,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1560333817815317441
 RectTransform:
   m_ObjectHideFlags: 0
@@ -221,6 +221,7 @@ GameObject:
   - component: {fileID: 4615790974851317403}
   - component: {fileID: 2671059283119968796}
   - component: {fileID: 1509091331478944049}
+  - component: {fileID: 2543296275919060411}
   m_Layer: 5
   m_Name: recollectableButtonPrefab
   m_TagString: Untagged
@@ -332,6 +333,18 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &2543296275919060411
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5314721951864860554}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9846e00ab4747b64e82abfc56db6b829, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &3398867048116990250
 PrefabInstance:
   m_ObjectHideFlags: 0

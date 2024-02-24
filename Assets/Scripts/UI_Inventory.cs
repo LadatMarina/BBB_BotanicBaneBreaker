@@ -4,15 +4,14 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using UnityEngine.Video;
 
 public class UI_Inventory : MonoBehaviour
 {
     private Inventory inventory;
-
     private Player player;
 
     private VillageDisplay villageDisplay;
-    public bool hasSelectedAPotion;
 
     //asignar per inspector
     [SerializeField] private GameObject recollectableButtonPrefab;
@@ -55,13 +54,27 @@ public class UI_Inventory : MonoBehaviour
         inventory = player.GetInventory();
         ingredientSpawner = FindAnyObjectByType<IngredientsSpawner>();
 
-        if(SceneManager.GetActiveScene().buildIndex == (int)SceneIndex.Villagers)
-        {
-            villageDisplay = FindObjectOfType<VillageDisplay>();
-            hasSelectedAPotion = false;
-        }
+
     }
 
+    private void Update()
+    {
+        if (SceneManager.GetActiveScene().buildIndex == (int)SceneIndex.House)
+        {
+            if (villageDisplay == null)
+            {
+                Debug.Log("village display eRA NULL!!!!");
+                villageDisplay = FindObjectOfType<VillageDisplay>();
+                Debug.Log("village dislpay ja no és null");
+                
+            }
+            
+            
+        }
+        //Debug.Log("the recollectableSavedForUsing is not longer null");
+        //villageDisplay.potion = recollectableSavedForUsing;
+        //villageDisplay.RefreshPotionField();
+    }
 
     public void SetInventory(Inventory inventory)
     {
@@ -94,8 +107,6 @@ public class UI_Inventory : MonoBehaviour
         }
     }
 
-
-
     public void HideAllChildren()
     {
         foreach (Transform child in recollectableButtonPrefab.transform)
@@ -112,16 +123,18 @@ public class UI_Inventory : MonoBehaviour
         {
             switch (sceneBuildIndex)
             {
-                case (int)SceneIndex.Villagers:
-                    Item potionItem = itemList[i];
-                    if (potionItem.itemSO.recollectableType == RecollectableType.healthPotion)
+                case (int)SceneIndex.House:
+                    //Item potionItem = itemList[i];
+
+                    if (itemList[i].itemSO.recollectableType == RecollectableType.healthPotion)
                     {
                         Transform potionButton = panelBackground.transform.GetChild(i);
 
                         potionButton.gameObject.SetActive(true);
 
-                        RefreshButton(potionItem, potionButton);
-                        Debug.Log("potion has been showed");
+                        RefreshButton(itemList[i], potionButton);
+
+                        Debug.Log("the potion has been showed");
                     }
                     else
                     {
@@ -130,13 +143,16 @@ public class UI_Inventory : MonoBehaviour
                     break;
 
                 case (int)SceneIndex.GamePlay:
-                    Item item = itemList[i];
+                    //Item item = itemList[i];
 
                     Transform recollectableButton = panelBackground.transform.GetChild(i);
-                    //Debug.Log($"element {i} has been set active");
+
                     recollectableButton.gameObject.SetActive(true);
 
-                    RefreshButton(item, recollectableButton);
+                    //delete inventoryButtonItem = recollectableButton.transform.GetChild(2).GetComponent<delete>();
+                    //inventoryButtonItem.recollectable = item.itemSO;
+
+                    RefreshButton(itemList[i], recollectableButton);
                     break;
             }
             
@@ -146,12 +162,16 @@ public class UI_Inventory : MonoBehaviour
     private void RefreshButton(Item item, Transform recollectableButton)
     {
         //visual
-        recollectableButton.transform.GetChild(0).GetComponent<Image>().sprite = item.itemSO.sprite;
-        TextMeshProUGUI text = recollectableButton.transform.GetChild(1).GetComponent<TextMeshProUGUI>();
+        recollectableButton.transform.GetChild(0).GetComponent<Image>().sprite = item.itemSO.sprite; //set the sprite
+        TextMeshProUGUI text = recollectableButton.transform.GetChild(1).GetComponent<TextMeshProUGUI>(); //set the amount text
         text.SetText($"{item.amount}");
 
         //logic
-        Button buttonComponent = recollectableButton.gameObject.GetComponent<Button>();
+        Button buttonComponent = recollectableButton.gameObject.GetComponent<Button>(); //get the button fot the add listener
+        //delete inventoryButtonItem = recollectableButton.GetComponent<delete>();
+
+        //this can be deleted, it's only for knowing if the button has the correct recollectable asigned
+        //inventoryButtonItem.recollectable = item.itemSO;
 
         //first we save the item reference and then reset the functions the button has
         Item localItem = item;
@@ -159,8 +179,9 @@ public class UI_Inventory : MonoBehaviour
         int buildIndex = SceneManager.GetActiveScene().buildIndex;
         switch (buildIndex)
         {
-            case (int)SceneIndex.Villagers:
-                buttonComponent.onClick.AddListener(() => ChooseThePotionToGive(localItem));
+            case (int)SceneIndex.House:
+                //buttonComponent.onClick.AddListener(() => villageDisplay.ChooseThePotionToGive(GameAssets.Instance.healthPotion1));
+                buttonComponent.onClick.AddListener(()=> villageDisplay.ProvasionDelete(5));
                 break;
             case (int)SceneIndex.GamePlay:
                 buttonComponent.onClick.AddListener(() => DropItem(localItem, recollectableButton));
@@ -172,7 +193,7 @@ public class UI_Inventory : MonoBehaviour
     public void DropItem(Item item, Transform recollectableButton)
     {
         Vector2[] directions = { Vector2.up, Vector2.right, Vector2.down, Vector2.left };
-
+        int i = 0;
         foreach (Vector2 dropDirection in directions)
         {
             if (!player.RecollectableInFrontOf(dropDirection)) // si no hi ha res quant dropDirection, instancia i atura es bulce
@@ -192,24 +213,20 @@ public class UI_Inventory : MonoBehaviour
 
                 break;
             }
-        }
-
-        // If no space is available in any direction, log an error message
-        Debug.Log("The item could not be instantiated, there's no space");
-    }
-
-    public void ChooseThePotionToGive(Item item)
-    {
-        //if the player has not selected a potion from the inventory, will add the
-        //item that the button represents to the field potion in the village display and hide the inventoy
-        if(hasSelectedAPotion == false)
-        {
-            //villageDisplay.potion = item.itemSO;
-            villageDisplay.SetPotion(item);
-            GameManager.Instance.ToggleInventoryButton();
-            hasSelectedAPotion = true;
+            else
+            {
+                i++;
+                if(i>= directions.Length)
+                {
+                    //AQUÍ HE DE POSAR QUE QUANT DONI FALS A SES 4 DIRECCIONS, ARA ME DIU QUE NO HI HA ESPAI A SA PRIMERA QUE COMPROVA
+                    // If no space is available in any direction, log an error message
+                    Debug.Log("The item could not be instantiated, there's no space");
+                }
+            }
         }
     }
+
+
 
 
 }

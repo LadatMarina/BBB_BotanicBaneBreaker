@@ -69,7 +69,7 @@ public class SoundManager : MonoBehaviour
                 musicAudioSource.loop = true;
                 musicAudioSource.Play();
                 break;
-            case (int)SceneIndex.Villagers:
+            case (int)SceneIndex.House:
                 //play background music 3
                 musicAudioSource.clip = sound1;
                 musicAudioSource.loop = true;

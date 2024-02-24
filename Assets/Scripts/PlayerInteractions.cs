@@ -49,6 +49,10 @@ public class PlayerInteractions : MonoBehaviour
                     Debug.LogError("something gone wrong, the other game object is null");
                 }
                 break;
+            case "kitchen":
+                GameManager.Instance.LoadKitchen();
+
+                break;
         }
     }
 }
