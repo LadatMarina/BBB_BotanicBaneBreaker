@@ -10,6 +10,8 @@ public class Player : MonoBehaviour
     private Vector2 lastMovement;
     private Rigidbody2D _rbPlayer;
 
+    private Vector3 defaultStartPosition = new Vector3(-20 , 7 , 0);
+
     //inventory
     public Inventory inventory;
 
@@ -31,6 +33,18 @@ public class Player : MonoBehaviour
         if(inventory != null)
         {
             listInitialized = true;
+        }
+
+        //menwhile the game manager doesn't store a last player position, the player will appear in defaultStartPosition
+        if(GameManager.Instance.GetLastPlayerPos() != null) {
+
+            Vector3 lastPos = GameManager.Instance.GetLastPlayerPos();
+            transform.position = new Vector3(lastPos.x , lastPos.y -1, 0);
+            Debug.Log("because the gameManager was storing a last player position, the player has moved to that last position " + transform.position);
+        }
+        else
+        {
+            transform.position = defaultStartPosition; 
         }
     }
     void Update()
@@ -88,6 +102,11 @@ public class Player : MonoBehaviour
     public Vector2 GetPlayerPos()
     {
         return transform.position;
+    }
+
+    public void SetPlayerPot()
+    {
+            
     }
 }
 

@@ -26,6 +26,9 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance { get; private set; }
 
     public Recollectable pocioQueHaElegit = null;
+
+    private Vector2 lastPlayerPosition;
+
     private void Awake()
     {
         // If there is an instance, and it's not me, delete myself.
@@ -115,4 +118,16 @@ public class GameManager : MonoBehaviour
         GameAssets.Instance.bel.isCured = false;
         GameAssets.Instance.toni.isCured = false;
     }
+
+    public void SetLastPLayerPos(Vector3 pos)
+    {
+        lastPlayerPosition = pos;
+        Debug.Log("the lastPlayerPosition has been setted to " + lastPlayerPosition);
+    }
+
+    public Vector3 GetLastPlayerPos()
+    {
+        return lastPlayerPosition;
+    }
+
 }

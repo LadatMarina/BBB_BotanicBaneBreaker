@@ -5,6 +5,7 @@ using TMPro;
 using UnityEngine.UI;
 using UnityEngine.Video;
 using System;
+using UnityEngine.SceneManagement;
 
 public class VillageDisplay : MonoBehaviour
 {
@@ -128,5 +129,10 @@ public class VillageDisplay : MonoBehaviour
             GameManager.Instance.ToggleInventoryButton();
             hasSelectedAPotion = true;
         }
+    }
+
+    public void LoadScene(int index)
+    {
+        SceneManager.LoadScene(index);
     }
 }
