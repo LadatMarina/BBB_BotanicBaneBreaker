@@ -5,6 +5,9 @@ using UnityEngine.UI;
 
 public class GameAssets : MonoBehaviour
 {
+    public Recollectable apple, bean, bluberry, strawberry, attackPotion1, healthPotion1, healthPotion2, healthPotion3, healthPotion4;
+    public Village paco, maria, bel, toni;
+
     public static GameAssets Instance { get; private set; }
     private void Awake()
     {
@@ -17,9 +20,10 @@ public class GameAssets : MonoBehaviour
         else
         {
             Instance = this;
+            DontDestroyOnLoad(gameObject);
         }
+
     }
 
-    public Recollectable apple, bean, bluberry, strawberry,prova, attackPotion1, healthPotion1;
-    public Village paco,maria,bel,toni;
+
 }

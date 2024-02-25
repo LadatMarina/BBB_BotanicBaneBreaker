@@ -15,7 +15,7 @@ MonoBehaviour:
   name: HealthPotion_1
   recollectableType: 1
   sprite: {fileID: -1286262626, guid: 08652569bdb28544e8d8707695b3b7d4, type: 3}
-  cureOf: disease_1
+  cureOf: 1
   ingredientsForMakeThePotion:
   - {fileID: 11400000, guid: 2a545c07f7f1cb4458bca294a2e8bb6b, type: 2}
   - {fileID: 11400000, guid: 6c5d80e752c812b4c8628f5aca044326, type: 2}

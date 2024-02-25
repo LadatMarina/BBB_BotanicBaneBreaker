@@ -23,6 +23,7 @@ public class VillageDisplay : MonoBehaviour
     public Recollectable potion = null;
     public bool hasSelectedAPotion;
 
+    Animator npcAnimator;
 
     void Start()
     {
@@ -38,11 +39,12 @@ public class VillageDisplay : MonoBehaviour
     }
     public void SetVillage(Village village)
     {
-        Debug.Log($"en paco ara tocaria sortir : '{village}' ");
         nameText.text = village.name;
         diseaseText.text = $"{village.disease}";
-        //potionText.text = village.potion;
+        potionText.text = village.potion;
         npcImage.sprite = village.sprite;
+        npcAnimator = npcImage.GetComponent<Animator>();
+        npcAnimator.runtimeAnimatorController = village.animator.runtimeAnimatorController;
 
         Image imageBackground = background.GetComponent<Image>();
         imageBackground.color = village.backgroundColor;
@@ -64,7 +66,6 @@ public class VillageDisplay : MonoBehaviour
         Debug.Log("has entrat dins sa funció RefreshPotionField de dins VillageDisplay");
         Image potionFieldImage = potionField.GetComponent<Image>();
         potionFieldImage.sprite = recollectableToRefresh.sprite;
-        potion = null;
     }
 
     public void CheckPotion()
@@ -77,7 +78,10 @@ public class VillageDisplay : MonoBehaviour
             // npc animation of "huryay!"
             // return to main game
             // unlock a new potion recipe 
+            village.isCured = true;
+            npcAnimator.SetBool("isCured", true);
             Debug.Log($"CONGRAT'S YOU HAVE GIVE {village.name} THE CORRECT POTION");
+            
         }
         else
         {
@@ -86,6 +90,8 @@ public class VillageDisplay : MonoBehaviour
             // --> pensar que fer
             Debug.Log($"YOU ALMOST KILL {village.name}!!!");
         }
+        potion = null;
+        Debug.Log("now the potion variable of the village display is null");
     }
 
 
@@ -95,7 +101,12 @@ public class VillageDisplay : MonoBehaviour
         {
             case Diseases.cold:
                 return GameAssets.Instance.healthPotion1;
-            
+            case Diseases.constipated:
+                return GameAssets.Instance.healthPotion2;
+            case Diseases.diarrea:
+                return GameAssets.Instance.healthPotion3;
+            case Diseases.stomachAge:
+                return GameAssets.Instance.healthPotion4;
         }
         return null;
     }

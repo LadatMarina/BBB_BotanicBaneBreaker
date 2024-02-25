@@ -26,7 +26,7 @@ public class Recollectable : ScriptableObject
     //public ParticleSystem particleSystem;
 
     //HEALTH POTION && ATTACK POTION
-    public string cureOf;
+    public Diseases cureOf;
     public ScriptableObject[] ingredientsForMakeThePotion;
     public ScriptableObject potionThatUnlocks;
 

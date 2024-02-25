@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 54831b926fc5b134094b0ea8e3ada721, type: 3}
+  m_Name: Toni
+  m_EditorClassIdentifier: 
+  name: Toni
+  age: 37
+  disease: 0
+  potion: 
+  sprite: {fileID: 468665917, guid: 25d6762d8b3812748afadbc3db9ad9d8, type: 3}
+  backgroundColor: {r: 0.56381273, g: 0.56381273, b: 0.6603774, a: 0}
+  isCured: 0
+  animator: {fileID: 4621320017612249621, guid: 2f38599e8971dc84bbfaa6e904a49203, type: 3}

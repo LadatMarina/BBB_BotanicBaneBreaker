@@ -26,13 +26,13 @@ public class PlayerInteractions : MonoBehaviour
                 GameManager.Instance.LoadHouseScene(GameAssets.Instance.paco);
                 break;
             case "house_2":
-                ///
+                GameManager.Instance.LoadHouseScene(GameAssets.Instance.maria);
                 break;
             case "house_3":
-                ///
+                GameManager.Instance.LoadHouseScene(GameAssets.Instance.bel);
                 break;
             case "house_4":
-                ///
+                GameManager.Instance.LoadHouseScene(GameAssets.Instance.toni);
                 break;
 
             case "recollectable":

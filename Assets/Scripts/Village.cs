@@ -19,4 +19,6 @@ public class Village : ScriptableObject
     public string potion;
     public Sprite sprite;
     public Color backgroundColor;
+    public bool isCured = false;
+    public Animator animator;
 }
