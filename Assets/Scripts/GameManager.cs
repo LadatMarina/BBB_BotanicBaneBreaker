@@ -113,10 +113,11 @@ public class GameManager : MonoBehaviour
     private void OnDisable()
     {
         //pensar a que quant acabi es joc per entregar, he de borrar s'on disable, o almanco l'he de comentar per posar que és només per quant editi es joc 
-        GameAssets.Instance.paco.isCured = false;
-        GameAssets.Instance.maria.isCured = false;
-        GameAssets.Instance.bel.isCured = false;
-        GameAssets.Instance.toni.isCured = false;
+        //GameAssets.Instance.paco.isCured = false;
+        //GameAssets.Instance.maria.isCured = false;
+        //GameAssets.Instance.bel.isCured = false;
+        //GameAssets.Instance.toni.isCured = false;
+        //lastPlayerPosition = Vector3.zero;
     }
 
     public void SetLastPLayerPos(Vector3 pos)

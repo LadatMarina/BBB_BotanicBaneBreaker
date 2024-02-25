@@ -36,11 +36,11 @@ public class Player : MonoBehaviour
         }
 
         //menwhile the game manager doesn't store a last player position, the player will appear in defaultStartPosition
-        if(GameManager.Instance.GetLastPlayerPos() != null) {
+        if(GameManager.Instance.GetLastPlayerPos() != Vector3.zero) {
 
             Vector3 lastPos = GameManager.Instance.GetLastPlayerPos();
-            transform.position = new Vector3(lastPos.x , lastPos.y -1, 0);
-            Debug.Log("because the gameManager was storing a last player position, the player has moved to that last position " + transform.position);
+            transform.position = new Vector3(lastPos.x , lastPos.y -1, 0   );
+            //Debug.Log("because the gameManager was storing a last player position, the player has moved to that last position " + transform.position);
         }
         else
         {

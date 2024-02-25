@@ -25,27 +25,24 @@ public class PlayerInteractions : MonoBehaviour
 
         switch(tag) {
             case "house_1":
-                Debug.Log(gameInput.GetInputVectorNormalized());
-                //save the position of the player and the last facing (the last facing ara no és necessari pq totes ses portes per poder entrar estaràs mirant cap adalt)
+                //save the position of the player
                 GameManager.Instance.SetLastPLayerPos(player.GetPlayerPos());
-                
                 GameManager.Instance.LoadHouseScene(GameAssets.Instance.paco);
                 
                 break;
             case "house_2":
+                GameManager.Instance.SetLastPLayerPos(player.GetPlayerPos());
                 GameManager.Instance.LoadHouseScene(GameAssets.Instance.maria);
-                Debug.Log(gameInput.GetInputVectorNormalized());
-
                 break;
+
             case "house_3":
+                GameManager.Instance.SetLastPLayerPos(player.GetPlayerPos());
                 GameManager.Instance.LoadHouseScene(GameAssets.Instance.bel);
-                Debug.Log(gameInput.GetInputVectorNormalized());
-
                 break;
+            
             case "house_4":
+                GameManager.Instance.SetLastPLayerPos(player.GetPlayerPos());
                 GameManager.Instance.LoadHouseScene(GameAssets.Instance.toni);
-                Debug.Log(gameInput.GetInputVectorNormalized());
-
                 break;
 
             case "recollectable":
@@ -63,9 +60,8 @@ public class PlayerInteractions : MonoBehaviour
                 }
                 break;
             case "kitchen":
+                GameManager.Instance.SetLastPLayerPos(player.GetPlayerPos());
                 GameManager.Instance.LoadKitchen();
-                Debug.Log(gameInput.GetInputVectorNormalized());
-
                 break;
         }
     }
