@@ -151,6 +151,6 @@ public class VillageDisplay : MonoBehaviour
 
     public void LoadScene(int index)
     {
-        SceneManager.LoadScene(index);
+        GameManager.Instance.LoadScene(index);
     }
 }

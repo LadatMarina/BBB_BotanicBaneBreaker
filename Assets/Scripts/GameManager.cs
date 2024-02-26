@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -29,6 +30,8 @@ public class GameManager : MonoBehaviour
 
     private Vector2 lastPlayerPosition;
 
+    private List<Item> savedItemList;
+
     //inventory
     public Inventory inventory;
 
@@ -45,6 +48,8 @@ public class GameManager : MonoBehaviour
             Instance = this;
             DontDestroyOnLoad(gameObject);
         }
+
+        //savedItemList = new List<Item>();
     }
 
     public void DisplayInventoryItemList(List<Item> itemList)
@@ -59,15 +64,10 @@ public class GameManager : MonoBehaviour
     {
         this.village = village;
 
-        Debug.Log($"the villager : '{village}' has been set to the load scene '{(int)SceneIndex.House}'");
-                
-        //hasLoaded = true;
+        savedItemList = inventory.itemList;
 
-        SceneManager.LoadScene((int)SceneIndex.House);
+        LoadScene((int)SceneIndex.House);
 
-        Debug.Log(this.village);
-
-        //quant se fa load a una de ses escenes, vull que s'inventario de
 
     }
 
@@ -84,10 +84,36 @@ public class GameManager : MonoBehaviour
     }*/
     public void LoadScene(int index)
     {
+        Debug.Log("LoadScene() / GameManager");
+        if(SceneManager.GetActiveScene().buildIndex != (int)SceneIndex.MainMenu)
+        {
+            if (savedItemList != null)
+            {
+                RefreshItemList(savedItemList);
+
+            }
+            else
+            {
+                Debug.Log("the saved item list is null");
+            }
+            
+        }
+
         SceneManager.LoadScene(index);
     }
 
-
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.N))
+        {
+            DebugItemList(inventory.itemList);
+        }
+        
+        if (Input.GetKeyDown(KeyCode.G))
+        {
+            DebugItemList(savedItemList);
+        }
+    }
 
     private void OnDisable()
     {
@@ -120,4 +146,24 @@ public class GameManager : MonoBehaviour
 
     public void Remove(Item item) {inventory.RemoveItemFromList(item);}
 
+    public void DebugItemList(List<Item> list)
+    {
+        foreach (Item item in list)
+        {
+            Debug.Log(item.itemSO.name);
+        }
+    }
+
+    public void RefreshItemList(List<Item> list)
+    {
+        inventory.itemList = list;
+
+        Debug.Log("item list passed from GM is:");
+        GameManager.Instance.DebugItemList(list);
+
+        Debug.Log("item list refreshed from inventory is:");
+        GameManager.Instance.DebugItemList(inventory.itemList);
+
+        Debug.Log("item list refreshed / inventory");
+    }
 }
