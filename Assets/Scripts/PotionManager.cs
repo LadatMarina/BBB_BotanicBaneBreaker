@@ -12,8 +12,6 @@ public class PotionManager : MonoBehaviour
     private Recollectable potion = null;
     public bool hasSelectedAPotion;
 
-    Animator npcAnimator;
-
     public static PotionManager Instance { get; private set; }
     private void Awake()
     {
@@ -32,11 +30,10 @@ public class PotionManager : MonoBehaviour
         potion = null;
     }
 
-
-
-
     public Recollectable GetHealthPotionFromDisease(Diseases disease)
     {
+        Debug.Log($"GetHealthPotionFromDisease({disease}) / PotionManager");
+
         switch (disease)
         {
             case Diseases.cold:
@@ -51,7 +48,12 @@ public class PotionManager : MonoBehaviour
         return null;
     }
 
-    public Recollectable GetPotion() { return potion; }
-    public void SetPotion(Recollectable potionToSet) { potion = potionToSet; }
+    public Recollectable GetPotion() {
+        Debug.Log("GetPotion() / PotionManager");
+        return potion; }
+
+    public void SetPotion(Recollectable potionToSet) { 
+        Debug.Log("SetPotion() / PotionManager");
+        potion = potionToSet; }
    
 }

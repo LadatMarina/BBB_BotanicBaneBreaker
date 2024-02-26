@@ -51,10 +51,10 @@ public class UI_Inventory : MonoBehaviour
 
         player = FindAnyObjectByType<Player>();
 
-        inventory = player.GetInventory();
+        inventory = GameManager.Instance.GetInventory();
         ingredientSpawner = FindAnyObjectByType<IngredientsSpawner>();
 
-
+        HideAllChildren();
     }
 
     private void Update()
@@ -66,10 +66,7 @@ public class UI_Inventory : MonoBehaviour
                 Debug.Log("village display eRA NULL!!!!");
                 villageDisplay = FindObjectOfType<VillageDisplay>();
                 Debug.Log("village dislpay ja no és null");
-                
             }
-            
-            
         }
         //Debug.Log("the recollectableSavedForUsing is not longer null");
         //villageDisplay.potion = recollectableSavedForUsing;
@@ -82,42 +79,23 @@ public class UI_Inventory : MonoBehaviour
         //RefreshUiInventory();
     }
 
-    public void FillInventory(Transform parent, List<Item> itemList)
-    {
-        //canvair mecànica a sa de activar/desactivar es objectes
-
-        if (itemList.Count > 0)
-        {
-            for (int i = 0; i < itemList.Count; i++)
-            {
-                //instantiate a child inside the parent
-                GameObject instantiation = Instantiate(recollectableButtonPrefab, parent);
-
-                //get the sprite of the just instantiated
-                Transform image = instantiation.gameObject.transform.GetChild(0);
-                Sprite sprite = image.GetComponent<Sprite>();
-
-                //set that this sprite is the same as the inventory item sprite
-                sprite = itemList[i].GetItemSO().sprite;
-            }
-        }
-        else
-        {
-            Debug.Log("cannot fill the inventory because there's nothing in");
-        }
-    }
-
     public void HideAllChildren()
     {
-        foreach (Transform child in recollectableButtonPrefab.transform)
+        // hide all the buttons
+        foreach (Transform child in panelBackground.transform)
         {
             child.gameObject.SetActive(false);
+            //set active all the button inventory components
+            foreach (Transform child2 in child)
+            {
+                child2.gameObject.SetActive(true);
+            }
         }
     }
 
     public void RefreshItems()
     {
-        itemList = player.GetInventory().GetItemList();
+        itemList = GameManager.Instance.GetInventory().GetItemList();
         int sceneBuildIndex = SceneManager.GetActiveScene().buildIndex;
         for (int i = 0; i < itemList.Count; i++)
         {
@@ -148,9 +126,6 @@ public class UI_Inventory : MonoBehaviour
                     Transform recollectableButton = panelBackground.transform.GetChild(i);
 
                     recollectableButton.gameObject.SetActive(true);
-
-                    //delete inventoryButtonItem = recollectableButton.transform.GetChild(2).GetComponent<delete>();
-                    //inventoryButtonItem.recollectable = item.itemSO;
 
                     RefreshButton(itemList[i], recollectableButton);
                     break;
@@ -206,7 +181,7 @@ public class UI_Inventory : MonoBehaviour
                 newItem.GetComponent<Rigidbody2D>().AddForce(dropDirection, ForceMode2D.Impulse);
 
                 // Remove the item from the list
-                player.Remove(item);
+                GameManager.Instance.Remove(item);
 
                 // Refresh the UI inventory by hiding the button where the element was
                 recollectableButton.gameObject.SetActive(false);
@@ -226,7 +201,26 @@ public class UI_Inventory : MonoBehaviour
         }
     }
 
+    public void ToggleInventoryButton()
+    {
+        //PLAY AN SFX WHEN RECOLLECT
+        SoundManager.Instance.PlaySFX(SoundManager.Instance.sound3);
 
+        //GameObject inventoryPanelBackground = UI_Inventory.Instance.panelBackground;
 
+        if (panelBackground.activeInHierarchy) //if it's true, will be closed so we have to destroy all the elements
+        {
+            panelBackground.SetActive(false);
+            HideAllChildren();
+            Debug.Log("all the childrens of the panel background have been destroyed");
+        }
+        else
+        {
+            panelBackground.SetActive(true);
+            RefreshItems();
+
+            Debug.Log("the inventory has been refreshed with the item list");
+        }
+    }
 
 }

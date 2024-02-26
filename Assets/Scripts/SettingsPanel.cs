@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class SettingsPanel : MonoBehaviour
 {
+    //BORRAR PQ NS QUÈ ÉS AQUEST SCRIPT!!!
     public static SettingsPanel Instance {get; private set; }
 
     private void Awake()
@@ -20,17 +21,4 @@ public class SettingsPanel : MonoBehaviour
             DontDestroyOnLoad(gameObject);
         }
     }
-
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-}

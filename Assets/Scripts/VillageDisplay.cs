@@ -6,6 +6,7 @@ using UnityEngine.UI;
 using UnityEngine.Video;
 using System;
 using UnityEngine.SceneManagement;
+using static UnityEditor.Progress;
 
 public class VillageDisplay : MonoBehaviour
 {
@@ -28,9 +29,23 @@ public class VillageDisplay : MonoBehaviour
         SetVillage();
         hasSelectedAPotion = false; //això tampoc se exactament on me conve més, si aqui o a nes potionmanger
     }
+
+    private void Update()
+    {
+        if(Input.GetKeyUp(KeyCode.P)) { Debug.Log(PotionManager.Instance.GetPotion().name); }
+
+
+        if(Input.GetKeyUp(KeyCode.M)) { Debug.Log(PotionManager.Instance.GetHealthPotionFromDisease(village.disease).name); }
+
+        if(Input.GetKeyUp(KeyCode.V)) {Debug.Log(village); }
+    }
+
+
     private void SetVillage()
     {
-        Village village = GameManager.Instance.village;
+        Debug.Log("SetVillage() / VillageDisplay");
+
+        village = GameManager.Instance.village;
         
         nameText.text = village.name;
         diseaseText.text = $"{village.disease}";
@@ -50,18 +65,24 @@ public class VillageDisplay : MonoBehaviour
     //això és UI per tant se fa des de aquis
     public void RefreshPotionField(Recollectable recollectableToRefresh)
     {
+        Debug.Log($"RefreshPotionField({recollectableToRefresh}) / VillageDisplay");
+
         Image potionFieldImage = potionField.GetComponent<Image>();
         potionFieldImage.sprite = recollectableToRefresh.sprite;
     }
 
     public void ShowInventoryAndUnableButton(Button potionFieldButton)
     {
-        GameManager.Instance.ToggleInventoryButton();
+        Debug.Log($"ShowInventoryAndUnableButton({potionFieldButton}) / VillageDisplay");
+
+        UI_Inventory.Instance.ToggleInventoryButton();
         potionFieldButton.interactable = false;
     }
 
     public void SetPotionField(Transform potionField, Village village)
     {
+        Debug.Log($"SetPotionField({potionField} , {village}) / Village Display");
+
         givePotionButton.gameObject.SetActive(false);
         //if the npc is cured the button unables and the image of the button is the correct potion
         if (village.isCured == true)
@@ -87,6 +108,8 @@ public class VillageDisplay : MonoBehaviour
 
     public void CheckPotion()
     {
+        Debug.Log("CheckPotion() / Village Display");
+
         //if the potion is the one that cures the village's disease,
 
         if (PotionManager.Instance.GetPotion() == PotionManager.Instance.GetHealthPotionFromDisease(village.disease))
@@ -98,6 +121,7 @@ public class VillageDisplay : MonoBehaviour
             village.isCured = true;
             npcAnimator.SetBool("isCured", true);
             Debug.Log($"CONGRAT'S YOU HAVE GIVE {village.name} THE CORRECT POTION");
+            givePotionButton.gameObject.SetActive(false);
 
         }
         else
@@ -111,6 +135,7 @@ public class VillageDisplay : MonoBehaviour
     }
     public void ChooseThePotionToGive(Recollectable itemSO) //pensar a posar sa lògica de restar-n'hi un si té més d'una poción!!
     {
+        Debug.Log($"ChooseThePotionToGive({itemSO}) / Village Display");
         Recollectable recollectableOfThisButton = itemSO;
         //if the player has not selected a potion from the inventory, will add the
         //item that the button represents to the field potion in the village display and hide the inventoy
@@ -119,7 +144,7 @@ public class VillageDisplay : MonoBehaviour
             PotionManager.Instance.SetPotion(itemSO); //mirar si basta es temps en què transcorre
             RefreshPotionField(recollectableOfThisButton);
             givePotionButton.gameObject.SetActive(true);
-            GameManager.Instance.ToggleInventoryButton();
+            UI_Inventory.Instance.ToggleInventoryButton();
             hasSelectedAPotion = true;
         }
     }

@@ -16,7 +16,7 @@ public class MainGameUIManager : MonoBehaviour
     void Start()
     {
         //set the function of the game manager via code bc the game manager navegate btwn the scenes
-        inventoryButton.onClick.AddListener(()=> GameManager.Instance.ToggleInventoryButton());
+        inventoryButton.onClick.AddListener(()=> UI_Inventory.Instance.ToggleInventoryButton());
 
         //en teoria no he de posar cap cortafuegos de si és null o si és a sa escena que toca pq
         //sempre hi haurà un panelBackground per mor de que viatge entre escenes, asi que provam
@@ -36,7 +36,7 @@ public class MainGameUIManager : MonoBehaviour
         }
         if ((panelBackground.activeInHierarchy == true) && (player.GetPlayerPos() != playerPosition))
         {
-            GameManager.Instance.ToggleInventoryButton();
+            UI_Inventory.Instance.ToggleInventoryButton();
             hasThePlayerPos = false; //reset the value
             Debug.Log("the inventory is toggled");
         }

@@ -19,7 +19,7 @@ public class RecollectableField : MonoBehaviour
 
     private void ShowInventoryAndUnableButton(Button potionFieldButton)
     {
-        GameManager.Instance.ToggleInventoryButton();
+        UI_Inventory.Instance.ToggleInventoryButton();
         potionFieldButton.interactable = false;
     }
 

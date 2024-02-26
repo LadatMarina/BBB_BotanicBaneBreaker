@@ -29,6 +29,9 @@ public class GameManager : MonoBehaviour
 
     private Vector2 lastPlayerPosition;
 
+    //inventory
+    public Inventory inventory;
+
     private void Awake()
     {
         // If there is an instance, and it's not me, delete myself.
@@ -42,8 +45,8 @@ public class GameManager : MonoBehaviour
             Instance = this;
             DontDestroyOnLoad(gameObject);
         }
-
     }
+
     public void DisplayInventoryItemList(List<Item> itemList)
     {
         foreach (Item item in itemList)
@@ -64,20 +67,14 @@ public class GameManager : MonoBehaviour
 
         Debug.Log(this.village);
 
+        //quant se fa load a una de ses escenes, vull que s'inventario de
+
     }
 
     public void LoadKitchen()
     {
         SceneManager.LoadScene((int)SceneIndex.Kitchen);
 
-    }
-
-        private void Update()
-    {
-        if(Input.GetKeyDown(KeyCode.Y))
-        {
-            LoadHouseScene(village);
-        }
     }
 
     // VULL QUE FUNCIONI AIXÍ, PERÒ DE MENTRES FUNCIONARÀ NOMÉS AMB UN INT
@@ -90,29 +87,11 @@ public class GameManager : MonoBehaviour
         SceneManager.LoadScene(index);
     }
 
-    public void ToggleInventoryButton()
-    {
-        //PLAY AN SFX WHEN RECOLLECT
-        SoundManager.Instance.PlaySFX(SoundManager.Instance.sound3);
 
-        if (UI_Inventory.Instance.panelBackground.activeInHierarchy == true) //if it's true, will be closed so we have to destroy all the elements
-        {
-            UI_Inventory.Instance.panelBackground.SetActive(false);
-            UI_Inventory.Instance.HideAllChildren();
-            Debug.Log("all the childrens of the panel background have been destroyed");
-        }
-        else
-        {
-            UI_Inventory.Instance.panelBackground.SetActive(true);
-            UI_Inventory.Instance.RefreshItems();
-
-            Debug.Log("the inventory has been refreshed with the item list");
-        }
-    }
 
     private void OnDisable()
     {
-        //pensar a que quant acabi es joc per entregar, he de borrar s'on disable, o almanco l'he de comentar per posar que és només per quant editi es joc 
+        //pensar a que quant acabi es joc per entregar, he de borrar s'on disable, o almanco l'he de comentar per posar que és només per quant editi es joc
         //GameAssets.Instance.paco.isCured = false;
         //GameAssets.Instance.maria.isCured = false;
         //GameAssets.Instance.bel.isCured = false;
@@ -130,5 +109,15 @@ public class GameManager : MonoBehaviour
     {
         return lastPlayerPosition;
     }
+
+    public void InitializeInventory()
+    {
+        //initialize the inventory
+        inventory = new Inventory();
+    }
+
+    public Inventory GetInventory(){ return inventory; }
+
+    public void Remove(Item item) {inventory.RemoveItemFromList(item);}
 
 }

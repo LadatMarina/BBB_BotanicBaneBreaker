@@ -12,10 +12,9 @@ public class Player : MonoBehaviour
 
     private Vector3 defaultStartPosition = new Vector3(-20 , 7 , 0);
 
-    //inventory
-    public Inventory inventory;
 
-    public bool listInitialized = false;
+
+    //public bool listInitialized = false;
 
     public LayerMask collisionableLayer;
 
@@ -24,19 +23,19 @@ public class Player : MonoBehaviour
         _rbPlayer = GetComponent<Rigidbody2D>();
         lastMovement = Vector2.down;
 
-        //initialize the inventory
-        inventory = new Inventory();
-
+        GameManager.Instance.InitializeInventory();
+        
     }
     private void Start()
     {
-        if(inventory != null)
-        {
-            listInitialized = true;
-        }
+        //mirar per a què ho emplei o algo perquè ara ns pq tenc aquesta variable
+        //if (inventory != null)
+        //{
+        //    listInitialized = true;
+        //}
 
         //menwhile the game manager doesn't store a last player position, the player will appear in defaultStartPosition
-        if(GameManager.Instance.GetLastPlayerPos() != Vector3.zero) {
+        if (GameManager.Instance.GetLastPlayerPos() != Vector3.zero) {
 
             Vector3 lastPos = GameManager.Instance.GetLastPlayerPos();
             transform.position = new Vector3(lastPos.x , lastPos.y -1, 0   );
@@ -61,11 +60,6 @@ public class Player : MonoBehaviour
                 isWalking = true;
                 lastMovement = inputVector;
             }
-
-            if (Input.GetKeyUp(KeyCode.J))
-            {
-                GameManager.Instance.DisplayInventoryItemList(inventory.GetItemList());
-            }
         }
     }
     private void LateUpdate()
@@ -78,8 +72,6 @@ public class Player : MonoBehaviour
     {
         return Physics2D.Raycast(transform.position, direction ,3f,collisionableLayer);
     }
-
-
     public bool GetIsWalking()
     {
         return isWalking;
@@ -89,24 +81,9 @@ public class Player : MonoBehaviour
         return lastMovement;
     }
 
-    public Inventory GetInventory()
-    {
-        return inventory;
-    }
-
-    public void Remove(Item item)
-    {
-        inventory.RemoveItemFromList(item);        
-    }
-
     public Vector2 GetPlayerPos()
     {
         return transform.position;
-    }
-
-    public void SetPlayerPot()
-    {
-            
     }
 }
 
