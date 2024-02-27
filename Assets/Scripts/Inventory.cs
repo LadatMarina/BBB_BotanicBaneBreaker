@@ -11,7 +11,7 @@ public class Inventory
     {
         itemList = new List<Item>();
 
-        Debug.Log("the inventory has been initialized");
+        //Debug.Log("the inventory has been initialized");
     }
 
     public void AddItem(Item item)
@@ -24,15 +24,15 @@ public class Inventory
             {
                 inventoryItem.amount = inventoryItem.amount + item.amount;
                 itemInInventory = true;
-                Debug.Log("due to the item was already in the list, we only have increased the sum of the amount");
-                Debug.Log($"you have added a {inventoryItem.itemSO.name} / {item.itemSO.name} to the inventory with amount {inventoryItem.amount}");
+                //Debug.Log("due to the item was already in the list, we only have increased the sum of the amount");
+                //Debug.Log($"you have added a {inventoryItem.itemSO.name} / {item.itemSO.name} to the inventory with amount {inventoryItem.amount}");
             }
             
         }
         if(!itemInInventory)
         {
             itemList.Add(item);
-            Debug.Log("the item was not in the list. we have added the item to the list");
+            //Debug.Log("the item was not in the list. we have added the item to the list");
             //Debug.Log($"you have added a {item} to the inventory with amount {item.amount}");
         }
     }
@@ -51,7 +51,7 @@ public class Inventory
                 if (item == itemToRemove)
                 {
                     itemList.Remove(itemToRemove);
-                    Debug.Log($"the item {itemToRemove} has been deleted of the list");
+                    //Debug.Log($"the item {itemToRemove} has been deleted of the list");
                     //ara me dona error, però si jo pos aquí un brake, quan ho hagui trobat sortirà
                     //des loop, no m'hauria de donar problemes en teoria
                     break;

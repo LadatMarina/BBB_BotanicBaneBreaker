@@ -22,8 +22,45 @@ public class GameAssets : MonoBehaviour
             Instance = this;
             DontDestroyOnLoad(gameObject);
         }
-
     }
 
+    public Recollectable GetRecollectableFromString(string recollectableName)
+    {
+        switch (recollectableName)
+        {
+            case "apple":
+                return apple;
+            case "bean":
+                return bean;
+            case "bluberry":
+                return bluberry;
+            case "strawberry":
+                return strawberry;
+            case "attackPotion1":
+                return attackPotion1;
+            case "healthPotion1":
+                return healthPotion1;
+            case "healthPotion2":
+                return healthPotion2;
+        }
+        return null;
+    }
+
+    //******molt important; revisar que tots es noms dels villagers comencin en majúscula, perquè si no són iguals mos donarà null
+    public Village GetVillageFromString(string villagerName)
+    {
+        switch (villagerName)
+        {
+            case "Paco":
+                return paco;
+            case "Maria":
+                return maria;
+            case "Bel":
+                return bel;
+            case "Toni":
+                return toni;
+        }
+        return null;
+    }
 
 }

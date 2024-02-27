@@ -63,9 +63,7 @@ public class UI_Inventory : MonoBehaviour
         {
             if (villageDisplay == null)
             {
-                Debug.Log("village display eRA NULL!!!!");
                 villageDisplay = FindObjectOfType<VillageDisplay>();
-                Debug.Log("village dislpay ja no és null");
             }
         }
         //Debug.Log("the recollectableSavedForUsing is not longer null");
@@ -112,7 +110,7 @@ public class UI_Inventory : MonoBehaviour
 
                         RefreshButton(itemList[i], potionButton);
 
-                        Debug.Log("the potion has been showed");
+                        //Debug.Log("the potion has been showed");
                     }
                     else
                     {
@@ -212,14 +210,13 @@ public class UI_Inventory : MonoBehaviour
         {
             panelBackground.SetActive(false);
             HideAllChildren();
-            Debug.Log("all the childrens of the panel background have been destroyed");
+            //Debug.Log("all the childrens of the panel background have been destroyed");
         }
         else
         {
             panelBackground.SetActive(true);
             RefreshItems();
-
-            Debug.Log("the inventory has been refreshed with the item list");
+            //Debug.Log("the inventory has been refreshed with the item list");
         }
     }
 

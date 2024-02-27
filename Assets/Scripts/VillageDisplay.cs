@@ -45,7 +45,7 @@ public class VillageDisplay : MonoBehaviour
     {
         Debug.Log("SetVillage() / VillageDisplay");
 
-        village = GameManager.Instance.village;
+        village = DataPersistanceManager.Instance.LoadVillage();
         
         nameText.text = village.name;
         diseaseText.text = $"{village.disease}";
@@ -149,8 +149,8 @@ public class VillageDisplay : MonoBehaviour
         }
     }
 
-    public void LoadScene(int index)
+    public void BackButton()
     {
-        GameManager.Instance.LoadScene(index);
+        Loader.Load(SceneIndex.GamePlay);
     }
 }

@@ -69,6 +69,6 @@ public class IngredientsSpawner : MonoBehaviour
             CreateNewItem(recollectableToSpawn, arrayOfPositions[i], 1);
             i++;
         }
-        Debug.Log($"all the {recollectableToSpawn.name} has been spawned");
+        //Debug.Log($"all the {recollectableToSpawn.name} has been spawned");
     }
 }

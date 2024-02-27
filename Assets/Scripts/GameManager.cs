@@ -11,9 +11,10 @@ public enum SceneIndex //en teoria posar aquests valors o no és lo mateix.
 {
     MainMenu = 0,
     GamePlay = 1,
-    Witch = 4,
+    Witch = 5,
     House = 2,
     Kitchen = 3,
+    LoadingScene = 4,
 }
 public class GameManager : MonoBehaviour
 {
@@ -60,48 +61,48 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public void LoadHouseScene(Village village)
-    {
-        this.village = village;
+# region LOAD THINGS TO DELETE WHEN JSON IS DONE
+    //public void LoadHouseScene(Village village)
+    //{
+    //    this.village = village;
 
-        savedItemList = inventory.itemList;
+    //    savedItemList = inventory.itemList;
 
-        LoadScene((int)SceneIndex.House);
+    //    LoadScene((int)SceneIndex.House);
+    //}
 
+    //public void LoadKitchen()
+    //{
+    //    SceneManager.LoadScene((int)SceneIndex.Kitchen);
 
-    }
+    //}
 
-    public void LoadKitchen()
-    {
-        SceneManager.LoadScene((int)SceneIndex.Kitchen);
+    //// VULL QUE FUNCIONI AIXÍ, PERÒ DE MENTRES FUNCIONARÀ NOMÉS AMB UN INT
+    ///*public void LoadScene(SceneIndex index)
+    //{
+    //    SceneManager.LoadScene((int)index);
+    //}*/
+    //public void LoadScene(int index)
+    //{
+    //    Debug.Log("LoadScene() / GameManager");
+    //    if(SceneManager.GetActiveScene().buildIndex != (int)SceneIndex.MainMenu)
+    //    {
+    //        if (savedItemList != null)
+    //        {
+    //            RefreshItemList(savedItemList);
 
-    }
-
-    // VULL QUE FUNCIONI AIXÍ, PERÒ DE MENTRES FUNCIONARÀ NOMÉS AMB UN INT
-    /*public void LoadScene(SceneIndex index)
-    {
-        SceneManager.LoadScene((int)index);
-    }*/
-    public void LoadScene(int index)
-    {
-        Debug.Log("LoadScene() / GameManager");
-        if(SceneManager.GetActiveScene().buildIndex != (int)SceneIndex.MainMenu)
-        {
-            if (savedItemList != null)
-            {
-                RefreshItemList(savedItemList);
-
-            }
-            else
-            {
-                Debug.Log("the saved item list is null");
-            }
+    //        }
+    //        else
+    //        {
+    //            Debug.Log("the saved item list is null");
+    //        }
             
-        }
+    //    }
 
-        SceneManager.LoadScene(index);
-    }
+    //    SceneManager.LoadScene(index);
+    //}
 
+    #endregion
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.N))
@@ -112,6 +113,11 @@ public class GameManager : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.G))
         {
             DebugItemList(savedItemList);
+        }
+        
+        if (Input.GetKeyDown(KeyCode.I))
+        {
+            Loader.Load(SceneIndex.MainMenu);
         }
     }
 
@@ -158,12 +164,12 @@ public class GameManager : MonoBehaviour
     {
         inventory.itemList = list;
 
-        Debug.Log("item list passed from GM is:");
-        GameManager.Instance.DebugItemList(list);
+        //Debug.Log("item list passed from GM is:");
+        DebugItemList(list);
 
-        Debug.Log("item list refreshed from inventory is:");
-        GameManager.Instance.DebugItemList(inventory.itemList);
+        //Debug.Log("item list refreshed from inventory is:");
+        DebugItemList(inventory.itemList);
 
-        Debug.Log("item list refreshed / inventory");
+        //Debug.Log("item list refreshed / inventory");
     }
 }

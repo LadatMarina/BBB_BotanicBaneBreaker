@@ -27,22 +27,26 @@ public class PlayerInteractions : MonoBehaviour
             case "house_1":
                 //save the position of the player
                 GameManager.Instance.SetLastPLayerPos(player.GetPlayerPos());
-                GameManager.Instance.LoadHouseScene(GameAssets.Instance.paco);
+                DataPersistanceManager.Instance.SaveVillage(GameAssets.Instance.paco);
+                Loader.Load(SceneIndex.House);
                 
                 break;
             case "house_2":
                 GameManager.Instance.SetLastPLayerPos(player.GetPlayerPos());
-                GameManager.Instance.LoadHouseScene(GameAssets.Instance.maria);
+                DataPersistanceManager.Instance.SaveVillage(GameAssets.Instance.maria);
+                Loader.Load(SceneIndex.House);
                 break;
 
             case "house_3":
                 GameManager.Instance.SetLastPLayerPos(player.GetPlayerPos());
-                GameManager.Instance.LoadHouseScene(GameAssets.Instance.bel);
+                DataPersistanceManager.Instance.SaveVillage(GameAssets.Instance.bel);
+                Loader.Load(SceneIndex.House);
                 break;
             
             case "house_4":
                 GameManager.Instance.SetLastPLayerPos(player.GetPlayerPos());
-                GameManager.Instance.LoadHouseScene(GameAssets.Instance.toni);
+                DataPersistanceManager.Instance.SaveVillage(GameAssets.Instance.toni);
+                Loader.Load(SceneIndex.House); ;
                 break;
 
             case "recollectable":
@@ -61,7 +65,7 @@ public class PlayerInteractions : MonoBehaviour
                 break;
             case "kitchen":
                 GameManager.Instance.SetLastPLayerPos(player.GetPlayerPos());
-                GameManager.Instance.LoadKitchen();
+                //GameManager.Instance.LoadKitchen();
                 break;
         }
     }

@@ -20,4 +20,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/KitchenScene.unity
     guid: 8ff6b624df9068345a7b3bfcb1d54254
+  - enabled: 1
+    path: Assets/Scenes/LoadingScene.unity
+    guid: 889da428d5aa8f84cbe939f268f89507
   m_configObjects: {}
