@@ -11,6 +11,10 @@ public class DataPersistanceManager : MonoBehaviour
     public bool inventoryUploaded = false;
 
     public List<JsonItem> jsonItemList;
+    //public List<string> stringList;
+    public List<Item> localItemList;
+
+    public SaveObject saveObject;
 
     public class JsonItem
     {
@@ -23,6 +27,7 @@ public class DataPersistanceManager : MonoBehaviour
     public class SaveObject
     {
         public List<JsonItem> saveItemList;
+        //public List<string> stringList;
         public string villager;
     }
 
@@ -39,25 +44,67 @@ public class DataPersistanceManager : MonoBehaviour
             Instance = this;
             DontDestroyOnLoad(gameObject);
         }
+        jsonItemList = new List<JsonItem>();
+        localItemList = new List<Item>();
+
+        saveObject = new SaveObject { saveItemList = new List<JsonItem>() };
+
+
+    }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.O))
+        {
+            foreach (JsonItem jsonItem in saveObject.saveItemList)
+            {
+                Debug.Log("object of the saveItemList " + "Item: " + jsonItem.itemSO + ", Amount: " + jsonItem.amount);
+            }
+        }
+
+        if (Input.GetKeyDown(KeyCode.O))
+        {
+            foreach (JsonItem jsonItem in saveObject.saveItemList)
+            {
+                Debug.Log("object of the saveItemList " + "Item: " + jsonItem.itemSO + ", Amount: " + jsonItem.amount);
+            }
+        }
     }
 
     public void SaveInventory(List<Item> listToSave)
     {
         Debug.Log("SaveInventory / DataManager");
 
-        jsonItemList = new List<JsonItem>();
-        List<Item> itemList = listToSave;
-        foreach (Item item in itemList)
-        {
-            JsonItem jsonItem =  new JsonItem { itemSO = item.itemSO.name, amount = item.amount};
 
-            jsonItemList.Add(jsonItem);
-        }
-        foreach (var item in jsonItemList)
+        //jsonItemList.Clear(); //reset the list before saving
+        //stringList.Clear(); //reset the list before saving
+        int i = 0;
+
+        foreach (Item item in listToSave)
         {
-            Debug.Log("Item: " + item.itemSO + ", Amount: " + item.amount);
+            JsonItem jsonItem = new JsonItem { itemSO = item.itemSO.name, amount = item.amount };
+
+            saveObject.saveItemList.Add(jsonItem);
+            //Debug.Log(jsonItemList[i].itemSO);
+            i++;
         }
-        SaveObject saveObject = new SaveObject { saveItemList = jsonItemList };
+
+
+        //foreach (Item item in listToSave)
+        //{
+            
+        //    //stringList.Add(item.itemSO.name);
+        //    //Debug.Log(jsonItemList[i].itemSO);
+        //    //i++;
+        //}
+
+
+
+        //SaveObject saveObject = new SaveObject { stringList = stringList };
+        //foreach (JsonItem jsonItem in saveObject.saveItemList)
+        //{
+        //    Debug.Log("object of the saveObject.saveItemList " + "Item: " + jsonItem.itemSO + ", Amount: " + jsonItem.amount);
+        //}
 
         string savedObjectJson = JsonUtility.ToJson(saveObject);
 
@@ -74,25 +121,53 @@ public class DataPersistanceManager : MonoBehaviour
 
     public List<Item> LoadInventory()
     {
+        Debug.Log("LoadInventory() / DataManager");
         //we make a new inventory for create a new list with all loaded elements
         Inventory loadedInventory = new Inventory();
 
-        Debug.Log("LoadInventory() / DataManager");
-        if (File.Exists(Application.dataPath + DATA_FILE_PATH))
+        string filePath = Application.persistentDataPath + DATA_FILE_PATH;
+
+        if (File.Exists(filePath))
         {
-            string savedObjectString = File.ReadAllText(Application.dataPath + DATA_FILE_PATH);
+            string savedObjectString = File.ReadAllText(filePath);
 
             SaveObject saveObject = JsonUtility.FromJson<SaveObject>(savedObjectString);
+            //stringList.Clear(); //delete all the components in the list
 
-            foreach(JsonItem jsonItem in saveObject.saveItemList)
+            //if (saveObject.stringList != null)
+            //{
+            //    foreach (string stringItem in saveObject.stringList)
+            //    {
+            //        Item newItem = new Item
+            //        {
+            //            itemSO = GameAssets.Instance.GetRecollectableFromString(stringItem),
+            //            amount = 1
+            //        };
+
+            //        localItemList.Add(newItem); //re feim sa llista a partir de es items que aconsegueix fent sa conversió de string a recollectables
+            //    }
+            //}
+            //else
+            //{
+            //    Debug.Log("save object. saveItemList == null");
+            //}
+
+            if (saveObject.saveItemList != null)
             {
-                Item newItem = new Item
+                foreach (JsonItem jsonItem in saveObject.saveItemList)
                 {
-                    itemSO = GameAssets.Instance.GetRecollectableFromString(jsonItem.itemSO),
-                    amount = jsonItem.amount
-                };
+                    Item newItem = new Item
+                    {
+                        itemSO = GameAssets.Instance.GetRecollectableFromString(jsonItem.itemSO),
+                        amount = jsonItem.amount
+                    };
 
-                loadedInventory.AddItem(newItem);
+                    loadedInventory.GetItemList().Add(newItem);
+                }
+            }
+            else
+            {
+                Debug.Log("save object. saveItemList == null");
             }
         }
         else
@@ -101,12 +176,14 @@ public class DataPersistanceManager : MonoBehaviour
             Debug.LogError("No save file");
         }
 
-        foreach(Item item in loadedInventory.itemList)
-        {
-            Debug.Log(item.itemSO.name + " " + item.amount);
-        }
+        //foreach(Item item in loadedInventory.itemList)
+        //{
+        //    Debug.Log(item.itemSO.name + " " + item.amount);
+        //}
         //inventoryUploaded = true; // this bool is for when the inventory is saved to the json file, per quant jo hagui d'accedir des de s'UI invntory, perquè així sàpiga si puc fer load, si nohi ha
-        return loadedInventory.GetItemList();
+        
+        return localItemList;
+
     }
 
     public void RemoveOneItem(Item itemToRemove)
@@ -130,36 +207,37 @@ public class DataPersistanceManager : MonoBehaviour
 
     public void SaveVillage(Village village)
     {
-        SaveObject saveObject = new SaveObject { villager = village.name };
-        string savedObjectJson = JsonUtility.ToJson(saveObject);
+        //SaveObject saveObject = new SaveObject { villager = village.name };
+        //string savedObjectJson = JsonUtility.ToJson(saveObject);
 
-        string filePath = Application.persistentDataPath + DATA_FILE_PATH;
+        //string filePath = Application.persistentDataPath + DATA_FILE_PATH;
 
         // Escribe la cadena JSON en el archivo
-        File.WriteAllText(filePath, savedObjectJson);
+        //File.WriteAllText(filePath, savedObjectJson);
 
-        Debug.Log("the villager saved is " + saveObject.villager);
+        //Debug.Log("the villager saved is " + saveObject.villager);
 
-        Debug.Log("villager saved to: " + filePath);
+        //Debug.Log("villager saved to: " + filePath);
     }
 
     public Village LoadVillage()
     {
-        string filePath = Application.persistentDataPath + DATA_FILE_PATH;
+        //string filePath = Application.persistentDataPath + DATA_FILE_PATH;
 
-        if (!File.Exists(filePath))
-        {
-            Debug.LogWarning("Save file not found at: " + filePath);
-            return null;
-        }
+        //if (!File.Exists(filePath))
+        //{
+        //    Debug.LogWarning("Save file not found at: " + filePath);
+        //    return null;
+        //}
 
-        string savedObjectString = File.ReadAllText(filePath);
+        //string savedObjectString = File.ReadAllText(filePath);
 
-        SaveObject saveObject = JsonUtility.FromJson<SaveObject>(savedObjectString);
+        //SaveObject saveObject = JsonUtility.FromJson<SaveObject>(savedObjectString);
 
-        Debug.Log(GameAssets.Instance.GetVillageFromString(saveObject.villager));
+        //Debug.Log(GameAssets.Instance.GetVillageFromString(saveObject.villager));
 
-        return GameAssets.Instance.GetVillageFromString(saveObject.villager);
+        //return GameAssets.Instance.GetVillageFromString(saveObject.villager);
+        return null;
     }
 
 }

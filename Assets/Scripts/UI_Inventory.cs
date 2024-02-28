@@ -95,7 +95,14 @@ public class UI_Inventory : MonoBehaviour
     {
         //1st acces to the saved inventory
         itemList = DataPersistanceManager.Instance.LoadInventory();
+        //itemList = DataPersistanceManager.Instance.LoadInventory();
         int sceneBuildIndex = SceneManager.GetActiveScene().buildIndex;
+        int a = 0;
+        foreach(Item item in itemList)
+        {
+            Debug.Log(itemList[a].itemSO.name);
+                a++;
+        }
         for (int i = 0; i < itemList.Count; i++)
         {
             switch (sceneBuildIndex)
