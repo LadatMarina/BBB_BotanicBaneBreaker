@@ -18,7 +18,7 @@ public enum SceneIndex //en teoria posar aquests valors o no és lo mateix.
 }
 public class GameManager : MonoBehaviour
 {
-    public Village village;
+    //public Village village;
     public bool hasLoaded;
 
     public bool isPaused = false;
@@ -31,10 +31,10 @@ public class GameManager : MonoBehaviour
 
     private Vector2 lastPlayerPosition;
 
-    private List<Item> savedItemList;
+    //private List<Item> savedItemList;
 
     //inventory
-    public Inventory inventory;
+    //public Inventory inventory;
 
     private void Awake()
     {
@@ -53,13 +53,13 @@ public class GameManager : MonoBehaviour
         //savedItemList = new List<Item>();
     }
 
-    public void DisplayInventoryItemList(List<Item> itemList)
-    {
-        foreach (Item item in itemList)
-        {
-            Debug.Log(itemList.IndexOf(item) + " " + item.itemSO.name + " amount " + item.amount);
-        }
-    }
+    //public void DisplayInventoryItemList(List<Item> itemList)
+    //{
+    //    foreach (Item item in itemList)
+    //    {
+    //        Debug.Log(itemList.IndexOf(item) + " " + item.itemSO.name + " amount " + item.amount);
+    //    }
+    //}
 
 # region LOAD THINGS TO DELETE WHEN JSON IS DONE
     //public void LoadHouseScene(Village village)
@@ -105,15 +105,15 @@ public class GameManager : MonoBehaviour
     #endregion
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.N))
-        {
-            DebugItemList(inventory.itemList);
-        }
+        //if (Input.GetKeyDown(KeyCode.N))
+        //{
+        //    DebugItemList(inventory.itemList);
+        //}
         
-        if (Input.GetKeyDown(KeyCode.G))
-        {
-            DebugItemList(savedItemList);
-        }
+        //if (Input.GetKeyDown(KeyCode.G))
+        //{
+        //    DebugItemList(savedItemList);
+        //}
         
         if (Input.GetKeyDown(KeyCode.I))
         {
@@ -142,34 +142,26 @@ public class GameManager : MonoBehaviour
         return lastPlayerPosition;
     }
 
-    public void InitializeInventory()
-    {
-        //initialize the inventory
-        inventory = new Inventory();
-    }
 
-    public Inventory GetInventory(){ return inventory; }
 
-    public void Remove(Item item) {inventory.RemoveItemFromList(item);}
+//    public void DebugItemList(List<Item> list)
+//    {
+//        foreach (Item item in list)
+//        {
+//            Debug.Log(item.itemSO.name);
+//        }
+//    }
 
-    public void DebugItemList(List<Item> list)
-    {
-        foreach (Item item in list)
-        {
-            Debug.Log(item.itemSO.name);
-        }
-    }
+//    public void RefreshItemList(List<Item> list)
+//    {
+//        inventory.itemList = list;
 
-    public void RefreshItemList(List<Item> list)
-    {
-        inventory.itemList = list;
+//        //Debug.Log("item list passed from GM is:");
+//        DebugItemList(list);
 
-        //Debug.Log("item list passed from GM is:");
-        DebugItemList(list);
+//        //Debug.Log("item list refreshed from inventory is:");
+//        DebugItemList(inventory.itemList);
 
-        //Debug.Log("item list refreshed from inventory is:");
-        DebugItemList(inventory.itemList);
-
-        //Debug.Log("item list refreshed / inventory");
-    }
+//        //Debug.Log("item list refreshed / inventory");
+//    }
 }

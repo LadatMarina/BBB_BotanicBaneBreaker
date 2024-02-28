@@ -15,7 +15,7 @@ public class PlayerInteractions : MonoBehaviour
     void Awake()
     {
         player = FindObjectOfType<Player>();
-        inventory = GameManager.Instance.GetInventory();
+        inventory = player.GetInventory();
         gameInput = FindObjectOfType<GameInput>();  
     }
 
@@ -55,7 +55,7 @@ public class PlayerInteractions : MonoBehaviour
                 if (other != null) //&& (Input.GetKeyDown(KeyCode.X)))
                 {
                     SoundManager.Instance.PlaySFX(SoundManager.Instance.sound4); //PLAY AN SFX WHEN RECOLLECT
-                    GameManager.Instance.inventory.AddItem(otherItem);
+                    player.GetInventory().AddItem(otherItem);
                     Destroy(other.gameObject);
                 }
                 else

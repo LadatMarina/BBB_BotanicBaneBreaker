@@ -60,16 +60,5 @@ public class Inventory
         }
     }
 
-    //public void RefreshItemList(List<Item> list)
-    //{
-    //    itemList = list;
 
-    //    Debug.Log("item list passed from GM is:");
-    //    GameManager.Instance.DebugItemList(list);
-
-    //    Debug.Log("item list refreshed from inventory is:");
-    //    GameManager.Instance.DebugItemList(itemList);
-
-    //    Debug.Log("item list refreshed / inventory");
-    //}
 }

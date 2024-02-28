@@ -8,6 +8,8 @@ public class DataPersistanceManager : MonoBehaviour
     public static DataPersistanceManager Instance;
     private const string DATA_FILE_PATH = "/data.json";
 
+    public bool inventoryUploaded = false;
+
     public List<JsonItem> jsonItemList;
 
     public class JsonItem
@@ -38,42 +40,23 @@ public class DataPersistanceManager : MonoBehaviour
             DontDestroyOnLoad(gameObject);
         }
     }
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
 
-    // Update is called once per frame
-    void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.H))
-        {
-            SaveInventory();
-        }
-        
-        if (Input.GetKeyDown(KeyCode.R))
-        {
-            LoadInventory();
-        }
-    }
-
-    public void SaveInventory()
+    public void SaveInventory(List<Item> listToSave)
     {
         Debug.Log("SaveInventory / DataManager");
 
         jsonItemList = new List<JsonItem>();
-        List<Item> itemList =  GameManager.Instance.inventory.itemList;
+        List<Item> itemList = listToSave;
         foreach (Item item in itemList)
         {
             JsonItem jsonItem =  new JsonItem { itemSO = item.itemSO.name, amount = item.amount};
 
             jsonItemList.Add(jsonItem);
         }
-        //foreach (var item in jsonItemList)
-        //{
-        //    Debug.Log("Item: " + item.itemSO + ", Amount: " + item.amount);
-        //}
+        foreach (var item in jsonItemList)
+        {
+            Debug.Log("Item: " + item.itemSO + ", Amount: " + item.amount);
+        }
         SaveObject saveObject = new SaveObject { saveItemList = jsonItemList };
 
         string savedObjectJson = JsonUtility.ToJson(saveObject);
@@ -89,8 +72,11 @@ public class DataPersistanceManager : MonoBehaviour
         //Debug.Log(savedObjectJson);
     }
 
-    public void LoadInventory()
+    public List<Item> LoadInventory()
     {
+        //we make a new inventory for create a new list with all loaded elements
+        Inventory loadedInventory = new Inventory();
+
         Debug.Log("LoadInventory() / DataManager");
         if (File.Exists(Application.dataPath + DATA_FILE_PATH))
         {
@@ -106,7 +92,7 @@ public class DataPersistanceManager : MonoBehaviour
                     amount = jsonItem.amount
                 };
 
-                GameManager.Instance.inventory.AddItem(newItem);
+                loadedInventory.AddItem(newItem);
             }
         }
         else
@@ -115,9 +101,30 @@ public class DataPersistanceManager : MonoBehaviour
             Debug.LogError("No save file");
         }
 
-        foreach(Item item in GameManager.Instance.inventory.itemList)
+        foreach(Item item in loadedInventory.itemList)
         {
             Debug.Log(item.itemSO.name + " " + item.amount);
+        }
+        //inventoryUploaded = true; // this bool is for when the inventory is saved to the json file, per quant jo hagui d'accedir des de s'UI invntory, perquè així sàpiga si puc fer load, si nohi ha
+        return loadedInventory.GetItemList();
+    }
+
+    public void RemoveOneItem(Item itemToRemove)
+    {
+        List<Item> list = LoadInventory();
+        foreach(Item item in list)
+        {
+            if(item == itemToRemove)
+            {
+                if(item.amount != 1)
+                {
+                    item.amount--;
+                }
+                else
+                {
+                    list.Remove(itemToRemove); //en teoria és lo mateix posar aquí itemToRemove que item tot sol asi que nice
+                }
+            }
         }
     }
 

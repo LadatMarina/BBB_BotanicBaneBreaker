@@ -51,7 +51,7 @@ public class UI_Inventory : MonoBehaviour
 
         player = FindAnyObjectByType<Player>();
 
-        inventory = GameManager.Instance.GetInventory();
+        inventory = player.GetInventory();
         ingredientSpawner = FindAnyObjectByType<IngredientsSpawner>();
 
         HideAllChildren();
@@ -93,7 +93,8 @@ public class UI_Inventory : MonoBehaviour
 
     public void RefreshItems()
     {
-        itemList = GameManager.Instance.GetInventory().GetItemList();
+        //1st acces to the saved inventory
+        itemList = DataPersistanceManager.Instance.LoadInventory();
         int sceneBuildIndex = SceneManager.GetActiveScene().buildIndex;
         for (int i = 0; i < itemList.Count; i++)
         {
@@ -153,7 +154,7 @@ public class UI_Inventory : MonoBehaviour
         switch (buildIndex)
         {
             case (int)SceneIndex.House:
-                buttonComponent.onClick.AddListener(() => villageDisplay.ChooseThePotionToGive(item.itemSO));
+                buttonComponent.onClick.AddListener(() => villageDisplay.ChooseThePotionToGive(item));
                 //buttonComponent.onClick.AddListener(()=> villageDisplay.ProvasionDelete(5));
                 break;
             case (int)SceneIndex.GamePlay:
@@ -179,7 +180,7 @@ public class UI_Inventory : MonoBehaviour
                 newItem.GetComponent<Rigidbody2D>().AddForce(dropDirection, ForceMode2D.Impulse);
 
                 // Remove the item from the list
-                GameManager.Instance.Remove(item);
+                player.GetInventory().GetItemList().Remove(item); //remove directly from the player bc only can drop an item if the player is in the scene
 
                 // Refresh the UI inventory by hiding the button where the element was
                 recollectableButton.gameObject.SetActive(false);
@@ -197,6 +198,8 @@ public class UI_Inventory : MonoBehaviour
                 }
             }
         }
+        //after a change is made, the inventory is saved to the Json file
+        DataPersistanceManager.Instance.SaveInventory(player.GetInventory().GetItemList());
     }
 
     public void ToggleInventoryButton()
@@ -218,6 +221,10 @@ public class UI_Inventory : MonoBehaviour
             RefreshItems();
             //Debug.Log("the inventory has been refreshed with the item list");
         }
+    }
+    public void HideInventory()
+    {
+        panelBackground.SetActive(false);
     }
 
 }

@@ -12,7 +12,7 @@ public class Player : MonoBehaviour
 
     private Vector3 defaultStartPosition = new Vector3(-20 , 7 , 0);
 
-
+    private Inventory inventory;
 
     //public bool listInitialized = false;
 
@@ -23,7 +23,7 @@ public class Player : MonoBehaviour
         _rbPlayer = GetComponent<Rigidbody2D>();
         lastMovement = Vector2.down;
 
-        GameManager.Instance.InitializeInventory();
+        InitializeInventory();
         
     }
     private void Start()
@@ -68,22 +68,16 @@ public class Player : MonoBehaviour
         if (isWalking == false) {_rbPlayer.velocity = Vector2.zero; }
     }
 
-    public bool RecollectableInFrontOf(Vector3 direction)
-    {
-        return Physics2D.Raycast(transform.position, direction ,3f,collisionableLayer);
-    }
-    public bool GetIsWalking()
-    {
-        return isWalking;
-    }
-    public Vector2 GetLastMovement()
-    {
-        return lastMovement;
-    }
+    public bool RecollectableInFrontOf(Vector3 direction) { return Physics2D.Raycast(transform.position, direction, 3f, collisionableLayer); }
+    public bool GetIsWalking() { return isWalking; }
 
-    public Vector2 GetPlayerPos()
-    {
-        return transform.position;
-    }
+    public Vector2 GetLastMovement() { return lastMovement; }
+    public Vector2 GetPlayerPos() { return transform.position; }
+    public void InitializeInventory() { inventory = new Inventory(); }
+
+
+    public Inventory GetInventory() { return inventory; }
+
+    public void Remove(Item item) { inventory.RemoveItemFromList(item); }
 }
 

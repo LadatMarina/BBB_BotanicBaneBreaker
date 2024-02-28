@@ -131,17 +131,20 @@ public class VillageDisplay : MonoBehaviour
             // --> pensar que fer
             Debug.Log($"YOU ALMOST KILL {village.name}!!!");
         }
+        UI_Inventory.Instance.HideInventory();
         PotionManager.Instance.SetPotion(null);
     }
-    public void ChooseThePotionToGive(Recollectable itemSO) //pensar a posar sa lògica de restar-n'hi un si té més d'una poción!!
+    public void ChooseThePotionToGive(Item item) //pensar a posar sa lògica de restar-n'hi un si té més d'una poción!!
     {
-        Debug.Log($"ChooseThePotionToGive({itemSO}) / Village Display");
-        Recollectable recollectableOfThisButton = itemSO;
+        DataPersistanceManager.Instance.RemoveOneItem(item);
+
+        Debug.Log($"ChooseThePotionToGive({item.itemSO}) / Village Display");
+        Recollectable recollectableOfThisButton = item.itemSO;
         //if the player has not selected a potion from the inventory, will add the
         //item that the button represents to the field potion in the village display and hide the inventoy
         if (hasSelectedAPotion == false)
         {
-            PotionManager.Instance.SetPotion(itemSO); //mirar si basta es temps en què transcorre
+            PotionManager.Instance.SetPotion(item.itemSO); //mirar si basta es temps en què transcorre
             RefreshPotionField(recollectableOfThisButton);
             givePotionButton.gameObject.SetActive(true);
             UI_Inventory.Instance.ToggleInventoryButton();
