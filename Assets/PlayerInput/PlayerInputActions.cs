@@ -149,6 +149,34 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": true
                 }
             ]
+        },
+        {
+            ""name"": ""UI_nav"",
+            ""id"": ""1800fbc3-aef1-4ea6-9fa3-06249594c72e"",
+            ""actions"": [
+                {
+                    ""name"": ""OpenInventory"",
+                    ""type"": ""Button"",
+                    ""id"": ""6774b33b-2449-4e9c-aae0-4e4729695c71"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""71179e65-bcd5-4120-961c-e7973722cf04"",
+                    ""path"": ""<Keyboard>/e"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""OpenInventory"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
         }
     ],
     ""controlSchemes"": []
@@ -156,6 +184,9 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         // Player
         m_Player = asset.FindActionMap("Player", throwIfNotFound: true);
         m_Player_Move = m_Player.FindAction("Move", throwIfNotFound: true);
+        // UI_nav
+        m_UI_nav = asset.FindActionMap("UI_nav", throwIfNotFound: true);
+        m_UI_nav_OpenInventory = m_UI_nav.FindAction("OpenInventory", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -259,8 +290,58 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         }
     }
     public PlayerActions @Player => new PlayerActions(this);
+
+    // UI_nav
+    private readonly InputActionMap m_UI_nav;
+    private List<IUI_navActions> m_UI_navActionsCallbackInterfaces = new List<IUI_navActions>();
+    private readonly InputAction m_UI_nav_OpenInventory;
+    public struct UI_navActions
+    {
+        private @PlayerInputActions m_Wrapper;
+        public UI_navActions(@PlayerInputActions wrapper) { m_Wrapper = wrapper; }
+        public InputAction @OpenInventory => m_Wrapper.m_UI_nav_OpenInventory;
+        public InputActionMap Get() { return m_Wrapper.m_UI_nav; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(UI_navActions set) { return set.Get(); }
+        public void AddCallbacks(IUI_navActions instance)
+        {
+            if (instance == null || m_Wrapper.m_UI_navActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_UI_navActionsCallbackInterfaces.Add(instance);
+            @OpenInventory.started += instance.OnOpenInventory;
+            @OpenInventory.performed += instance.OnOpenInventory;
+            @OpenInventory.canceled += instance.OnOpenInventory;
+        }
+
+        private void UnregisterCallbacks(IUI_navActions instance)
+        {
+            @OpenInventory.started -= instance.OnOpenInventory;
+            @OpenInventory.performed -= instance.OnOpenInventory;
+            @OpenInventory.canceled -= instance.OnOpenInventory;
+        }
+
+        public void RemoveCallbacks(IUI_navActions instance)
+        {
+            if (m_Wrapper.m_UI_navActionsCallbackInterfaces.Remove(instance))
+                UnregisterCallbacks(instance);
+        }
+
+        public void SetCallbacks(IUI_navActions instance)
+        {
+            foreach (var item in m_Wrapper.m_UI_navActionsCallbackInterfaces)
+                UnregisterCallbacks(item);
+            m_Wrapper.m_UI_navActionsCallbackInterfaces.Clear();
+            AddCallbacks(instance);
+        }
+    }
+    public UI_navActions @UI_nav => new UI_navActions(this);
     public interface IPlayerActions
     {
         void OnMove(InputAction.CallbackContext context);
+    }
+    public interface IUI_navActions
+    {
+        void OnOpenInventory(InputAction.CallbackContext context);
     }
 }

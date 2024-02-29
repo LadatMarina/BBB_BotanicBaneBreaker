@@ -14,7 +14,7 @@ public class UI_Inventory : MonoBehaviour
     private VillageDisplay villageDisplay;
 
     //asignar per inspector
-    [SerializeField] private GameObject recollectableButtonPrefab;
+    public GameObject recollectableButtonPrefab;
     public GameObject panelBackground;
 
 
@@ -97,12 +97,12 @@ public class UI_Inventory : MonoBehaviour
         itemList = DataPersistanceManager.Instance.LoadInventory();
         //itemList = DataPersistanceManager.Instance.LoadInventory();
         int sceneBuildIndex = SceneManager.GetActiveScene().buildIndex;
-        int a = 0;
-        foreach(Item item in itemList)
-        {
-            Debug.Log(itemList[a].itemSO.name);
-                a++;
-        }
+        //int a = 0;
+        //foreach(Item item in itemList)
+        //{
+        //    Debug.Log(itemList[a].itemSO.name);
+        //        a++;
+        //}
         for (int i = 0; i < itemList.Count; i++)
         {
             switch (sceneBuildIndex)
@@ -206,7 +206,7 @@ public class UI_Inventory : MonoBehaviour
             }
         }
         //after a change is made, the inventory is saved to the Json file
-        //DataPersistanceManager.Instance.SaveInventory(player.GetInventory().GetItemList());
+        DataPersistanceManager.Instance.SaveInventory(player.GetInventory().GetItemList());
     }
 
     public void ToggleInventoryButton()

@@ -7,7 +7,8 @@ using UnityEngine.EventSystems;
 public class MainMenuUiManager : MonoBehaviour
 {
     public GameObject quitCheckerPanel;
-    public GameObject nextButton;
+    public GameObject backButton;
+    public GameObject playButton;
 
     private void Awake()
     {
@@ -24,7 +25,7 @@ public class MainMenuUiManager : MonoBehaviour
         if (!quitCheckerPanel.activeInHierarchy)
         {
             quitCheckerPanel.SetActive(true);
-            EventSystem.current.SetSelectedGameObject(nextButton);
+            EventSystem.current.SetSelectedGameObject(backButton);
         }
         else
         {
@@ -35,5 +36,6 @@ public class MainMenuUiManager : MonoBehaviour
     public void BackButton()
     {
         quitCheckerPanel.SetActive(false);
+        EventSystem.current.SetSelectedGameObject(playButton);
     }
 }

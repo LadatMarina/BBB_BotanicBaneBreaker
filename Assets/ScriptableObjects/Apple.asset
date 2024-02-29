@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2da60bd550eea6849b0c0fb3b7af832c, type: 3}
   m_Name: Apple
   m_EditorClassIdentifier: 
-  name: Apple
+  name: apple
   recollectableType: 0
   sprite: {fileID: -1513162354, guid: 3b37751737c7529449844c9d142c01f8, type: 3}
-  cureOf: 
+  cureOf: 0
   ingredientsForMakeThePotion: []
   potionThatUnlocks: {fileID: 0}
   damage: 0

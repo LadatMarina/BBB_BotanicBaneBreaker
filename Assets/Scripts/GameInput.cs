@@ -12,6 +12,7 @@ public class GameInput : MonoBehaviour
         playerInputActions = new PlayerInputActions();
         //enable the player input actions
         playerInputActions.Player.Enable();
+        playerInputActions.UI_nav.Enable();
     }
     public Vector2 GetInputVectorNormalized()
     {
@@ -22,4 +23,9 @@ public class GameInput : MonoBehaviour
 
         return inputVector;
     }
+//    public bool HasClickedTheInventoryButton()
+//    {
+//        if(playerInputActions.UI_nav.OpenInventory();)
+//        return true;
+//    } 
 }

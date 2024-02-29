@@ -24,7 +24,7 @@ public class GameAssets : MonoBehaviour
         }
     }
 
-    public Recollectable GetRecollectableFromString(string recollectableName) // ah vale
+    public Recollectable GetRecollectableFromString(string recollectableName) 
     {
         switch (recollectableName)
         {
@@ -42,8 +42,10 @@ public class GameAssets : MonoBehaviour
                 return healthPotion1;
             case "healthPotion2":
                 return healthPotion2;
+            default:
+                Debug.Log("the default is being returned");
+                return apple;
         }
-        return null;
     }
 
     //******molt important; revisar que tots es noms dels villagers comencin en majúscula, perquè si no són iguals mos donarà null
@@ -59,8 +61,10 @@ public class GameAssets : MonoBehaviour
                 return bel;
             case "Toni":
                 return toni;
+            default:
+                Debug.Log("the default is being returned");
+                return paco;
         }
-        return null;
     }
 
 }
