@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2da60bd550eea6849b0c0fb3b7af832c, type: 3}
   m_Name: HealthPotion_1
   m_EditorClassIdentifier: 
-  name: HealthPotion_1
+  name: HealthPotion1
   recollectableType: 1
   sprite: {fileID: -1286262626, guid: 08652569bdb28544e8d8707695b3b7d4, type: 3}
   cureOf: 1

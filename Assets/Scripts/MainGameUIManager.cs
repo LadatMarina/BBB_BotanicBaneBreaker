@@ -14,6 +14,8 @@ public class MainGameUIManager : MonoBehaviour
     private bool hasThePlayerPos = false;
     private Player player;
 
+    
+
 
     void Start()
     {
@@ -30,19 +32,19 @@ public class MainGameUIManager : MonoBehaviour
 
     private void Update()
     {
-        //when the player moves, the inventory will close
-        if (panelBackground.activeInHierarchy == true && hasThePlayerPos == false)
-        {
-            playerPosition = player.GetPlayerPos();
-            hasThePlayerPos = true;
+        ////when the player moves, the inventory will close
+        //if (panelBackground.activeInHierarchy == true && hasThePlayerPos == false)
+        //{
+        //    playerPosition = player.GetPlayerPos();
+        //    hasThePlayerPos = true;
 
-        }
-        if ((panelBackground.activeInHierarchy == true) && (player.GetPlayerPos() != playerPosition))
-        {
-            UI_Inventory.Instance.ToggleInventoryButton();
-            hasThePlayerPos = false; //reset the value
-            Debug.Log("the inventory is toggled");
-        }
+        //}
+        //if ((panelBackground.activeInHierarchy == true) && (player.GetPlayerPos() != playerPosition))
+        //{
+        //    //UI_Inventory.Instance.ToggleInventoryButton();
+        //    hasThePlayerPos = false; //reset the value
+        //    Debug.Log("the inventory is toggled");
+        //}
     }
 
 

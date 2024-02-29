@@ -4,7 +4,8 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
-using UnityEngine.Video;
+using UnityEngine.EventSystems;
+
 
 public class UI_Inventory : MonoBehaviour
 {
@@ -17,8 +18,8 @@ public class UI_Inventory : MonoBehaviour
     public GameObject recollectableButtonPrefab;
     public GameObject panelBackground;
 
-
-    //[SerializeField] private TextMeshPro amountText;
+    //asined in the inspector
+    public Button inventoryButton;
 
     private List<Item> itemList;
 
@@ -28,7 +29,6 @@ public class UI_Inventory : MonoBehaviour
     public GameObject popUpPanel;
 
     public IngredientsSpawner ingredientSpawner;
-
 
     public static UI_Inventory Instance { get; private set; }
 
@@ -55,6 +55,8 @@ public class UI_Inventory : MonoBehaviour
         ingredientSpawner = FindAnyObjectByType<IngredientsSpawner>();
 
         HideAllChildren();
+
+        //inventoryButton.onClick.AddListener(() => EventSystem.current.SetSelectedGameObject(FindFirstButtonActive().gameObject));
     }
 
     private void Update()
@@ -65,6 +67,10 @@ public class UI_Inventory : MonoBehaviour
             {
                 villageDisplay = FindObjectOfType<VillageDisplay>();
             }
+        }
+        if (Input.GetKeyDown(KeyCode.B))
+        {
+            ToggleInventoryButton();
         }
         //Debug.Log("the recollectableSavedForUsing is not longer null");
         //villageDisplay.potion = recollectableSavedForUsing;
@@ -96,14 +102,9 @@ public class UI_Inventory : MonoBehaviour
         //HideAllChildren();
         //1st acces to the saved inventory
         itemList = DataPersistanceManager.Instance.LoadInventory();
-        //itemList = DataPersistanceManager.Instance.LoadInventory();
+
         int sceneBuildIndex = SceneManager.GetActiveScene().buildIndex;
-        //int a = 0;
-        //foreach(Item item in itemList)
-        //{
-        //    Debug.Log(itemList[a].itemSO.name);
-        //        a++;
-        //}
+
         for (int i = 0; i < itemList.Count; i++)
         {
             switch (sceneBuildIndex)
@@ -128,8 +129,6 @@ public class UI_Inventory : MonoBehaviour
                     break;
 
                 case (int)SceneIndex.GamePlay:
-                    //Item item = itemList[i];
-
                     Transform recollectableButton = panelBackground.transform.GetChild(i);
 
                     recollectableButton.gameObject.SetActive(true);
@@ -216,6 +215,7 @@ public class UI_Inventory : MonoBehaviour
 
     public void ToggleInventoryButton()
     {
+        Debug.Log("ToggleInvenotry");
         //PLAY AN SFX WHEN RECOLLECT
         SoundManager.Instance.PlaySFX(SoundManager.Instance.sound3);
 
@@ -231,12 +231,26 @@ public class UI_Inventory : MonoBehaviour
         {
             panelBackground.SetActive(true);
             RefreshItems();
+            //EventSystem.current.SetSelectedGameObject(FindFirstButtonActive().gameObject);
+
             //Debug.Log("the inventory has been refreshed with the item list");
         }
     }
     public void HideInventory()
     {
         panelBackground.SetActive(false);
+    }
+
+    private Transform FindFirstButtonActive()
+    {
+        foreach(Transform child in panelBackground.GetComponentInChildren<Transform>())
+        {
+            if (child.gameObject.activeInHierarchy)
+            {
+                return child;
+            }
+        }
+        return inventoryButton.transform;
     }
 
 }

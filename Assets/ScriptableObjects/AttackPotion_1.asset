@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2da60bd550eea6849b0c0fb3b7af832c, type: 3}
   m_Name: AttackPotion_1
   m_EditorClassIdentifier: 
-  name: AttackPotion_1
+  name: AttackPotion1
   recollectableType: 0
   sprite: {fileID: 626381747, guid: 08652569bdb28544e8d8707695b3b7d4, type: 3}
   cureOf: 0

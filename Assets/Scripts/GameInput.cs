@@ -12,7 +12,7 @@ public class GameInput : MonoBehaviour
         playerInputActions = new PlayerInputActions();
         //enable the player input actions
         playerInputActions.Player.Enable();
-        playerInputActions.UI_nav.Enable();
+        //playerInputActions.UI_nav.Enable();
     }
     public Vector2 GetInputVectorNormalized()
     {
