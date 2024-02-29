@@ -68,6 +68,8 @@ public class UI_Inventory : MonoBehaviour
                 villageDisplay = FindObjectOfType<VillageDisplay>();
             }
         }
+
+
         if (Input.GetKeyDown(KeyCode.B))
         {
             ToggleInventoryButton();
@@ -215,6 +217,7 @@ public class UI_Inventory : MonoBehaviour
 
     public void ToggleInventoryButton()
     {
+        GameInput.Instance.TogglePlayerInputActions();
         Debug.Log("ToggleInvenotry");
         //PLAY AN SFX WHEN RECOLLECT
         SoundManager.Instance.PlaySFX(SoundManager.Instance.sound3);
@@ -232,7 +235,6 @@ public class UI_Inventory : MonoBehaviour
             panelBackground.SetActive(true);
             RefreshItems();
             //EventSystem.current.SetSelectedGameObject(FindFirstButtonActive().gameObject);
-
             //Debug.Log("the inventory has been refreshed with the item list");
         }
     }
