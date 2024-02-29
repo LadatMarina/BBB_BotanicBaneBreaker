@@ -10,6 +10,7 @@ public enum RecollectableType //ho posam fora de sa clase pq és usat per tot es 
 }
 
 [CreateAssetMenu(fileName ="New Recolectable",menuName ="Recollectable")]
+[System.Serializable]
 public class Recollectable : ScriptableObject
 {
     //jo voldria fer 3 classes diferents i poder diferenciar ses variables segons es tipo que fos;

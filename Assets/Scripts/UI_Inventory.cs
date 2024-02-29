@@ -206,7 +206,7 @@ public class UI_Inventory : MonoBehaviour
             }
         }
         //after a change is made, the inventory is saved to the Json file
-        DataPersistanceManager.Instance.SaveInventory(player.GetInventory().GetItemList());
+        //DataPersistanceManager.Instance.SaveInventory(player.GetInventory().GetItemList());
     }
 
     public void ToggleInventoryButton()

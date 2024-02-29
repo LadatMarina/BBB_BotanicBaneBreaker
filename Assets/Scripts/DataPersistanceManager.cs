@@ -10,13 +10,15 @@ public class DataPersistanceManager : MonoBehaviour
 
     public bool inventoryUploaded = false;
 
-    public List<JsonItem> jsonItemList;
+    public List<ConvertedItem> convertedItemList;
     //public List<string> stringList;
     public List<Item> localItemList;
 
-    public SaveObject saveObject;
 
-    public class JsonItem
+    Player player;
+
+
+    public class ConvertedItem
     {
         //public Recollectable jsonItemSO;
         public string itemSO;
@@ -26,9 +28,9 @@ public class DataPersistanceManager : MonoBehaviour
 
     public class SaveObject
     {
-        public List<JsonItem> saveItemList;
+        public List<ConvertedItem> saveItemList = new ();
         //public List<string> stringList;
-        public string villager;
+        //public string villager;
     }
 
     private void Awake()
@@ -44,144 +46,110 @@ public class DataPersistanceManager : MonoBehaviour
             Instance = this;
             DontDestroyOnLoad(gameObject);
         }
-        jsonItemList = new List<JsonItem>();
-        localItemList = new List<Item>();
-
-        saveObject = new SaveObject { saveItemList = new List<JsonItem>() };
-
+        //localItemList = new List<Item>();
 
     }
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.O))
-        {
-            foreach (JsonItem jsonItem in saveObject.saveItemList)
-            {
-                Debug.Log("object of the saveItemList " + "Item: " + jsonItem.itemSO + ", Amount: " + jsonItem.amount);
-            }
-        }
 
         if (Input.GetKeyDown(KeyCode.O))
         {
-            foreach (JsonItem jsonItem in saveObject.saveItemList)
+            player = FindObjectOfType<Player>();
+            List<ConvertedItem> list = SaveInventory(player.GetInventory().GetItemList());
+            if (player.GetInventory().GetItemList() != null)
             {
-                Debug.Log("object of the saveItemList " + "Item: " + jsonItem.itemSO + ", Amount: " + jsonItem.amount);
+                Debug.Log("PART 2");
+
+                foreach (ConvertedItem jsonItem in list)
+                {
+                    Debug.Log("object of the saveItemList " + "Item: " + jsonItem.itemSO + ", Amount: " + jsonItem.amount);
+                }
             }
+            
         }
     }
 
-    public void SaveInventory(List<Item> listToSave)
+    public List<ConvertedItem> SaveInventory(List<Item> listToSave)
     {
         Debug.Log("SaveInventory / DataManager");
-
-
-        //jsonItemList.Clear(); //reset the list before saving
-        //stringList.Clear(); //reset the list before saving
         int i = 0;
+        SaveObject saveObejct = new (); //create a new save object to store the inventory 
 
-        foreach (Item item in listToSave)
+        foreach (Item itemToSave in listToSave) //per cada item de sa llista, feim un item amb diferent tipus
         {
-            JsonItem jsonItem = new JsonItem { itemSO = item.itemSO.name, amount = item.amount };
+            ConvertedItem convertedItem = new () { itemSO = itemToSave.itemSO.name, amount = itemToSave.amount };
 
-            saveObject.saveItemList.Add(jsonItem);
-            //Debug.Log(jsonItemList[i].itemSO);
+            saveObejct.saveItemList.Add(convertedItem); //guardam s'item convertit a sa llista dins es save object
+            Debug.Log("item" + i + saveObejct.saveItemList[i]);
             i++;
         }
 
-
-        //foreach (Item item in listToSave)
-        //{
-            
-        //    //stringList.Add(item.itemSO.name);
-        //    //Debug.Log(jsonItemList[i].itemSO);
-        //    //i++;
-        //}
-
-
-
-        //SaveObject saveObject = new SaveObject { stringList = stringList };
-        //foreach (JsonItem jsonItem in saveObject.saveItemList)
-        //{
-        //    Debug.Log("object of the saveObject.saveItemList " + "Item: " + jsonItem.itemSO + ", Amount: " + jsonItem.amount);
-        //}
-
-        string savedObjectJson = JsonUtility.ToJson(saveObject);
+        string savedObjectJson = JsonUtility.ToJson(saveObejct);
 
         // Ruta completa del archivo, se concatena con la ruta del directorio de datos persistente y el nombre del archivo
         string filePath = Application.persistentDataPath + DATA_FILE_PATH;
-        //File.WriteAllText(Application.dataPath + DATA_FILE_PATH, savedObjectJson);
-
+       
         // Escribe la cadena JSON en el archivo
         File.WriteAllText(filePath, savedObjectJson);
 
         Debug.Log("Inventory saved to: " + filePath);
-        //Debug.Log(savedObjectJson);
+
+        //if(saveObejct.saveItemList.Count < 0)
+        //{
+        //    Debug.Log("SVEITEMLIST COUNT 0");
+        //}
+
+        //foreach (ConvertedItem jsonItem in saveObejct.saveItemList)
+        //{
+        //    Debug.Log("object of the saveItemList " + "Item: " + jsonItem.itemSO + ", Amount: " + jsonItem.amount);
+        //}
+
+        //if (saveObejct == null)
+        //{
+        //    Debug.Log("SAVE OBJ NULL!!!!");
+        //}
+        return saveObejct.saveItemList;
     }
 
     public List<Item> LoadInventory()
     {
-        Debug.Log("LoadInventory() / DataManager");
-        //we make a new inventory for create a new list with all loaded elements
-        Inventory loadedInventory = new Inventory();
+        //Debug.Log("LoadInventory() / DataManager");
+        ////we make a new inventory for create a new list with all loaded elements
+        //Inventory loadedInventory = new Inventory();
 
-        string filePath = Application.persistentDataPath + DATA_FILE_PATH;
+        //string filePath = Application.persistentDataPath + DATA_FILE_PATH;
 
-        if (File.Exists(filePath))
-        {
-            string savedObjectString = File.ReadAllText(filePath);
-
-            SaveObject saveObject = JsonUtility.FromJson<SaveObject>(savedObjectString);
-            //stringList.Clear(); //delete all the components in the list
-
-            //if (saveObject.stringList != null)
-            //{
-            //    foreach (string stringItem in saveObject.stringList)
-            //    {
-            //        Item newItem = new Item
-            //        {
-            //            itemSO = GameAssets.Instance.GetRecollectableFromString(stringItem),
-            //            amount = 1
-            //        };
-
-            //        localItemList.Add(newItem); //re feim sa llista a partir de es items que aconsegueix fent sa conversió de string a recollectables
-            //    }
-            //}
-            //else
-            //{
-            //    Debug.Log("save object. saveItemList == null");
-            //}
-
-            if (saveObject.saveItemList != null)
-            {
-                foreach (JsonItem jsonItem in saveObject.saveItemList)
-                {
-                    Item newItem = new Item
-                    {
-                        itemSO = GameAssets.Instance.GetRecollectableFromString(jsonItem.itemSO),
-                        amount = jsonItem.amount
-                    };
-
-                    loadedInventory.GetItemList().Add(newItem);
-                }
-            }
-            else
-            {
-                Debug.Log("save object. saveItemList == null");
-            }
-        }
-        else
-        {
-            // Aquí no tendríamos que caer nunca
-            Debug.LogError("No save file");
-        }
-
-        //foreach(Item item in loadedInventory.itemList)
+        //if (File.Exists(filePath))
         //{
-        //    Debug.Log(item.itemSO.name + " " + item.amount);
+        //    string savedObjectString = File.ReadAllText(filePath);
+
+        //    SaveObject saveObject = JsonUtility.FromJson<SaveObject>(savedObjectString);
+
+        //    if (saveObject.saveItemList != null)
+        //    {
+        //        foreach (JsonItem jsonItem in saveObject.saveItemList)
+        //        {
+        //            Item newItem = new Item
+        //            {
+        //                itemSO = GameAssets.Instance.GetRecollectableFromString(jsonItem.itemSO),
+        //                amount = jsonItem.amount
+        //            };
+
+        //            loadedInventory.GetItemList().Add(newItem);
+        //        }
+        //    }
+        //    else
+        //    {
+        //        Debug.Log("save object. saveItemList == null");
+        //    }
         //}
-        //inventoryUploaded = true; // this bool is for when the inventory is saved to the json file, per quant jo hagui d'accedir des de s'UI invntory, perquè així sàpiga si puc fer load, si nohi ha
-        
+        //else
+        //{
+        //    // Aquí no tendríamos que caer nunca
+        //    Debug.LogError("No save file");
+        //}
+
         return localItemList;
 
     }
@@ -212,7 +180,7 @@ public class DataPersistanceManager : MonoBehaviour
 
         //string filePath = Application.persistentDataPath + DATA_FILE_PATH;
 
-        // Escribe la cadena JSON en el archivo
+        ////Escribe la cadena JSON en el archivo
         //File.WriteAllText(filePath, savedObjectJson);
 
         //Debug.Log("the villager saved is " + saveObject.villager);
@@ -236,8 +204,7 @@ public class DataPersistanceManager : MonoBehaviour
 
         //Debug.Log(GameAssets.Instance.GetVillageFromString(saveObject.villager));
 
-        //return GameAssets.Instance.GetVillageFromString(saveObject.villager);
-        return null;
+        return GameAssets.Instance.paco;
     }
 
 }

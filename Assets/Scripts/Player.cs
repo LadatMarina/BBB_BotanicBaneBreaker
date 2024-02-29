@@ -109,7 +109,7 @@ public class Player : MonoBehaviour
         {
             Debug.Log(itemK.itemSO.name);
         }
-        DataPersistanceManager.Instance.SaveInventory(inventory.GetItemList()); //after adding an object, save the inventory to the json file
+        //DataPersistanceManager.Instance.SaveInventory(inventory.GetItemList()); //after adding an object, save the inventory to the json file
     }
 }
 
