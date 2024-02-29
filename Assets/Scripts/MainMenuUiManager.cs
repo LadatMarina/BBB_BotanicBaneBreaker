@@ -1,10 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements;
+using UnityEngine.EventSystems;
 
 public class MainMenuUiManager : MonoBehaviour
 {
     public GameObject quitCheckerPanel;
+    public GameObject nextButton;
 
     private void Awake()
     {
@@ -18,13 +21,14 @@ public class MainMenuUiManager : MonoBehaviour
 
     public void QuitButton()
     {
-        if (quitCheckerPanel.activeInHierarchy)
+        if (!quitCheckerPanel.activeInHierarchy)
         {
-            Application.Quit();
+            quitCheckerPanel.SetActive(true);
+            EventSystem.current.SetSelectedGameObject(nextButton);
         }
         else
         {
-            quitCheckerPanel.SetActive(true);
+            Application.Quit();
         }
     }
 
