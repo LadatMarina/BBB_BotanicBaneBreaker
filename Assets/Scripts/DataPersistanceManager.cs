@@ -57,7 +57,7 @@ public class DataPersistanceManager : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.L))
         {
-            Debug.Log(GameAssets.Instance.GetRecollectableFromString("paco"));
+            Debug.Log(GameAssets.Instance.GetRecollectableFromString("apple"));
             
         }
     }
@@ -109,6 +109,7 @@ public class DataPersistanceManager : MonoBehaviour
             {
                 foreach (ConvertedItem convertedItem in saveObject.saveItemList)
                 {
+                    Debug.Log("item to convert :" + convertedItem.itemSO);
                     Item newItem = new Item
                     {
                         itemSO = GameAssets.Instance.GetRecollectableFromString(convertedItem.itemSO),

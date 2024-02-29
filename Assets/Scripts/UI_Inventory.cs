@@ -93,6 +93,7 @@ public class UI_Inventory : MonoBehaviour
 
     public void RefreshItems()
     {
+        //HideAllChildren();
         //1st acces to the saved inventory
         itemList = DataPersistanceManager.Instance.LoadInventory();
         //itemList = DataPersistanceManager.Instance.LoadInventory();
@@ -186,10 +187,14 @@ public class UI_Inventory : MonoBehaviour
                 GameObject newItem = ingredientSpawner.CreateNewItem(item.itemSO, player.transform.position + (Vector3)dropDirection * 2, item.amount);
                 newItem.GetComponent<Rigidbody2D>().AddForce(dropDirection, ForceMode2D.Impulse);
 
-                // Remove the item from the list
+                // Remove the item from the list and from the jsonFile
                 player.GetInventory().GetItemList().Remove(item); //remove directly from the player bc only can drop an item if the player is in the scene
+                DataPersistanceManager.Instance.RemoveOneItem(item);
+                DataPersistanceManager.Instance.SaveInventory(player.GetInventory().GetItemList());
 
-                // Refresh the UI inventory by hiding the button where the element was
+                // Refresh the UI inventory by hiding the button where the element was 
+                //AQUI HAURIA DE FER UN REFRESH A TOT
+                //RefreshItems();
                 recollectableButton.gameObject.SetActive(false);
 
                 break;

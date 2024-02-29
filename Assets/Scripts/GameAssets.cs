@@ -28,19 +28,19 @@ public class GameAssets : MonoBehaviour
     {
         switch (recollectableName)
         {
-            case "apple":
+            case "Apple":
                 return apple;
-            case "bean":
+            case "Bean":
                 return bean;
-            case "bluberry":
+            case "Blueberry":
                 return bluberry;
-            case "strawberry":
+            case "Strawberry":
                 return strawberry;
-            case "attackPotion1":
+            case "AttackPotion1":
                 return attackPotion1;
-            case "healthPotion1":
+            case "HealthPotion1":
                 return healthPotion1;
-            case "healthPotion2":
+            case "HealthPotion2":
                 return healthPotion2;
             default:
                 Debug.Log("the default is being returned");
@@ -63,7 +63,7 @@ public class GameAssets : MonoBehaviour
                 return toni;
             default:
                 Debug.Log("the default is being returned");
-                return paco;
+                return null;
         }
     }
 
