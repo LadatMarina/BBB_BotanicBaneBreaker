@@ -12,6 +12,8 @@ public class PlayerInteractions : MonoBehaviour
     public Item itemScript;
     public GameInput gameInput;
 
+    private Item otherItem;
+
     void Awake()
     {
         player = FindObjectOfType<Player>();
@@ -50,28 +52,36 @@ public class PlayerInteractions : MonoBehaviour
                 break;
 
             case "recollectable":
-                Item otherItem = other.gameObject.GetComponent<RecollectableDisplay>().GetItem();
-                if(player.GetInventory().GetItemList().Count <= 4)
-                {
-                    Collider2D otherCollider = other.gameObject.GetComponent<Collider2D>();
-                    otherCollider.isTrigger = true;
 
+                otherItem = other.gameObject.GetComponent<RecollectableDisplay>().GetItem();
+
+                //if the list has less than 5 items, can recolect
+                if (player.GetInventory().GetItemList().Count <= 4) 
+                {
                     if (other != null) //&& (Input.GetKeyDown(KeyCode.X)))
                     {
-                        SoundManager.Instance.PlaySFX(SoundManager.Instance.sound4); //PLAY AN SFX WHEN RECOLLECT
-                        player.AddItem(otherItem);
-                        Destroy(other.gameObject);
+                        RecollectAnItem(other);
                     }
                     else
                     {
                         Debug.LogError("something gone wrong, the other game object is null");
                     }
                 }
-                else
+                //if the list has 5...
+                else 
                 {
-                    //do not recolect the item --> let the player collision with it
-                    Collider2D otherCollider = other.gameObject.GetComponent<Collider2D>();
-                    otherCollider.isTrigger = false; //fer que tot d'una sa llista sigui menor que 4 tots es items instanciats tornin a trigger true
+                    //but the item I want to recolect is in the list
+                    if (!player.GetInventory().IsRecollectableInList(otherItem))
+                    {
+                        RecollectAnItem(other);
+                    }
+                    else
+                    {
+                        //do not recolect the item --> let the player collision with it
+                        Collider2D otherCollider = other.gameObject.GetComponent<Collider2D>();
+                        otherCollider.isTrigger = false; 
+                    }
+
                 }
 
                 break;
@@ -80,5 +90,15 @@ public class PlayerInteractions : MonoBehaviour
                 //GameManager.Instance.LoadKitchen();
                 break;
         }
+    }
+
+    private void RecollectAnItem(Collider2D other)
+    {
+        Collider2D otherCollider = other.gameObject.GetComponent<Collider2D>();
+        otherCollider.isTrigger = true;
+
+        SoundManager.Instance.PlaySFX(SoundManager.Instance.sound4); //PLAY AN SFX WHEN RECOLLECT
+        player.AddItem(otherItem);
+        Destroy(other.gameObject);
     }
 }

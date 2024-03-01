@@ -63,4 +63,17 @@ public class Inventory
             Debug.Log(itemK.itemSO.name);
         }
     }
+
+    public bool IsRecollectableInList(Item itemToCheck)
+    {
+        foreach (Item item in itemList)
+        {
+            if(item.itemSO == itemToCheck.itemSO)
+            {
+                //item.amount += itemToCheck.amount;
+                return true;
+            }
+        }
+        return false;
+    }
 }
