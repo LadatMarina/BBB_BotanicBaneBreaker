@@ -52,14 +52,19 @@ public class PlayerInteractions : MonoBehaviour
                 break;
 
             case "recollectable":
+                Debug.Log(other.gameObject.GetComponent<RecollectableDisplay>().GetItem().itemSO.name);
+
 
                 otherItem = other.gameObject.GetComponent<RecollectableDisplay>().GetItem();
 
                 //if the list has less than 5 items, can recolect
                 if (player.GetInventory().GetItemList().Count <= 4) 
                 {
+                    Debug.Log("can recolect, the count list is under 4");
                     if (other != null) //&& (Input.GetKeyDown(KeyCode.X)))
                     {
+                        Debug.Log("HAS recolected");
+
                         RecollectAnItem(other);
                     }
                     else
@@ -71,12 +76,16 @@ public class PlayerInteractions : MonoBehaviour
                 else 
                 {
                     //but the item I want to recolect is in the list
-                    if (!player.GetInventory().IsRecollectableInList(otherItem))
+                    if (player.IsRecollectableInList(otherItem))
                     {
+                        Debug.Log("can recolect, the count list is = 4, BUT!! --> The item is in the inventory");
+                        Debug.Log(other.gameObject.GetComponent<RecollectableDisplay>().GetItem().itemSO.name);
+
                         RecollectAnItem(other);
                     }
                     else
                     {
+                        Debug.Log("can'T recolect, list.count > 4 and the item is not in the inventory");
                         //do not recolect the item --> let the player collision with it
                         Collider2D otherCollider = other.gameObject.GetComponent<Collider2D>();
                         otherCollider.isTrigger = false; 

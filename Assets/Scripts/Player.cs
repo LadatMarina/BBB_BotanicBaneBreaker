@@ -111,5 +111,21 @@ public class Player : MonoBehaviour
         }
         DataPersistanceManager.Instance.SaveInventory(inventory.GetItemList()); //after adding an object, save the inventory to the json file
     }
+
+    public bool IsRecollectableInList(Item itemToCheck)
+    {
+        foreach (Item item in inventory.GetItemList())
+        {
+            if (item.itemSO == itemToCheck.itemSO)
+            {
+                Debug.Log(item.itemSO.name + " / " + itemToCheck.itemSO.name);
+                //item.amount += itemToCheck.amount;
+                return true;
+                
+            }
+        }
+        Debug.Log("default value is being returned");
+        return false;
+    }
 }
 

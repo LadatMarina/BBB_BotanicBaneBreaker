@@ -57,14 +57,14 @@ public class DataPersistanceManager : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.L))
         {
-            Debug.Log(GameAssets.Instance.GetRecollectableFromString("apple"));
+            //Debug.Log(GameAssets.Instance.GetRecollectableFromString("apple"));
             
         }
     }
 
     public List<ConvertedItem> SaveInventory(List<Item> listToSave)
     {
-        Debug.Log("SaveInventory / DataManager");
+        //Debug.Log("SaveInventory / DataManager");
         int i = 0;
         SaveObject saveObejct = new (); //create a new save object to store the inventory 
 
@@ -73,7 +73,7 @@ public class DataPersistanceManager : MonoBehaviour
             ConvertedItem convertedItem = new () { itemSO = itemToSave.itemSO.name, amount = itemToSave.amount };
 
             saveObejct.saveItemList.Add(convertedItem); //guardam s'item convertit a sa llista dins es save object
-            Debug.Log("item" + i + saveObejct.saveItemList[i]);
+            //Debug.Log("item" + i + saveObejct.saveItemList[i]);
             i++;
         }
 
@@ -85,7 +85,7 @@ public class DataPersistanceManager : MonoBehaviour
         // Escribe la cadena JSON en el archivo
         File.WriteAllText(filePath, savedObjectJson);
 
-        Debug.Log("Inventory saved to: " + filePath);
+        //Debug.Log("Inventory saved to: " + filePath);
 
         return saveObejct.saveItemList;
     }
@@ -94,7 +94,7 @@ public class DataPersistanceManager : MonoBehaviour
     {
         List<Item> newList = new();
 
-        Debug.Log("LoadInventory() / DataManager");
+        //Debug.Log("LoadInventory() / DataManager");
         //we make a new inventory for create a new list with all loaded elements
 
         string filePath = Application.persistentDataPath + DATA_FILE_PATH;
@@ -109,7 +109,7 @@ public class DataPersistanceManager : MonoBehaviour
             {
                 foreach (ConvertedItem convertedItem in saveObject.saveItemList)
                 {
-                    Debug.Log("item to convert :" + convertedItem.itemSO);
+                    //Debug.Log("item to convert :" + convertedItem.itemSO);
                     Item newItem = new Item
                     {
                         itemSO = GameAssets.Instance.GetRecollectableFromString(convertedItem.itemSO),
@@ -123,21 +123,22 @@ public class DataPersistanceManager : MonoBehaviour
             }
             else
             {
-                Debug.Log("saveItemList == null");
+                //Debug.Log("saveItemList == null");
             }
         }
         else
         {
             // Aquí no tendríamos que caer nunca
-            Debug.LogError("No save file");
+            //Debug.LogError("No save file");
         }
         if(newList == null)
         {
-            Debug.Log("newList null");
+            //Debug.Log("newList null");
         }
         else
         {
-            foreach (Item item in newList) { Debug.Log("item of the newList returned " + item.itemSO.name); }
+            foreach (Item item in newList) { //Debug.Log("item of the newList returned " + item.itemSO.name);
+                                             }
 
         }
         return newList;
@@ -172,9 +173,9 @@ public class DataPersistanceManager : MonoBehaviour
         //Escribe la cadena JSON en el archivo
         File.WriteAllText(filePath, savedObjectJson);
 
-        Debug.Log("the villager saved is " + saveObject.villager);
+        //Debug.Log("the villager saved is " + saveObject.villager);
 
-        Debug.Log("villager saved to: " + filePath);
+        //Debug.Log("villager saved to: " + filePath);
     }
 
     public Village LoadVillage()
@@ -183,7 +184,7 @@ public class DataPersistanceManager : MonoBehaviour
 
         if (!File.Exists(filePath))
         {
-            Debug.LogWarning("Save file not found at: " + filePath);
+            //Debug.LogWarning("Save file not found at: " + filePath);
             return null;
         }
 
