@@ -101,7 +101,7 @@ public class UI_Inventory : MonoBehaviour
 
     public void RefreshItems()
     {
-        //HideAllChildren();
+        HideAllChildren();
         //1st acces to the saved inventory
         itemList = DataPersistanceManager.Instance.LoadInventory();
 
@@ -190,13 +190,16 @@ public class UI_Inventory : MonoBehaviour
 
                 // Remove the item from the list and from the jsonFile
                 player.GetInventory().GetItemList().Remove(item); //remove directly from the player bc only can drop an item if the player is in the scene
-                DataPersistanceManager.Instance.RemoveOneItem(item);
+                //DataPersistanceManager.Instance.RemoveOneItem(item);
                 DataPersistanceManager.Instance.SaveInventory(player.GetInventory().GetItemList());
 
                 // Refresh the UI inventory by hiding the button where the element was 
                 //AQUI HAURIA DE FER UN REFRESH A TOT
                 //RefreshItems();
                 recollectableButton.gameObject.SetActive(false);
+                //DataPersistanceManager.Instance.SaveInventory(player.GetInventory().GetItemList());
+                //everytime I drop an item, the selected button has to change
+                EventSystem.current.SetSelectedGameObject(FindFirstButtonActive().gameObject);
 
                 break;
             }
@@ -212,7 +215,6 @@ public class UI_Inventory : MonoBehaviour
             }
         }
         //after a change is made, the inventory is saved to the Json file
-        DataPersistanceManager.Instance.SaveInventory(player.GetInventory().GetItemList());
     }
 
     public void ToggleInventoryButton()
@@ -234,7 +236,7 @@ public class UI_Inventory : MonoBehaviour
         {
             panelBackground.SetActive(true);
             RefreshItems();
-            //EventSystem.current.SetSelectedGameObject(FindFirstButtonActive().gameObject);
+            EventSystem.current.SetSelectedGameObject(FindFirstButtonActive().gameObject);
             //Debug.Log("the inventory has been refreshed with the item list");
         }
     }
