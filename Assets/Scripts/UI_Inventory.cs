@@ -91,6 +91,7 @@ public class UI_Inventory : MonoBehaviour
         foreach (Transform child in panelBackground.transform)
         {
             child.gameObject.SetActive(false);
+            EventSystem.current.SetSelectedGameObject(null); //reset the selected, i want to do that when a button it's been selected, it resets to unselected
             //set active all the button inventory components
             foreach (Transform child2 in child)
             {
@@ -144,6 +145,7 @@ public class UI_Inventory : MonoBehaviour
 
     private void RefreshButton(Item item, Transform recollectableButton)
     {
+
         //visual
         recollectableButton.transform.GetChild(0).GetComponent<Image>().sprite = item.itemSO.sprite; //set the sprite
         TextMeshProUGUI text = recollectableButton.transform.GetChild(1).GetComponent<TextMeshProUGUI>(); //set the amount text

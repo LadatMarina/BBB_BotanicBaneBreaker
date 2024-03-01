@@ -51,17 +51,29 @@ public class PlayerInteractions : MonoBehaviour
 
             case "recollectable":
                 Item otherItem = other.gameObject.GetComponent<RecollectableDisplay>().GetItem();
-
-                if (other != null) //&& (Input.GetKeyDown(KeyCode.X)))
+                if(player.GetInventory().GetItemList().Count <= 4)
                 {
-                    SoundManager.Instance.PlaySFX(SoundManager.Instance.sound4); //PLAY AN SFX WHEN RECOLLECT
-                    player.AddItem(otherItem);
-                    Destroy(other.gameObject);
+                    Collider2D otherCollider = other.gameObject.GetComponent<Collider2D>();
+                    otherCollider.isTrigger = true;
+
+                    if (other != null) //&& (Input.GetKeyDown(KeyCode.X)))
+                    {
+                        SoundManager.Instance.PlaySFX(SoundManager.Instance.sound4); //PLAY AN SFX WHEN RECOLLECT
+                        player.AddItem(otherItem);
+                        Destroy(other.gameObject);
+                    }
+                    else
+                    {
+                        Debug.LogError("something gone wrong, the other game object is null");
+                    }
                 }
                 else
                 {
-                    Debug.LogError("something gone wrong, the other game object is null");
+                    //do not recolect the item --> let the player collision with it
+                    Collider2D otherCollider = other.gameObject.GetComponent<Collider2D>();
+                    otherCollider.isTrigger = false; //fer que tot d'una sa llista sigui menor que 4 tots es items instanciats tornin a trigger true
                 }
+
                 break;
             case "kitchen":
                 GameManager.Instance.SetLastPLayerPos(player.GetPlayerPos());
