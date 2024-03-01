@@ -27,7 +27,7 @@ public class UI_Inventory : MonoBehaviour
     //private Transform containerTemplate;
 
     public GameObject popUpPanel;
-
+    private GameObject defaultSelectedButton;
     public IngredientsSpawner ingredientSpawner;
 
     public static UI_Inventory Instance { get; private set; }
@@ -199,7 +199,8 @@ public class UI_Inventory : MonoBehaviour
                 recollectableButton.gameObject.SetActive(false);
                 //DataPersistanceManager.Instance.SaveInventory(player.GetInventory().GetItemList());
                 //everytime I drop an item, the selected button has to change
-                EventSystem.current.SetSelectedGameObject(FindFirstButtonActive().gameObject);
+                FindFirstButtonActive();
+                //EventSystem.current.SetSelectedGameObject(defaultSelectedButton);
 
                 break;
             }
@@ -236,7 +237,8 @@ public class UI_Inventory : MonoBehaviour
         {
             panelBackground.SetActive(true);
             RefreshItems();
-            EventSystem.current.SetSelectedGameObject(FindFirstButtonActive().gameObject);
+            FindFirstButtonActive();
+            //EventSystem.current.SetSelectedGameObject(defaultSelectedButton);
             //Debug.Log("the inventory has been refreshed with the item list");
         }
     }
@@ -245,16 +247,20 @@ public class UI_Inventory : MonoBehaviour
         panelBackground.SetActive(false);
     }
 
-    private Transform FindFirstButtonActive()
+    private void FindFirstButtonActive()
     {
         foreach(Transform child in panelBackground.GetComponentInChildren<Transform>())
         {
             if (child.gameObject.activeInHierarchy)
             {
-                return child;
+                EventSystem.current.SetSelectedGameObject(child.gameObject);
+                break;
+            }
+            else
+            {
+                EventSystem.current.SetSelectedGameObject(null);
             }
         }
-        return inventoryButton.transform;
     }
 
 }

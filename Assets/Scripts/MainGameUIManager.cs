@@ -7,7 +7,6 @@ using UnityEngine.EventSystems;
 
 public class MainGameUIManager : MonoBehaviour
 {
-    public Button inventoryButton;
     private GameObject panelBackground;
 
     private Vector2 playerPosition;
@@ -19,15 +18,12 @@ public class MainGameUIManager : MonoBehaviour
 
     void Start()
     {
-        //set the function of the game manager via code bc the game manager navegate btwn the scenes
-        inventoryButton.onClick.AddListener(()=> UI_Inventory.Instance.ToggleInventoryButton());
-        inventoryButton.onClick.AddListener(()=> EventSystem.current.SetSelectedGameObject(UI_Inventory.Instance.panelBackground.transform.GetChild(0).gameObject));
 
         //en teoria no he de posar cap cortafuegos de si és null o si és a sa escena que toca pq
         //sempre hi haurà un panelBackground per mor de que viatge entre escenes, asi que provam
-        panelBackground = UI_Inventory.Instance.panelBackground; 
+        //panelBackground = UI_Inventory.Instance.panelBackground; 
 
-        player = FindObjectOfType<Player>();
+        //player = FindObjectOfType<Player>();
     }
 
     private void Update()
