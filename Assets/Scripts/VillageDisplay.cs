@@ -15,6 +15,7 @@ public class VillageDisplay : MonoBehaviour
     public TextMeshProUGUI diseaseText;
     public TextMeshProUGUI potionText;
     public Image npcImage;
+    public Image potionImage;
     public GameObject background;
     public Transform potionField;
     public Transform givePotionButton;
@@ -48,10 +49,9 @@ public class VillageDisplay : MonoBehaviour
         village = DataPersistanceManager.Instance.LoadVillage();
         
         nameText.text = village.name;
-        diseaseText.text = $"{village.disease}";
-        potionText.text = village.potion;
-        //npcImage.sprite = village.sprite; --> ja no ho necessit perquè ho faig des de s'animator
-
+        diseaseText.text = "Disease: " + village.disease;
+        potionText.text = "Potion needed: " + village.potion.name;
+        potionImage.sprite = village.potion.sprite;
         npcAnimator = npcImage.GetComponent<Animator>(); 
         npcAnimator.runtimeAnimatorController = village.animator.runtimeAnimatorController;
 
@@ -155,5 +155,6 @@ public class VillageDisplay : MonoBehaviour
     public void BackButton()
     {
         Loader.Load(SceneIndex.GamePlay);
+        UI_Inventory.Instance.ToggleInventoryButton();
     }
 }

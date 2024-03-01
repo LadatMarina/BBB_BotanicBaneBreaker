@@ -15,7 +15,7 @@ MonoBehaviour:
   name: Maria
   age: 15
   disease: 2
-  potion: 
+  potion: {fileID: 11400000, guid: cb0f7e666501f864ea7151469baf94d7, type: 2}
   sprite: {fileID: 249559968, guid: 02b1e61c26afe79448b747ff8000374f, type: 3}
   backgroundColor: {r: 0.7924528, g: 0.7767284, b: 0.497152, a: 0}
   isCured: 0

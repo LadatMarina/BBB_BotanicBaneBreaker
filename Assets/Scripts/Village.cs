@@ -16,7 +16,7 @@ public class Village : ScriptableObject
     public new string name;
     public int age;
     public Diseases disease;
-    public string potion;
+    public Recollectable potion;
     public Sprite sprite;
     public Color backgroundColor;
     public bool isCured = false;
