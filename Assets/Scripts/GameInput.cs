@@ -6,21 +6,21 @@ using UnityEngine.InputSystem;
 public class GameInput : MonoBehaviour
 {
     private PlayerInputActions playerInputActions;
-    public static GameInput Instance;
+    //public static GameInput Instance;
     private void Awake()
     {
         //singleton
         // If there is an instance, and it's not me, delete myself.
 
-        if (Instance != null)
-        {
-            Destroy(this);
-        }
-        else
-        {
-            Instance = this;
-            DontDestroyOnLoad(gameObject);
-        }
+        //if (Instance != null)
+        //{
+        //    Destroy(this);
+        //}
+        //else
+        //{
+        //    Instance = this;
+        //    DontDestroyOnLoad(gameObject);
+        //}
 
         //construct the input actions of the player
         playerInputActions = new PlayerInputActions();

@@ -21,6 +21,10 @@ public class GameManager : MonoBehaviour
     //public Village village;
     public bool hasLoaded;
 
+    //setted w the inspector
+    [SerializeField] private GameObject itemWorld;
+
+
     public bool isPaused = false;
     [SerializeField] private GameObject pausePanel;
     [SerializeField] private GameObject pauseButton;
@@ -152,24 +156,37 @@ public class GameManager : MonoBehaviour
 
 
 
-//    public void DebugItemList(List<Item> list)
-//    {
-//        foreach (Item item in list)
-//        {
-//            Debug.Log(item.itemSO.name);
-//        }
-//    }
+    //    public void DebugItemList(List<Item> list)
+    //    {
+    //        foreach (Item item in list)
+    //        {
+    //            Debug.Log(item.itemSO.name);
+    //        }
+    //    }
 
-//    public void RefreshItemList(List<Item> list)
-//    {
-//        inventory.itemList = list;
+    //    public void RefreshItemList(List<Item> list)
+    //    {
+    //        inventory.itemList = list;
 
-//        //Debug.Log("item list passed from GM is:");
-//        DebugItemList(list);
+    //        //Debug.Log("item list passed from GM is:");
+    //        DebugItemList(list);
 
-//        //Debug.Log("item list refreshed from inventory is:");
-//        DebugItemList(inventory.itemList);
+    //        //Debug.Log("item list refreshed from inventory is:");
+    //        DebugItemList(inventory.itemList);
 
-//        //Debug.Log("item list refreshed / inventory");
-//    }
+    //        //Debug.Log("item list refreshed / inventory");
+    //    }
+
+    public GameObject CreateNewItem(Recollectable itemSO, Vector3 position, int amount)
+    {
+        GameObject newObject = Instantiate(itemWorld, position, Quaternion.identity);
+
+        Item item = new Item { amount = amount, itemSO = itemSO };
+
+        newObject.tag = "recollectable";
+
+        newObject.GetComponent<RecollectableDisplay>().SetItem(item);
+
+        return newObject;
+    }
 }

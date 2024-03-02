@@ -7,7 +7,6 @@ public class IngredientsSpawner : MonoBehaviour
 {
     //private Ingredients ingredientsEnum;
 
-    [SerializeField]private GameObject itemWorld;
     [SerializeField] private Vector2[] appleSpawner;
     [SerializeField] private Vector2[] beanSpawner;
     [SerializeField] private Vector2[] bluberrySpawner;
@@ -19,13 +18,13 @@ public class IngredientsSpawner : MonoBehaviour
     }
     void Start()
     {
-        CreateNewItem(GameAssets.Instance.healthPotion1, Vector3.right,1);
+        GameManager.Instance.CreateNewItem(GameAssets.Instance.healthPotion1, Vector3.right,1);
 
         SpawnTheFruits(beanSpawner, GameAssets.Instance.bean);
         SpawnTheFruits(appleSpawner, GameAssets.Instance.apple);
-       
-        CreateNewItem(GameAssets.Instance.bluberry, Vector3.zero, 1);
-        CreateNewItem(GameAssets.Instance.strawberry, new Vector3(-5, -3, 0), 2);
+
+        GameManager.Instance.CreateNewItem(GameAssets.Instance.bluberry, Vector3.zero, 1);
+        GameManager.Instance.CreateNewItem(GameAssets.Instance.strawberry, new Vector3(-5, -3, 0), 2);
         //CreateNewItem(GameAssets.Instance.healthPotion1, new Vector3(-8, -2, 0), 1);
 
         //string tag = gameObject.tag;
@@ -48,25 +47,14 @@ public class IngredientsSpawner : MonoBehaviour
         }*/
     }
 
-    public GameObject CreateNewItem(Recollectable itemSO, Vector3 position, int amount)
-    {
-        GameObject newObject = Instantiate(itemWorld, position, Quaternion.identity);
 
-        Item item = new Item { amount = amount, itemSO = itemSO };
-
-        newObject.tag = "recollectable";
-
-        newObject.GetComponent<RecollectableDisplay>().SetItem(item);
-
-        return newObject;
-    }
 
     private void SpawnTheFruits(Vector2[] arrayOfPositions, Recollectable recollectableToSpawn)
     {
         int i = 0;
         foreach(Vector2 pos in arrayOfPositions)
         {
-            CreateNewItem(recollectableToSpawn, arrayOfPositions[i], 1);
+            GameManager.Instance.CreateNewItem(recollectableToSpawn, arrayOfPositions[i], 1);
             i++;
         }
         //Debug.Log($"all the {recollectableToSpawn.name} has been spawned");

@@ -18,7 +18,7 @@ public class RecollectableDisplay : MonoBehaviour
     [SerializeField] private new ParticleSystem particleSystem;
 
     [SerializeField] private TextMeshPro amountText;
-    [SerializeField] private TextMeshPro recollectedText;
+    //[SerializeField] private TextMeshPro recollectedText;
 
 
     private Item item;
@@ -39,8 +39,8 @@ public class RecollectableDisplay : MonoBehaviour
         circleCollider.radius = 0.5f;
         circleCollider.isTrigger = true;
 
-        recollectedText.gameObject.SetActive(false); //set it to false until the player go near
-        recollectedText.text = item.itemSO.name; //set the name
+        //recollectedText.gameObject.SetActive(false); //set it to false until the player go near
+        //recollectedText.text = item.itemSO.name; //set the name
 
         spriteRenderer.sprite = item.itemSO.sprite;
         this.name = item.itemSO.name;
@@ -68,7 +68,4 @@ public class RecollectableDisplay : MonoBehaviour
     public void SetItem(Item item) { this.item = item; }
     public Item GetItem() { return item; }
     public void Reset() { amountText.text = $"{item.amount}"; }
-    public void ShowRecollectedText() { recollectedText.gameObject.SetActive(true); }
-    public void HideRecollectedText() { recollectedText.gameObject.SetActive(false); }
-
 }

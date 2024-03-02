@@ -80,7 +80,7 @@ public class Player : MonoBehaviour
         if (isWalking == false) { _rbPlayer.velocity = Vector2.zero; }
     }
 
-    public bool RecollectableInFrontOf(Vector3 direction) { return Physics2D.Raycast(transform.position, direction, 3f, collisionableLayer); }
+    public bool SomethingInFrontOf(Vector3 direction) { return Physics2D.Raycast(transform.position, direction, 3f, collisionableLayer); }
     public bool GetIsWalking() { return isWalking; }
 
     public Vector2 GetLastMovement() { return lastMovement; }

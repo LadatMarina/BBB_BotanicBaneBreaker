@@ -13,6 +13,8 @@ public class UI_Inventory : MonoBehaviour
     private Player player;
 
     private VillageDisplay villageDisplay;
+    private KitchenManager kitchenManager;
+    private GameInput gameInput;
 
     //asignar per inspector
     public GameObject recollectableButtonPrefab;
@@ -54,7 +56,7 @@ public class UI_Inventory : MonoBehaviour
         player = FindAnyObjectByType<Player>();
 
         inventory = player.GetInventory();
-        ingredientSpawner = FindAnyObjectByType<IngredientsSpawner>();
+        
 
         DestroyAllChildren();
 
@@ -70,6 +72,13 @@ public class UI_Inventory : MonoBehaviour
                 villageDisplay = FindObjectOfType<VillageDisplay>();
             }
         }
+        if (SceneManager.GetActiveScene().buildIndex == (int)SceneIndex.Kitchen)
+        {
+            if (kitchenManager == null)
+            {
+                kitchenManager = FindObjectOfType<KitchenManager>();
+            }
+        }
         if (SceneManager.GetActiveScene().buildIndex == (int)SceneIndex.GamePlay)
         {
             if (player == null)
@@ -81,28 +90,18 @@ public class UI_Inventory : MonoBehaviour
         {
             ToggleInventoryButton();
         }
+        if(gameInput == null)
+        {
+            gameInput = FindObjectOfType<GameInput>();
+        }
+        if(ingredientSpawner == null)
+        {
+            ingredientSpawner = FindAnyObjectByType<IngredientsSpawner>();
+        }
 
     }
 
-    public void SetInventory(Inventory inventory)
-    {
-        this.inventory = inventory;
-        //RefreshUiInventory();
-    }
-
-    //public void HideAllChildren()
-    //{
-    //    // hide all the buttons
-    //    foreach (Transform child in panelBackground.transform)
-    //    {
-    //        child.gameObject.SetActive(false);
-    //        //set active all the button inventory components
-    //        foreach (Transform child2 in child)
-    //        {
-    //            child2.gameObject.SetActive(true);
-    //        }
-    //    }
-    //}
+    public void SetInventory(Inventory inventory) { this.inventory = inventory; }
     public void DestroyAllChildren()
     {
         // destroy all the buttons
@@ -144,6 +143,19 @@ public class UI_Inventory : MonoBehaviour
 
                     RefreshButton(itemList[i], recollectableButton);
                     break;
+
+                case (int)SceneIndex.Kitchen:
+                    if (itemList[i].itemSO.recollectableType == RecollectableType.ingredients) //show only the ingredients avaliables
+                    {
+                        Transform potionButton = Instantiate(prefabInventoryButton.transform, panelBackground.transform); //create the button
+
+                        RefreshButton(itemList[i], potionButton);
+                    }
+                    else
+                    {
+                        Debug.Log("there's no ingredients to show");
+                    }
+                    break;
             }
             
         }
@@ -167,10 +179,14 @@ public class UI_Inventory : MonoBehaviour
         {
             case (int)SceneIndex.House:
                 buttonComponent.onClick.AddListener(() => villageDisplay.ChooseThePotionToGive(item));
-                //buttonComponent.onClick.AddListener(()=> villageDisplay.ProvasionDelete(5));
                 break;
+
             case (int)SceneIndex.GamePlay:
                 buttonComponent.onClick.AddListener(() => DropItem(item, recollectableButton)); //aqui anava localItem, mira si funciona
+                break;
+
+            case (int)SceneIndex.Kitchen:
+                buttonComponent.onClick.AddListener(() => kitchenManager.ChooseIngredient(item, recollectableButton));
                 break;
         }
         
@@ -182,13 +198,13 @@ public class UI_Inventory : MonoBehaviour
         int i = 0;
         foreach (Vector2 dropDirection in directions)
         {
-            if (!player.RecollectableInFrontOf(dropDirection)) // si no hi ha res quant dropDirection, instancia i atura es bulce
+            if (!player.SomethingInFrontOf(dropDirection)) // si no hi ha res quant dropDirection, instancia i atura es bulce
             {
                 //PLAY AN SFX WHEN RECOLLECT
                 SoundManager.Instance.PlaySFX(SoundManager.Instance.sound4); 
 
                 // Drop the item to the world
-                GameObject newItem = ingredientSpawner.CreateNewItem(item.itemSO, player.transform.position + (Vector3)dropDirection * 2, item.amount);
+                GameObject newItem = GameManager.Instance.CreateNewItem(item.itemSO, player.transform.position + (Vector3)dropDirection * 2, item.amount);
                 newItem.GetComponent<Rigidbody2D>().AddForce(dropDirection, ForceMode2D.Impulse);
 
                 //remove directly bc will drop all the amount and has to save the inventory
@@ -225,15 +241,17 @@ public class UI_Inventory : MonoBehaviour
 
         if (panelBackground.activeInHierarchy) //if it's true, will be closed so we have to destroy all the elements
         {
-            GameInput.Instance.EnablePlayerInputActions();
+            if (SceneManager.GetActiveScene().buildIndex == (int)SceneIndex.GamePlay) { gameInput.EnablePlayerInputActions(); }
+
             panelBackground.SetActive(false);
             DestroyAllChildren();
             EventSystem.current.SetSelectedGameObject(null); // reset the selected button
             //Debug.Log("all the childrens of the panel background have been destroyed");
         }
         else
-        {
-            GameInput.Instance.DisablePlayerInputActions();
+        {   
+            if(SceneManager.GetActiveScene().buildIndex == (int)SceneIndex.GamePlay) { gameInput.DisablePlayerInputActions(); }
+            
             panelBackground.SetActive(true);
             RefreshItems();
             FindFirstButtonActive();

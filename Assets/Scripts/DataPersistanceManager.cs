@@ -187,6 +187,15 @@ public class DataPersistanceManager : MonoBehaviour
         SaveInventory(localItemList);
     }
 
+    public void AddOneItem(Item item) //mirar si s'inventory se destrueix després, perquè jo només el vull emplear com una eina per reutilitzar funcions
+    {
+        Inventory inventory = new ();
+        inventory.itemList = LoadInventory();
+
+        inventory.AddItem(item);
+        SaveInventory(inventory.itemList);
+    }
+
     public void SaveVillage(Village village)
     {
         SaveObject saveObject = new SaveObject {

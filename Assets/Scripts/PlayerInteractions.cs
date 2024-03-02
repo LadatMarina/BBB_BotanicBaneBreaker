@@ -110,6 +110,11 @@ public class PlayerInteractions : MonoBehaviour
 
         SoundManager.Instance.PlaySFX(SoundManager.Instance.sound4); //PLAY AN SFX WHEN RECOLLECT
         player.AddItem(otherItem);
+        PlayerUI playerUI = player.gameObject.GetComponentInChildren<PlayerUI>(); ; //no crec que funcioni, crec que ho hauré de fer primer es parent i dsps get component in child
+        playerUI.HideRecollectableNameText();
         Destroy(other.gameObject);
+
     }
+
+
 }

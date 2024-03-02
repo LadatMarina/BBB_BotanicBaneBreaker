@@ -957,6 +957,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hasLoaded: 0
+  itemWorld: {fileID: 3430717703935992697, guid: 1c08dbb2e77a1ea4d9240fe9f8e6df78, type: 3}
   isPaused: 0
   pausePanel: {fileID: 1220645440}
   pauseButton: {fileID: 0}
