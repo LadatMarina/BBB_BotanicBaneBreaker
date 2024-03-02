@@ -117,8 +117,16 @@ public class GameManager : MonoBehaviour
         
         if (Input.GetKeyDown(KeyCode.I))
         {
-            Loader.Load(SceneIndex.MainMenu);
+            Debug.Log(DataPersistanceManager.Instance.LoadInventory().Count);
         }
+        
+        if (Input.GetKeyDown(KeyCode.T))
+        {
+            DataPersistanceManager.Instance.SaveVillage(GameAssets.Instance.maria);
+
+            Debug.Log("the village is saved, now press I for prove if the list count is under 1");
+        }
+
     }
 
     private void OnDisable()

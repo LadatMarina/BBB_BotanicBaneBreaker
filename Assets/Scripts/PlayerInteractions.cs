@@ -48,7 +48,7 @@ public class PlayerInteractions : MonoBehaviour
             case "house_4":
                 GameManager.Instance.SetLastPLayerPos(player.GetPlayerPos());
                 DataPersistanceManager.Instance.SaveVillage(GameAssets.Instance.toni);
-                Loader.Load(SceneIndex.House); ;
+                Loader.Load(SceneIndex.House); 
                 break;
 
             case "recollectable":
@@ -96,6 +96,8 @@ public class PlayerInteractions : MonoBehaviour
                 break;
             case "kitchen":
                 GameManager.Instance.SetLastPLayerPos(player.GetPlayerPos());
+                Loader.Load(SceneIndex.Kitchen);
+
                 //GameManager.Instance.LoadKitchen();
                 break;
         }

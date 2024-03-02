@@ -85,7 +85,7 @@ public class DataPersistanceManager : MonoBehaviour
         // Escribe la cadena JSON en el archivo
         File.WriteAllText(filePath, savedObjectJson);
 
-        //Debug.Log("Inventory saved to: " + filePath);
+        Debug.Log("Inventory saved to: " + filePath);
 
         return saveObejct.saveItemList;
     }
@@ -142,6 +142,25 @@ public class DataPersistanceManager : MonoBehaviour
         }
         return newList;
     }
+    private List<ConvertedItem> LoadSavedItemList()
+    {
+        List<Item> convertedItemList = new();
+
+        string filePath = Application.persistentDataPath + DATA_FILE_PATH;
+
+        if (File.Exists(filePath))
+        {
+            string savedObjectString = File.ReadAllText(filePath);
+
+            SaveObject saveObject = JsonUtility.FromJson<SaveObject>(savedObjectString);
+
+            return saveObject.saveItemList;
+        }
+        else
+        {
+            return null;
+        }
+    }
 
     //removes an item from the saved list
     public void RemoveOneItem(Item itemToRemove)
@@ -171,7 +190,9 @@ public class DataPersistanceManager : MonoBehaviour
 
     public void SaveVillage(Village village)
     {
-        SaveObject saveObject = new SaveObject { villager = village.name };
+        SaveObject saveObject = new SaveObject {
+            saveItemList = LoadSavedItemList(),
+            villager = village.name };
         string savedObjectJson = JsonUtility.ToJson(saveObject);
 
         string filePath = Application.persistentDataPath + DATA_FILE_PATH;
