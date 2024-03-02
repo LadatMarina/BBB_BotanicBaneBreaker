@@ -6,7 +6,6 @@ using UnityEngine.SceneManagement;
 
 public class PlayerInteractions : MonoBehaviour
 {
-    public Player player;
     public Inventory inventory;
 
     public Item itemScript;
@@ -16,9 +15,9 @@ public class PlayerInteractions : MonoBehaviour
 
     void Awake()
     {
-        player = FindObjectOfType<Player>();
-        inventory = player.GetInventory();
-        gameInput = FindObjectOfType<GameInput>();  
+        //player = FindObjectOfType<Player>();
+        //inventory = player.GetInventory();
+        //gameInput = FindObjectOfType<GameInput>();  
     }
 
     private void OnTriggerEnter2D(Collider2D other)
@@ -28,26 +27,26 @@ public class PlayerInteractions : MonoBehaviour
         switch(tag) {
             case "house_1":
                 //save the position of the player
-                GameManager.Instance.SetLastPLayerPos(player.GetPlayerPos());
-                DataPersistanceManager.Instance.SaveVillage(GameAssets.Instance.paco);
+                GameManager.Instance.SetLastPLayerPos(Player.Instance.GetPlayerPos());
+                Player.Instance.SaveVillage(GameAssets.Instance.paco);
                 Loader.Load(SceneIndex.House);
                 
                 break;
             case "house_2":
-                GameManager.Instance.SetLastPLayerPos(player.GetPlayerPos());
-                DataPersistanceManager.Instance.SaveVillage(GameAssets.Instance.maria);
+                GameManager.Instance.SetLastPLayerPos(Player.Instance.GetPlayerPos());
+                Player.Instance.SaveVillage(GameAssets.Instance.maria);
                 Loader.Load(SceneIndex.House);
                 break;
 
             case "house_3":
-                GameManager.Instance.SetLastPLayerPos(player.GetPlayerPos());
-                DataPersistanceManager.Instance.SaveVillage(GameAssets.Instance.bel);
+                GameManager.Instance.SetLastPLayerPos(Player.Instance.GetPlayerPos());
+                Player.Instance.SaveVillage(GameAssets.Instance.bel);
                 Loader.Load(SceneIndex.House);
                 break;
             
             case "house_4":
-                GameManager.Instance.SetLastPLayerPos(player.GetPlayerPos());
-                DataPersistanceManager.Instance.SaveVillage(GameAssets.Instance.toni);
+                GameManager.Instance.SetLastPLayerPos(Player.Instance.GetPlayerPos());
+                Player.Instance.SaveVillage(GameAssets.Instance.toni);
                 Loader.Load(SceneIndex.House); ;
                 break;
 
@@ -58,7 +57,7 @@ public class PlayerInteractions : MonoBehaviour
                 otherItem = other.gameObject.GetComponent<RecollectableDisplay>().GetItem();
 
                 //if the list has less than 5 items, can recolect
-                if (player.GetInventory().GetItemList().Count <= 4) 
+                if (Player.Instance.GetInventory().GetItemList().Count <= 4) 
                 {
                     Debug.Log("can recolect, the count list is under 4");
                     if (other != null) //&& (Input.GetKeyDown(KeyCode.X)))
@@ -76,7 +75,7 @@ public class PlayerInteractions : MonoBehaviour
                 else 
                 {
                     //but the item I want to recolect is in the list
-                    if (player.IsRecollectableInList(otherItem))
+                    if (Player.Instance.IsRecollectableInList(otherItem))
                     {
                         Debug.Log("can recolect, the count list is = 4, BUT!! --> The item is in the inventory");
                         Debug.Log(other.gameObject.GetComponent<RecollectableDisplay>().GetItem().itemSO.name);
@@ -95,7 +94,7 @@ public class PlayerInteractions : MonoBehaviour
 
                 break;
             case "kitchen":
-                GameManager.Instance.SetLastPLayerPos(player.GetPlayerPos());
+                GameManager.Instance.SetLastPLayerPos(Player.Instance.GetPlayerPos());
                 //GameManager.Instance.LoadKitchen();
                 break;
         }
@@ -107,7 +106,7 @@ public class PlayerInteractions : MonoBehaviour
         otherCollider.isTrigger = true;
 
         SoundManager.Instance.PlaySFX(SoundManager.Instance.sound4); //PLAY AN SFX WHEN RECOLLECT
-        player.AddItem(otherItem);
+        Player.Instance.AddItem(otherItem);
         Destroy(other.gameObject);
     }
 }

@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Player : MonoBehaviour
 {
@@ -18,22 +19,33 @@ public class Player : MonoBehaviour
 
     public LayerMask collisionableLayer;
 
+    public Village savedVillage;
+
+    public static Player Instance { get; private set; }
+
     private void Awake()
     {
+        InitializeInventory();
+
+        // If there is an instance, and it's not me, delete myself.
+
+        if (Instance != null)
+        {
+            Destroy(this);
+        }
+        else
+        {
+            Instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+
         _rbPlayer = GetComponent<Rigidbody2D>();
         lastMovement = Vector2.down;
 
-        InitializeInventory();
 
     }
     private void Start()
     {
-        //mirar per a què ho emplei o algo perquè ara ns pq tenc aquesta variable
-        //if (inventory != null)
-        //{
-        //    listInitialized = true;
-        //}
-
         //menwhile the game manager doesn't store a last player position, the player will appear in defaultStartPosition
         if (GameManager.Instance.GetLastPlayerPos() != Vector3.zero)
         {
@@ -62,6 +74,19 @@ public class Player : MonoBehaviour
                 lastMovement = inputVector;
             }
         }
+
+        //the player will be desabled and hidden if there's not in the gamePlay scene
+        if(SceneManager.GetActiveScene().buildIndex != (int)SceneIndex.GamePlay)
+        {
+            //gameInput.DisablePlayerInputActions();
+            //Debug.Log("Call disablePlayerInputActions from update / player");
+            //if (gameObject.activeInHierarchy) { gameObject.SetActive(false); }
+        }
+        else
+        {
+            //gameInput.EnablePlayerInputActions();
+            //if (!gameObject.activeInHierarchy) { gameObject.SetActive(true); }
+        }
     }
     private void LateUpdate()
     {
@@ -74,12 +99,32 @@ public class Player : MonoBehaviour
 
     public Vector2 GetLastMovement() { return lastMovement; }
     public Vector2 GetPlayerPos() { return transform.position; }
-    public void InitializeInventory() { inventory = new Inventory(); }
+    public void InitializeInventory() 
+    {
+        inventory = new Inventory(); 
+        if(DataPersistanceManager.Instance.LoadInventory().Count < 0)
+        {
+            Debug.Log("No list JSON --> new emplty inicialized");
+
+            //there are no items saved in the inventory
+        }
+        else
+        {
+            //there are items saved in the inventory --> load this items to the new inventory.itemList();
+            Debug.Log("bc there was elements saved before, the list is loaded from JSON");
+            inventory.SetItemList(DataPersistanceManager.Instance.LoadInventory());
+        }
+    }
 
 
-    public Inventory GetInventory() { return inventory; }
-
-    public void Remove(Item item) { inventory.RemoveItemFromList(item); }
+    public Inventory GetInventory() {
+        if(inventory == null)
+        {
+            Debug.Log("inventoryNull");
+            return null;
+        }
+        return inventory; 
+    }
 
     public void AddItem(Item item)
     {
@@ -118,14 +163,41 @@ public class Player : MonoBehaviour
         {
             if (item.itemSO == itemToCheck.itemSO)
             {
-                Debug.Log(item.itemSO.name + " / " + itemToCheck.itemSO.name);
-                //item.amount += itemToCheck.amount;
                 return true;
-                
             }
         }
-        Debug.Log("default value is being returned");
         return false;
+    }
+
+    public void RemoveOneItemFromList(Item itemToRemove)
+    {
+        if (inventory.GetItemList() != null)
+        {
+            foreach (Item item in inventory.GetItemList())
+            {
+                if (item == itemToRemove)
+                {
+                    if(item.amount >= 1)
+                    {
+                        item.amount--;
+                    }
+                    else
+                    {
+                        inventory.GetItemList().Remove(itemToRemove);
+                    }
+                    DataPersistanceManager.Instance.SaveInventory(inventory.GetItemList());
+                    break;
+                }
+            }
+        }
+    }
+
+    public void SaveVillage(Village village) { savedVillage = village; }
+    public Village LoadVillage() { return savedVillage; }
+
+    public void RemoveItem(Item item) { 
+        inventory.GetItemList().Remove(item);
+        DataPersistanceManager.Instance.SaveInventory(inventory.GetItemList());
     }
 }
 

@@ -23,29 +23,29 @@ public class CursorManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        int scene = SceneManager.GetActiveScene().buildIndex;
-        switch (scene)
-        {
-            case (int)SceneIndex.GamePlay:
-                HideCursor();
-                break;
+        //int scene = SceneManager.GetActiveScene().buildIndex;
+        //switch (scene)
+        //{
+        //    case (int)SceneIndex.GamePlay:
+        //        HideCursor();
+        //        break;
 
-            case (int)SceneIndex.House:
-                ShowCursor();
-                break;
+        //    case (int)SceneIndex.House:
+        //        ShowCursor();
+        //        break;
 
-            case (int)SceneIndex.Kitchen:
-                ShowCursor();
-                break;
+        //    case (int)SceneIndex.Kitchen:
+        //        ShowCursor();
+        //        break;
 
-            case (int)SceneIndex.LoadingScene:
-                HideCursor();
-                break;
+        //    case (int)SceneIndex.LoadingScene:
+        //        HideCursor();
+        //        break;
 
-            case (int)SceneIndex.MainMenu:
-                HideCursor();
-                break;
-        }
+        //    case (int)SceneIndex.MainMenu:
+        //        HideCursor();
+        //        break;
+        //}
     }
 
     private void ShowCursor()

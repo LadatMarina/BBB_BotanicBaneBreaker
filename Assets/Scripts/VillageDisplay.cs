@@ -30,23 +30,11 @@ public class VillageDisplay : MonoBehaviour
         SetVillage();
         hasSelectedAPotion = false; //això tampoc se exactament on me conve més, si aqui o a nes potionmanger
     }
-
-    private void Update()
-    {
-        if(Input.GetKeyUp(KeyCode.P)) { Debug.Log(PotionManager.Instance.GetPotion().name); }
-
-
-        if(Input.GetKeyUp(KeyCode.M)) { Debug.Log(PotionManager.Instance.GetHealthPotionFromDisease(village.disease).name); }
-
-        if(Input.GetKeyUp(KeyCode.V)) {Debug.Log(village); }
-    }
-
-
     private void SetVillage()
     {
         Debug.Log("SetVillage() / VillageDisplay");
 
-        village = DataPersistanceManager.Instance.LoadVillage();
+        village = Player.Instance.LoadVillage();
         
         nameText.text = village.name;
         diseaseText.text = "Disease: " + village.disease;
@@ -73,8 +61,6 @@ public class VillageDisplay : MonoBehaviour
 
     public void ShowInventoryAndUnableButton(Button potionFieldButton)
     {
-        Debug.Log($"ShowInventoryAndUnableButton({potionFieldButton}) / VillageDisplay");
-
         UI_Inventory.Instance.ToggleInventoryButton();
         potionFieldButton.interactable = false;
     }
@@ -111,7 +97,6 @@ public class VillageDisplay : MonoBehaviour
         Debug.Log("CheckPotion() / Village Display");
 
         //if the potion is the one that cures the village's disease,
-
         if (PotionManager.Instance.GetPotion() == PotionManager.Instance.GetHealthPotionFromDisease(village.disease))
         {
             // play particle system with congrats
@@ -131,23 +116,22 @@ public class VillageDisplay : MonoBehaviour
             // --> pensar que fer
             Debug.Log($"YOU ALMOST KILL {village.name}!!!");
         }
-        UI_Inventory.Instance.HideInventory();
+        UI_Inventory.Instance.HideInventory(); //--> mirar perquè aquí no me funciona, no se tanca quant se pitja es give
         PotionManager.Instance.SetPotion(null);
     }
-    public void ChooseThePotionToGive(Item item) //pensar a posar sa lògica de restar-n'hi un si té més d'una poción!!
+    public void ChooseThePotionToGive(Item item) 
     {
-        DataPersistanceManager.Instance.RemoveOneItem(item);
+        Player.Instance.RemoveOneItemFromList(item);
 
-        Debug.Log($"ChooseThePotionToGive({item.itemSO}) / Village Display");
-        Recollectable recollectableOfThisButton = item.itemSO;
+        Recollectable recollectableOfThisButton = item.itemSO; //perquè no posar només item.itemSO=
         //if the player has not selected a potion from the inventory, will add the
         //item that the button represents to the field potion in the village display and hide the inventoy
         if (hasSelectedAPotion == false)
         {
             PotionManager.Instance.SetPotion(item.itemSO); //mirar si basta es temps en què transcorre
-            RefreshPotionField(recollectableOfThisButton);
+            RefreshPotionField(item.itemSO); //HO HE CANVIAT AQUI LO DE SA LINIA 127 --> Refresh the img
             givePotionButton.gameObject.SetActive(true);
-            UI_Inventory.Instance.ToggleInventoryButton();
+            UI_Inventory.Instance.ToggleInventoryButton(); //--> close the inventory
             hasSelectedAPotion = true;
         }
     }

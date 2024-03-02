@@ -13,28 +13,9 @@ public class Inventory
 
         //Debug.Log("the inventory has been initialized");
     }
-    public List<Item> GetItemList()
-    {
-        return itemList;
-    }
-
-    public void RemoveItemFromList(Item itemToRemove)
-    {
-        if(itemList != null)
-        {
-            foreach (Item item in itemList)
-            {
-                if (item == itemToRemove)
-                {
-                    itemList.Remove(itemToRemove);
-                    //Debug.Log($"the item {itemToRemove} has been deleted of the list");
-                    //ara me dona error, però si jo pos aquí un brake, quan ho hagui trobat sortirà
-                    //des loop, no m'hauria de donar problemes en teoria
-                    break;
-                }
-            }
-        }
-    }
+    public List<Item> GetItemList() { return itemList; }
+    
+    public void SetItemList(List<Item> listToSave) { itemList = listToSave; }
 
     public void AddItem(Item item)
     {
@@ -64,16 +45,4 @@ public class Inventory
         }
     }
 
-    public bool IsRecollectableInList(Item itemToCheck)
-    {
-        foreach (Item item in itemList)
-        {
-            if(item.itemSO == itemToCheck.itemSO)
-            {
-                //item.amount += itemToCheck.amount;
-                return true;
-            }
-        }
-        return false;
-    }
 }

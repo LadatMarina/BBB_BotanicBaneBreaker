@@ -91,7 +91,6 @@ public class UI_Inventory : MonoBehaviour
         foreach (Transform child in panelBackground.transform)
         {
             child.gameObject.SetActive(false);
-            EventSystem.current.SetSelectedGameObject(null); //reset the selected, i want to do that when a button it's been selected, it resets to unselected
             //set active all the button inventory components
             foreach (Transform child2 in child)
             {
@@ -104,7 +103,7 @@ public class UI_Inventory : MonoBehaviour
     {
         HideAllChildren();
         //1st acces to the saved inventory
-        itemList = DataPersistanceManager.Instance.LoadInventory();
+        itemList = player.GetInventory().GetItemList();
 
         int sceneBuildIndex = SceneManager.GetActiveScene().buildIndex;
 
@@ -113,17 +112,15 @@ public class UI_Inventory : MonoBehaviour
             switch (sceneBuildIndex)
             {
                 case (int)SceneIndex.House:
-                    //Item potionItem = itemList[i];
 
+                    //show only the health potions in the inventory
                     if (itemList[i].itemSO.recollectableType == RecollectableType.healthPotion)
                     {
                         Transform potionButton = panelBackground.transform.GetChild(i);
 
-                        potionButton.gameObject.SetActive(true);
+                        potionButton.gameObject.SetActive(true); 
 
                         RefreshButton(itemList[i], potionButton);
-
-                        //Debug.Log("the potion has been showed");
                     }
                     else
                     {
@@ -145,7 +142,6 @@ public class UI_Inventory : MonoBehaviour
 
     private void RefreshButton(Item item, Transform recollectableButton)
     {
-
         //visual
         recollectableButton.transform.GetChild(0).GetComponent<Image>().sprite = item.itemSO.sprite; //set the sprite
         TextMeshProUGUI text = recollectableButton.transform.GetChild(1).GetComponent<TextMeshProUGUI>(); //set the amount text
@@ -153,13 +149,9 @@ public class UI_Inventory : MonoBehaviour
 
         //logic
         Button buttonComponent = recollectableButton.gameObject.GetComponent<Button>(); //get the button fot the add listener
-        //delete inventoryButtonItem = recollectableButton.GetComponent<delete>();
-
-        //this can be deleted, it's only for knowing if the button has the correct recollectable asigned
-        //inventoryButtonItem.recollectable = item.itemSO;
 
         //first we save the item reference and then reset the functions the button has
-        Item localItem = item;
+        //Item localItem = item;
         buttonComponent.onClick.RemoveAllListeners();
         int buildIndex = SceneManager.GetActiveScene().buildIndex;
         switch (buildIndex)
@@ -169,7 +161,7 @@ public class UI_Inventory : MonoBehaviour
                 //buttonComponent.onClick.AddListener(()=> villageDisplay.ProvasionDelete(5));
                 break;
             case (int)SceneIndex.GamePlay:
-                buttonComponent.onClick.AddListener(() => DropItem(localItem, recollectableButton));
+                buttonComponent.onClick.AddListener(() => DropItem(item, recollectableButton)); //aqui anava localItem, mira si funciona
                 break;
         }
         
@@ -190,16 +182,14 @@ public class UI_Inventory : MonoBehaviour
                 GameObject newItem = ingredientSpawner.CreateNewItem(item.itemSO, player.transform.position + (Vector3)dropDirection * 2, item.amount);
                 newItem.GetComponent<Rigidbody2D>().AddForce(dropDirection, ForceMode2D.Impulse);
 
-                // Remove the item from the list and from the jsonFile
-                player.GetInventory().GetItemList().Remove(item); //remove directly from the player bc only can drop an item if the player is in the scene
-                //DataPersistanceManager.Instance.RemoveOneItem(item);
-                DataPersistanceManager.Instance.SaveInventory(player.GetInventory().GetItemList());
+                //remove directly bc will drop all the amount and has to save the inventory
+                player.RemoveItem(item); 
 
                 // Refresh the UI inventory by hiding the button where the element was 
                 //AQUI HAURIA DE FER UN REFRESH A TOT
                 //RefreshItems();
                 recollectableButton.gameObject.SetActive(false);
-                //DataPersistanceManager.Instance.SaveInventory(player.GetInventory().GetItemList());
+
                 //everytime I drop an item, the selected button has to change
                 FindFirstButtonActive();
                 //EventSystem.current.SetSelectedGameObject(defaultSelectedButton);
@@ -211,32 +201,30 @@ public class UI_Inventory : MonoBehaviour
                 i++;
                 if(i>= directions.Length)
                 {
-                    //AQUÍ HE DE POSAR QUE QUANT DONI FALS A SES 4 DIRECCIONS, ARA ME DIU QUE NO HI HA ESPAI A SA PRIMERA QUE COMPROVA
+                    //AQUÍ HE DE POSAR QUE QUANT DONI FALS A SES 4 DIRECCIONS, ARA ME DIU QUE NO HI HA ESPAI A SA PRIMERA QUE COMPROVA --> textMeshPro
                     // If no space is available in any direction, log an error message
                     Debug.Log("The item could not be instantiated, there's no space");
                 }
             }
         }
-        //after a change is made, the inventory is saved to the Json file
     }
 
     public void ToggleInventoryButton()
     {
-        GameInput.Instance.TogglePlayerInputActions();
-        Debug.Log("ToggleInvenotry");
         //PLAY AN SFX WHEN RECOLLECT
         SoundManager.Instance.PlaySFX(SoundManager.Instance.sound3);
 
-        //GameObject inventoryPanelBackground = UI_Inventory.Instance.panelBackground;
-
         if (panelBackground.activeInHierarchy) //if it's true, will be closed so we have to destroy all the elements
         {
+            GameInput.Instance.EnablePlayerInputActions();
             panelBackground.SetActive(false);
             HideAllChildren();
+            EventSystem.current.SetSelectedGameObject(null); // reset the selected button
             //Debug.Log("all the childrens of the panel background have been destroyed");
         }
         else
         {
+            GameInput.Instance.DisablePlayerInputActions();
             panelBackground.SetActive(true);
             RefreshItems();
             FindFirstButtonActive();
@@ -251,7 +239,7 @@ public class UI_Inventory : MonoBehaviour
 
     private void FindFirstButtonActive()
     {
-        foreach(Transform child in panelBackground.GetComponentInChildren<Transform>())
+        foreach (Transform child in panelBackground.GetComponentInChildren<Transform>())
         {
             if (child.gameObject.activeInHierarchy)
             {

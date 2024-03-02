@@ -48,6 +48,12 @@ public class GameInput : MonoBehaviour
         {
             playerInputActions.Player.Enable();
         }
-        
     }
+    //if this function is called, won't disable all the time
+    public void DisablePlayerInputActions() {
+            Debug.Log("playerInputActions are DISabled");
+            playerInputActions.Player.Disable(); }
+    public void EnablePlayerInputActions() { 
+            Debug.Log("playerInputActions are ENabled");
+            playerInputActions.Player.Enable();  }
 }

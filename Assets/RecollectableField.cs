@@ -5,23 +5,18 @@ using UnityEngine.UI;
 
 public class RecollectableField : MonoBehaviour
 {
-    public Recollectable recollectable;
-    public Transform potionField;
-    // Start is called before the first frame update
-    void Start()
+    Inventory inventory;
+    List<Item> itemList;
+    private void Update()
     {
-        recollectable = null;
-        Button potionFieldButton = potionField.GetComponent<Button>();
-        potionFieldButton.interactable = true;
-        potionFieldButton.onClick.AddListener(() => ShowInventoryAndUnableButton(potionFieldButton));
+        if (Input.GetKeyDown(KeyCode.Y))
+        {
+            //inventory = Player.Instance.GetInventory();
+            //itemList = Player.Instance.GetInventory().GetItemList();
+            int count = Player.Instance.GetInventory().GetItemList().Count;
+            Debug.Log(count);
+            Debug.Log("DELETE --> count saved as player.itemlist.count");
+        }
     }
-
-
-    private void ShowInventoryAndUnableButton(Button potionFieldButton)
-    {
-        UI_Inventory.Instance.ToggleInventoryButton();
-        potionFieldButton.interactable = false;
-    }
-
 
 }

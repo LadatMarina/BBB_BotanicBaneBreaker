@@ -50,16 +50,16 @@ public class DataPersistanceManager : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.O))
-        {
-            LoadInventory();
-        }
+        //if (Input.GetKeyDown(KeyCode.O))
+        //{
+        //    LoadInventory();
+        //}
 
-        if (Input.GetKeyDown(KeyCode.L))
-        {
-            //Debug.Log(GameAssets.Instance.GetRecollectableFromString("apple"));
+        //if (Input.GetKeyDown(KeyCode.L))
+        //{
+        //    //Debug.Log(GameAssets.Instance.GetRecollectableFromString("apple"));
             
-        }
+        //}
     }
 
     public List<ConvertedItem> SaveInventory(List<Item> listToSave)
@@ -117,7 +117,6 @@ public class DataPersistanceManager : MonoBehaviour
                     };
 
                     newList.Add(newItem);
-                    Debug.Log(newList[i].itemSO.name);
                     i++;
                 }
             }
@@ -144,6 +143,7 @@ public class DataPersistanceManager : MonoBehaviour
         return newList;
     }
 
+    //removes an item from the saved list
     public void RemoveOneItem(Item itemToRemove)
     {
         List<Item> list = LoadInventory();
