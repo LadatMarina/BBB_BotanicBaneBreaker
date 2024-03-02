@@ -116,30 +116,26 @@ public class Player : MonoBehaviour
     {
         Debug.Log("addItem / player");
         bool itemInInventory = false;
-        foreach (Item inventoryItem in inventory.GetItemList())
+
+        //if the item is stackable revise the list, if not, add it directly to the inventory
+        if (item.itemSO.stackable)
         {
-            //if the item was already, amount+ / true
-            if (item.itemSO == inventoryItem.itemSO)
+            foreach (Item inventoryItem in inventory.GetItemList())
             {
-                inventoryItem.amount = inventoryItem.amount + item.amount;
-                itemInInventory = true;
-                //Debug.Log("due to the item was already in the list, we only have increased the sum of the amount");
-                //Debug.Log($"you have added a {inventoryItem.itemSO.name} / {item.itemSO.name} to the inventory with amount {inventoryItem.amount}");
+                if (item.itemSO == inventoryItem.itemSO)
+                {
+                    //if the item is stackable and was already in the list, amount+ / true
+                    inventoryItem.amount = inventoryItem.amount + item.amount;
+                    itemInInventory = true;
+                }
             }
-
-
         }
+
         if (!itemInInventory)
         {
             inventory.GetItemList().Add(item);
-            //Debug.Log("the item was not in the list. we have added the item to the list");
-            //Debug.Log($"you have added a {item} to the inventory with amount {item.amount}");
         }
-        Debug.Log("the list in the inventory now is: ");
-        foreach (Item itemK in inventory.GetItemList())
-        {
-            Debug.Log(itemK.itemSO.name);
-        }
+        
         DataPersistanceManager.Instance.SaveInventory(inventory.GetItemList()); //after adding an object, save the inventory to the json file
     }
 

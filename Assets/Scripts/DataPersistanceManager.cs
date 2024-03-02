@@ -165,40 +165,26 @@ public class DataPersistanceManager : MonoBehaviour
     //removes an item from the saved list
     public void RemoveOneItem(Item itemToRemove)
     {
-        Debug.Log("has entered to the RemoveOneItem(item) / dataPersistance");
         localItemList = LoadInventory();
-
-        //foreach (Item itemLoaded in localItemList)
-        //{
-        //    Debug.Log("item loaded "+ itemLoaded.itemSO.name);
-        //}
         Debug.Log(localItemList.Count);
 
         foreach (Item item in localItemList)
         {
-            Debug.Log("has entered to the foreach of the localItemList");
             if(item.itemSO == itemToRemove.itemSO)
             {
                 if(item.amount != 1)
                 {
                     item.amount--;
-                    Debug.Log("has removed one to the amount");
                     break; 
                 }
                 else
                 {
-                    Debug.Log("has removed the item itself bc there was only one");
                     localItemList.Remove(item); //en teoria és lo mateix posar aquí itemToRemove que item tot sol asi que nice
-                    break; 
+                    break;  
                 }
             }
         }
         SaveInventory(localItemList);
-        Debug.Log("the localItemList now is: ");
-        foreach(Item item in localItemList)
-        {
-            Debug.Log(item.itemSO.name);
-        }
     }
 
     public void SaveVillage(Village village)
