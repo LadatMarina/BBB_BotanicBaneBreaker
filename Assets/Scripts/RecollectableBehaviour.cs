@@ -14,13 +14,14 @@ public class RecollectableBehaviour :MonoBehaviour
     private bool zone2;
     private LayerMask playerLayer;
     private RecollectableDisplay recollectableDisplay;
+    private Collider2D collider;
 
     private void Awake()
     {
         //get the player sorting layer to asign it in every recollectable
         //player = GameObject.Find("Player");
         playerLayer = LayerMask.GetMask("PlayerLayer");
-        
+        collider = GetComponent<Collider2D>();
         //set circle cast values
         
         direction = Vector2.one;
@@ -37,27 +38,37 @@ public class RecollectableBehaviour :MonoBehaviour
         zone1 = Physics2D.CircleCast(origin, radiusZone1, direction, distance, playerLayer);
         zone2 = Physics2D.CircleCast(origin, radiusZone2, direction, distance, playerLayer);
 
-        if (zone1)
+        if (zone1 || zone2)
         {
-            recollectableDisplay.ShowRecollectedText();
+            if(zone1)
+            {
+                recollectableDisplay.ShowRecollectedText();
 
-            //particle system play or light is shown
-            //Debug.Log("the player has entered in the zone 1 ");
+                //particle system play or light is shown
+                //Debug.Log("the player has entered in the zone 1 ");
+            }
+            else
+            {
+                recollectableDisplay.HideRecollectedText();
+            }
+
+            if (zone2)
+            {
+                //descrition pop-up
+                //Debug.Log("the player has entered in the zone 2");
+            }
+            else
+            {
+                recollectableDisplay.HideRecollectedText();
+            }
         }
         else
         {
-            recollectableDisplay.HideRecollectedText();
-        }
-
-        if (zone2)
-        {
-            //descrition pop-up
-            //Debug.Log("the player has entered in the zone 2");
-        }
-        else
-        {
-            recollectableDisplay.HideRecollectedText();
-
+            //ensure that after the player goes away the item returns to its initial state
+            if (!collider.isTrigger)
+            {
+                collider.isTrigger = true;
+            }
         }
     }
 

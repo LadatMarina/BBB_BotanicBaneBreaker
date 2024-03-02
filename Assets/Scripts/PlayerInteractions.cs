@@ -76,7 +76,7 @@ public class PlayerInteractions : MonoBehaviour
                 else 
                 {
                     //but the item I want to recolect is in the list
-                    if (player.IsRecollectableInList(otherItem))
+                    if ((player.IsRecollectableInList(otherItem)) && (otherItem.itemSO.stackable))
                     {
                         Debug.Log("can recolect, the count list is = 4, BUT!! --> The item is in the inventory");
                         Debug.Log(other.gameObject.GetComponent<RecollectableDisplay>().GetItem().itemSO.name);
