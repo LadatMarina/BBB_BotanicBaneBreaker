@@ -37,18 +37,7 @@ public class GameInput : MonoBehaviour
 
         return inputVector;
     }
-    
-    public void TogglePlayerInputActions()
-    {
-        if (playerInputActions.Player.enabled)
-        {
-            playerInputActions.Player.Disable();
-        }
-        else
-        {
-            playerInputActions.Player.Enable();
-        }
-    }
+
     //if this function is called, won't disable all the time
     public void DisablePlayerInputActions() {
             Debug.Log("playerInputActions are DISabled");

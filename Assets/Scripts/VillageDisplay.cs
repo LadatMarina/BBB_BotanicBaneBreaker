@@ -34,7 +34,8 @@ public class VillageDisplay : MonoBehaviour
     {
         Debug.Log("SetVillage() / VillageDisplay");
 
-        village = Player.Instance.LoadVillage();
+        //village = Player.Instance.LoadVillage();
+        village = DataPersistanceManager.Instance.LoadVillage();
         
         nameText.text = village.name;
         diseaseText.text = "Disease: " + village.disease;
@@ -100,8 +101,6 @@ public class VillageDisplay : MonoBehaviour
         if (PotionManager.Instance.GetPotion() == PotionManager.Instance.GetHealthPotionFromDisease(village.disease))
         {
             // play particle system with congrats
-            // npc animation of "huryay!"
-            // return to main game
             // unlock a new potion recipe 
             village.isCured = true;
             npcAnimator.SetBool("isCured", true);
@@ -121,7 +120,8 @@ public class VillageDisplay : MonoBehaviour
     }
     public void ChooseThePotionToGive(Item item) 
     {
-        Player.Instance.RemoveOneItemFromList(item);
+        //Player.Instance.RemoveOneItemFromList(item);
+        DataPersistanceManager.Instance.RemoveOneItem(item); //remove the item directly from the saved list in the json file
 
         Recollectable recollectableOfThisButton = item.itemSO; //perquè no posar només item.itemSO=
         //if the player has not selected a potion from the inventory, will add the
@@ -139,6 +139,5 @@ public class VillageDisplay : MonoBehaviour
     public void BackButton()
     {
         Loader.Load(SceneIndex.GamePlay);
-        UI_Inventory.Instance.ToggleInventoryButton();
     }
 }

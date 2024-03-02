@@ -21,23 +21,9 @@ public class Player : MonoBehaviour
 
     public Village savedVillage;
 
-    public static Player Instance { get; private set; }
-
     private void Awake()
     {
         InitializeInventory();
-
-        // If there is an instance, and it's not me, delete myself.
-
-        if (Instance != null)
-        {
-            Destroy(this);
-        }
-        else
-        {
-            Instance = this;
-            DontDestroyOnLoad(gameObject);
-        }
 
         _rbPlayer = GetComponent<Rigidbody2D>();
         lastMovement = Vector2.down;

@@ -50,15 +50,15 @@ public class DataPersistanceManager : MonoBehaviour
 
     private void Update()
     {
-        //if (Input.GetKeyDown(KeyCode.O))
-        //{
-        //    LoadInventory();
-        //}
+        if (Input.GetKeyDown(KeyCode.O))
+        {
+            SaveInventory(new List<Item>());
+        }
 
         //if (Input.GetKeyDown(KeyCode.L))
         //{
         //    //Debug.Log(GameAssets.Instance.GetRecollectableFromString("apple"));
-            
+
         //}
     }
 
@@ -146,8 +146,13 @@ public class DataPersistanceManager : MonoBehaviour
     //removes an item from the saved list
     public void RemoveOneItem(Item itemToRemove)
     {
-        List<Item> list = LoadInventory();
-        foreach(Item item in list)
+        localItemList = LoadInventory();
+        foreach (Item itemLoaded in localItemList)
+        {
+            Debug.Log("item loaded "+ itemLoaded.itemSO.name);
+        }
+
+        foreach (Item item in localItemList)
         {
             if(item == itemToRemove)
             {
@@ -157,10 +162,11 @@ public class DataPersistanceManager : MonoBehaviour
                 }
                 else
                 {
-                    list.Remove(itemToRemove); //en teoria és lo mateix posar aquí itemToRemove que item tot sol asi que nice
+                    localItemList.Remove(itemToRemove); //en teoria és lo mateix posar aquí itemToRemove que item tot sol asi que nice
                 }
             }
         }
+        SaveInventory(localItemList);
     }
 
     public void SaveVillage(Village village)

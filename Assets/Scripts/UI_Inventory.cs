@@ -30,6 +30,8 @@ public class UI_Inventory : MonoBehaviour
     private GameObject defaultSelectedButton;
     public IngredientsSpawner ingredientSpawner;
 
+    public GameObject prefabInventoryButton;
+
     public static UI_Inventory Instance { get; private set; }
 
     private void Awake()
@@ -54,7 +56,7 @@ public class UI_Inventory : MonoBehaviour
         inventory = player.GetInventory();
         ingredientSpawner = FindAnyObjectByType<IngredientsSpawner>();
 
-        HideAllChildren();
+        DestroyAllChildren();
 
         //inventoryButton.onClick.AddListener(() => EventSystem.current.SetSelectedGameObject(FindFirstButtonActive().gameObject));
     }
@@ -68,15 +70,18 @@ public class UI_Inventory : MonoBehaviour
                 villageDisplay = FindObjectOfType<VillageDisplay>();
             }
         }
-
-
+        if (SceneManager.GetActiveScene().buildIndex == (int)SceneIndex.GamePlay)
+        {
+            if (player == null)
+            {
+                player = FindAnyObjectByType<Player>();
+            }
+        }
         if (Input.GetKeyDown(KeyCode.B))
         {
             ToggleInventoryButton();
         }
-        //Debug.Log("the recollectableSavedForUsing is not longer null");
-        //villageDisplay.potion = recollectableSavedForUsing;
-        //villageDisplay.RefreshPotionField();
+
     }
 
     public void SetInventory(Inventory inventory)
@@ -85,23 +90,31 @@ public class UI_Inventory : MonoBehaviour
         //RefreshUiInventory();
     }
 
-    public void HideAllChildren()
+    //public void HideAllChildren()
+    //{
+    //    // hide all the buttons
+    //    foreach (Transform child in panelBackground.transform)
+    //    {
+    //        child.gameObject.SetActive(false);
+    //        //set active all the button inventory components
+    //        foreach (Transform child2 in child)
+    //        {
+    //            child2.gameObject.SetActive(true);
+    //        }
+    //    }
+    //}
+    public void DestroyAllChildren()
     {
-        // hide all the buttons
+        // destroy all the buttons
         foreach (Transform child in panelBackground.transform)
         {
-            child.gameObject.SetActive(false);
-            //set active all the button inventory components
-            foreach (Transform child2 in child)
-            {
-                child2.gameObject.SetActive(true);
-            }
+            Destroy(child.gameObject);
         }
     }
 
     public void RefreshItems()
     {
-        HideAllChildren();
+        DestroyAllChildren();
         //1st acces to the saved inventory
         itemList = player.GetInventory().GetItemList();
 
@@ -116,9 +129,7 @@ public class UI_Inventory : MonoBehaviour
                     //show only the health potions in the inventory
                     if (itemList[i].itemSO.recollectableType == RecollectableType.healthPotion)
                     {
-                        Transform potionButton = panelBackground.transform.GetChild(i);
-
-                        potionButton.gameObject.SetActive(true); 
+                        Transform potionButton = Instantiate(prefabInventoryButton.transform, panelBackground.transform); //create the button
 
                         RefreshButton(itemList[i], potionButton);
                     }
@@ -129,9 +140,7 @@ public class UI_Inventory : MonoBehaviour
                     break;
 
                 case (int)SceneIndex.GamePlay:
-                    Transform recollectableButton = panelBackground.transform.GetChild(i);
-
-                    recollectableButton.gameObject.SetActive(true);
+                    Transform recollectableButton = Instantiate(prefabInventoryButton.transform, panelBackground.transform); //create the button
 
                     RefreshButton(itemList[i], recollectableButton);
                     break;
@@ -218,7 +227,7 @@ public class UI_Inventory : MonoBehaviour
         {
             GameInput.Instance.EnablePlayerInputActions();
             panelBackground.SetActive(false);
-            HideAllChildren();
+            DestroyAllChildren();
             EventSystem.current.SetSelectedGameObject(null); // reset the selected button
             //Debug.Log("all the childrens of the panel background have been destroyed");
         }
