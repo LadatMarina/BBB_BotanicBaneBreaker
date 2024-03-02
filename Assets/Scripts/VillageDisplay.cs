@@ -120,10 +120,11 @@ public class VillageDisplay : MonoBehaviour
     }
     public void ChooseThePotionToGive(Item item) 
     {
+        Debug.Log("ChooseThePotionToGive / villageDisplay --> from the onClick button of the potion");
         //Player.Instance.RemoveOneItemFromList(item);
         DataPersistanceManager.Instance.RemoveOneItem(item); //remove the item directly from the saved list in the json file
 
-        Recollectable recollectableOfThisButton = item.itemSO; //perquè no posar només item.itemSO=
+        //Recollectable recollectableOfThisButton = item.itemSO; //perquè no posar només item.itemSO=
         //if the player has not selected a potion from the inventory, will add the
         //item that the button represents to the field potion in the village display and hide the inventoy
         if (hasSelectedAPotion == false)
