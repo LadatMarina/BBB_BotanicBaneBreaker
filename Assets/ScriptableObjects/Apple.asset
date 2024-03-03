@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Apple
   m_EditorClassIdentifier: 
   name: Apple
-  recollectableType: 0
+  recollectableType: 2
   sprite: {fileID: -1513162354, guid: 3b37751737c7529449844c9d142c01f8, type: 3}
   cureOf: 0
   ingredientsForMakeThePotion: []

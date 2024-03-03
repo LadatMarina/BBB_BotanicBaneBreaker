@@ -5,8 +5,9 @@ using UnityEngine.UI;
 
 public class KitchenManager : MonoBehaviour
 {
-    [SerializeField] private Transform savedIngredientField;
+    [SerializeField] private Transform ingredientField1;
     [SerializeField] private Transform ingredientField2;
+    private Transform actualIngredientField;
 
     //private IngredientHolder ingredientHolder1
 
@@ -20,31 +21,60 @@ public class KitchenManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if (Input.GetKeyDown(KeyCode.F))
+        {
+            IngredientHolder ingredientHolder = ingredientField1.GetComponent<IngredientHolder>();
+            if(ingredientHolder.ingredient == null){
+                Debug.Log("ingredientHolder.ingredient == null");
+            }
+            else
+            {
+                Debug.Log("ingredientHolder.ingredient != null");
+            }
+        }
     }
 
-    public void IngredientFieldButton(Transform transform)
+    public void IngredientFieldButton(int bttn)
     {
         UI_Inventory.Instance.ToggleInventoryButton();
+        
         //passar es transform de s'ingredient field perquè al chooseIngredient s'hi pugui accedir
+        switch (bttn)
+        {
+            case 1:
+                actualIngredientField = ingredientField1;
+                break;
+            case 2:
+                actualIngredientField = ingredientField2;
+                break;
+        }
     }
 
-    public void ChooseIngredient(Item item, Transform inventoryButton) //només se n'ha de restar 1 i afegir 1!!
+    public void ChooseIngredient(Item item) //només se n'ha de restar 1 i afegir 1!!
     {
-        IngredientHolder ingredientHolder = inventoryButton.GetComponent<IngredientHolder>(); //malament --> es qui te aqeust script és ingredient field, es qui fa toggle
+        Debug.Log("ChooseIngredient() / KM");
 
-        if(ingredientHolder.ingredient != null)
-        {
-            //was already an ingredient in the button
-            DataPersistanceManager.Instance.RemoveOneItem(ingredientHolder.ingredient);
-        }
+        UI_Inventory.Instance.ToggleInventoryButton();
+        IngredientHolder ingredientHolder = actualIngredientField.GetComponent<IngredientHolder>();
 
         //set the button ingredient as the field --> visuals and the item that represents
-        Button ingredientFieldButton = inventoryButton.GetComponent<Button>();
-        ingredientFieldButton.image.sprite = item.itemSO.sprite;
-        ingredientHolder.ingredient = item;
+        Button ingredientFieldButton = actualIngredientField.GetComponent<Button>();
 
-        //create a new item with amount 1 to ensure not to take a more than 1
-        DataPersistanceManager.Instance.AddOneItem(new Item { amount = 1, itemSO = item.itemSO }); 
+        //was already an ingredient in the button --> return this item to the list
+        if (ingredientHolder.ingredient.itemSO != null)
+        {
+            Debug.Log("there was already an ingredient, intercambio --> return the item to the inventory");
+            //if the button had an intem, return to the inventory the item --> returnPreviousItem()
+            DataPersistanceManager.Instance.AddOneItem(new Item { amount = 1, itemSO = ingredientHolder.ingredient.itemSO }); //create a new item w/amount 1
+            ingredientFieldButton.image.sprite = GameAssets.Instance.defaultEmptySprite;
+        }
+         //if there wasn't an ingredient asigned, remove from the list the item we want to use (parameter one)
+        
+        Debug.Log("hi hagués asignat o no un item, hem de llevar de sa llista s'actual");
+        DataPersistanceManager.Instance.RemoveOneItem(item); 
+
+        //set the button ingredient as the field --> visuals and the item that represents
+        ingredientFieldButton.image.sprite = item.itemSO.sprite;
+        ingredientHolder.ingredient = item; 
     }
 }

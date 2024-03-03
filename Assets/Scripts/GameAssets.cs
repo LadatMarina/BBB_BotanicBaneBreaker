@@ -7,7 +7,7 @@ public class GameAssets : MonoBehaviour
 {
     public Recollectable apple, bean, bluberry, strawberry, attackPotion1, healthPotion1, healthPotion2, healthPotion3, healthPotion4;
     public Village paco, maria, bel, toni;
-
+    public Sprite defaultEmptySprite;
     public static GameAssets Instance { get; private set; }
     private void Awake()
     {

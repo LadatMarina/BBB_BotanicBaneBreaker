@@ -1819,6 +1819,7 @@ MonoBehaviour:
   maria: {fileID: 11400000, guid: b2f9c281fcf777548aff0a1968b4d8cb, type: 2}
   bel: {fileID: 11400000, guid: 2e0db67437892984d9ad0015d31b50ad, type: 2}
   toni: {fileID: 11400000, guid: 2cb7b0764e38eb5498588b9329daaf0e, type: 2}
+  defaultEmptySprite: {fileID: 7482667652216324306, guid: 756dcf97cf15be1469dbb812362c0259, type: 3}
 --- !u!4 &1827284397
 Transform:
   m_ObjectHideFlags: 0

@@ -114,10 +114,18 @@ public class UI_Inventory : MonoBehaviour
     public void RefreshItems()
     {
         DestroyAllChildren();
-        //1st acces to the saved inventory
-        itemList = player.GetInventory().GetItemList();
 
         int sceneBuildIndex = SceneManager.GetActiveScene().buildIndex;
+
+        //1st acces to the saved inventory
+        if (sceneBuildIndex != (int)SceneIndex.GamePlay)
+        {
+            itemList = DataPersistanceManager.Instance.LoadInventory();
+        }
+        else
+        {
+            itemList = player.GetInventory().GetItemList();
+        }
 
         for (int i = 0; i < itemList.Count; i++)
         {
@@ -186,7 +194,7 @@ public class UI_Inventory : MonoBehaviour
                 break;
 
             case (int)SceneIndex.Kitchen:
-                buttonComponent.onClick.AddListener(() => kitchenManager.ChooseIngredient(item, recollectableButton));
+                buttonComponent.onClick.AddListener(() => kitchenManager.ChooseIngredient(item));
                 break;
         }
         
