@@ -9,13 +9,17 @@ public class KitchenManager : MonoBehaviour
     [SerializeField] private Transform ingredientField2;
     private Transform actualIngredientField;
 
+    [SerializeField] private Transform mixButton;
+    private IngredientHolder ingredientHolder1;
+    private IngredientHolder ingredientHolder2;
     //private IngredientHolder ingredientHolder1
 
     // Start is called before the first frame update
     void Start()
     {
-        //IngredientHolder 
-        //ingredientField1
+        mixButton.gameObject.SetActive(false);
+        ingredientHolder1 = ingredientField1.GetComponent<IngredientHolder>();
+        ingredientHolder2 = ingredientField2.GetComponent<IngredientHolder>();
     }
 
     // Update is called once per frame
@@ -75,6 +79,32 @@ public class KitchenManager : MonoBehaviour
 
         //set the button ingredient as the field --> visuals and the item that represents
         ingredientFieldButton.image.sprite = item.itemSO.sprite;
-        ingredientHolder.ingredient = item; 
+        ingredientHolder.ingredient = item;
+        CanMix(); //everytime the field is changed, check if can mix
+    }
+
+    private bool CanMix()
+    {
+
+
+        if (ingredientHolder1.ingredient.itemSO != null  && ingredientHolder2.ingredient.itemSO != null)
+        {
+            mixButton.gameObject.SetActive(true);
+            return true;
+        }
+        else
+        {
+            mixButton.gameObject.SetActive(false);
+            return false;
+        }
+    }
+
+    public void MixButton()
+    {
+        //recipes
+        switch (ingredientHolder1.ingredient.itemSO)
+        {
+
+        }
     }
 }
