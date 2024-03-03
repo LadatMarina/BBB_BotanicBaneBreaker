@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class GameAssets : MonoBehaviour
 {
-    public Recollectable apple, bean, bluberry, strawberry, attackPotion1, healthPotion1, healthPotion2, healthPotion3, healthPotion4;
+    public Recollectable apple, bean, bluberry, strawberry, attackPotion1, healthPotion1, healthPotion2, healthPotion3, healthPotion4, defaultPotion;
     public List<Recollectable> potions;
 
     public Village paco, maria, bel, toni;

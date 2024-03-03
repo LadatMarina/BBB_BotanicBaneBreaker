@@ -18,13 +18,14 @@ public class KitchenManager : MonoBehaviour
     private IngredientHolder ingredientHolder2;
     private PotionHolder potionHolder;
     private Button potionHolderButton;
-
+    private MainMenuUiManager mainMenuUiManager;
     private void Awake()
     {
         ingredientHolder1 = ingredientField1.GetComponent<IngredientHolder>();
         ingredientHolder2 = ingredientField2.GetComponent<IngredientHolder>();
         potionHolder = potionField.GetComponent<PotionHolder>();
         potionHolderButton = potionField.GetComponent<Button>();
+        mainMenuUiManager = FindObjectOfType<MainMenuUiManager>();
     }
 
     void Start()
@@ -117,10 +118,21 @@ public class KitchenManager : MonoBehaviour
         mixButton.gameObject.SetActive(false); //hide the button
         Debug.Log("mixButton() / kitchenManager");
         Recollectable resultPotion = GameAssets.Instance.GetPotionFromIngredients(ingredientHolder1.ingredient.itemSO, ingredientHolder2.ingredient.itemSO);
-        potionHolder.potion = resultPotion;
-        potionHolderButton.image.sprite = resultPotion.sprite;
-        potionHolderButton.interactable = true;
-        //show explanation text of "you can click here to decide what to do
+        if(resultPotion != GameAssets.Instance.defaultPotion)
+        {
+            //it's an existing potion
+            mainMenuUiManager.PlayParticles();
+            potionHolder.potion = resultPotion;
+            potionHolderButton.image.sprite = resultPotion.sprite;
+            potionHolderButton.interactable = true;
+            //show explanation text of "you can click here to decide what to do
+        }
+        else
+        {
+            //there's not a recipe for this combination --> change the ingredients
+            potionHolderButton.image.sprite = resultPotion.sprite;
+        }
+
     }
 
     public void PotionFieldButton()
