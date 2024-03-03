@@ -9,10 +9,14 @@ public class MainMenuUiManager : MonoBehaviour
     public GameObject quitCheckerPanel;
     public GameObject backButton;
     public GameObject playButton;
+    public GameObject creditsPanel;
+    public GameObject controllsPanel;
 
     private void Awake()
     {
         quitCheckerPanel.SetActive(false);
+        creditsPanel.SetActive(false);
+        controllsPanel.SetActive(false);
     }
 
     public void PlayButton()
@@ -38,4 +42,6 @@ public class MainMenuUiManager : MonoBehaviour
         quitCheckerPanel.SetActive(false);
         EventSystem.current.SetSelectedGameObject(playButton);
     }
+    public void ToggleCreditsButton() { creditsPanel.SetActive(!creditsPanel.activeInHierarchy); }
+    public void ToggleControllsButton() { controllsPanel.SetActive(!controllsPanel.activeInHierarchy); }
 }
