@@ -11,7 +11,6 @@ public class MainMenuUiManager : MonoBehaviour
     public GameObject playButton;
     public GameObject creditsPanel;
     public GameObject controllsPanel;
-    public ParticleSystem blueExplosion;
 
     private void Awake()
     {
@@ -45,5 +44,5 @@ public class MainMenuUiManager : MonoBehaviour
     }
     public void ToggleCreditsButton() { creditsPanel.SetActive(!creditsPanel.activeInHierarchy); }
     public void ToggleControllsButton() { controllsPanel.SetActive(!controllsPanel.activeInHierarchy); }
-    public void PlayParticles() { blueExplosion.Play(); }
+
 }

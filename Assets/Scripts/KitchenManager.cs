@@ -13,19 +13,20 @@ public class KitchenManager : MonoBehaviour
 
     [SerializeField] private Transform potionField;
     [SerializeField] private Transform mixButton;
+    [SerializeField] private ParticleSystem blueExplosion;
 
     private IngredientHolder ingredientHolder1;
     private IngredientHolder ingredientHolder2;
     private PotionHolder potionHolder;
     private Button potionHolderButton;
-    private MainMenuUiManager mainMenuUiManager;
+
     private void Awake()
     {
         ingredientHolder1 = ingredientField1.GetComponent<IngredientHolder>();
         ingredientHolder2 = ingredientField2.GetComponent<IngredientHolder>();
         potionHolder = potionField.GetComponent<PotionHolder>();
         potionHolderButton = potionField.GetComponent<Button>();
-        mainMenuUiManager = FindObjectOfType<MainMenuUiManager>();
+
     }
 
     void Start()
@@ -121,7 +122,8 @@ public class KitchenManager : MonoBehaviour
         if(resultPotion != GameAssets.Instance.defaultPotion)
         {
             //it's an existing potion
-            mainMenuUiManager.PlayParticles();
+            PlayParticles();
+            SoundManager.Instance.PlaySFX(SoundManager.Instance.sound1);
             potionHolder.potion = resultPotion;
             potionHolderButton.image.sprite = resultPotion.sprite;
             potionHolderButton.interactable = true;
@@ -154,6 +156,7 @@ public class KitchenManager : MonoBehaviour
         whatToDoPanel.gameObject.SetActive(false);
     }
 
+    public void PlayParticles() { blueExplosion.Play(); }
     private void ResetAllFields()
     {
         //reset all the fields

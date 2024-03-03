@@ -5410,6 +5410,7 @@ MonoBehaviour:
   healthPotion2: {fileID: 0}
   healthPotion3: {fileID: 0}
   healthPotion4: {fileID: 0}
+  defaultPotion: {fileID: 0}
   potions: []
   paco: {fileID: 11400000, guid: 22fa20da6d0e9834bb4e8574bd436a90, type: 2}
   maria: {fileID: 11400000, guid: b2f9c281fcf777548aff0a1968b4d8cb, type: 2}
@@ -5480,6 +5481,7 @@ MonoBehaviour:
   playButton: {fileID: 1089489674}
   creditsPanel: {fileID: 556582982}
   controllsPanel: {fileID: 1549012945}
+  blueExplosion: {fileID: 8466879634426260115, guid: 3e4ba3e62f9bb534fb920aa8d42313bb, type: 3}
 --- !u!1 &1950690606
 GameObject:
   m_ObjectHideFlags: 0
