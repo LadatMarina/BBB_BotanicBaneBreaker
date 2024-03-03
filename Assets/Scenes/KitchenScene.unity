@@ -481,6 +481,18 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 5.5950093
       objectReference: {fileID: 0}
+    - target: {fileID: 3580617435229741918, guid: 3a3e27c27f0bbef469f56fac94a89c6b, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 950925662}
+    - target: {fileID: 3580617435229741918, guid: 3a3e27c27f0bbef469f56fac94a89c6b, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: SavePotion
+      objectReference: {fileID: 0}
+    - target: {fileID: 3580617435229741918, guid: 3a3e27c27f0bbef469f56fac94a89c6b, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: KitchenManager, Assembly-CSharp
+      objectReference: {fileID: 0}
     - target: {fileID: 8230238591877160805, guid: 3a3e27c27f0bbef469f56fac94a89c6b, type: 3}
       propertyPath: m_Name
       value: SaveButton
@@ -600,8 +612,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 048bbe8fe27b1e341b4ef7eaf54dae2f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  whatToDoPanel: {fileID: 1170080239}
   ingredientField1: {fileID: 1678385405}
   ingredientField2: {fileID: 2075188931}
+  potionField: {fileID: 1579124856}
   mixButton: {fileID: 1120012740}
 --- !u!4 &950925663
 Transform:
@@ -939,7 +953,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1120012742}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 950925662}
+        m_TargetAssemblyTypeName: KitchenManager, Assembly-CSharp
+        m_MethodName: MixButton
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1120012742
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1484,6 +1510,7 @@ GameObject:
   - component: {fileID: 1579124859}
   - component: {fileID: 1579124858}
   - component: {fileID: 1579124857}
+  - component: {fileID: 1579124860}
   m_Layer: 5
   m_Name: Button_result
   m_TagString: Untagged
@@ -1553,7 +1580,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1579124858}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 950925662}
+        m_TargetAssemblyTypeName: KitchenManager, Assembly-CSharp
+        m_MethodName: PotionFieldButton
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1579124858
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1592,6 +1631,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1579124855}
   m_CullTransparentMesh: 1
+--- !u!114 &1579124860
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1579124855}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9f780ef61360d0643a4b2d35150bdd76, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  potion: {fileID: 0}
 --- !u!1 &1596882185
 GameObject:
   m_ObjectHideFlags: 0
@@ -2049,6 +2101,18 @@ PrefabInstance:
     - target: {fileID: 3259517949547564580, guid: 3a3e27c27f0bbef469f56fac94a89c6b, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 5.5950093
+      objectReference: {fileID: 0}
+    - target: {fileID: 3580617435229741918, guid: 3a3e27c27f0bbef469f56fac94a89c6b, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 950925662}
+    - target: {fileID: 3580617435229741918, guid: 3a3e27c27f0bbef469f56fac94a89c6b, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: ThrowPotion
+      objectReference: {fileID: 0}
+    - target: {fileID: 3580617435229741918, guid: 3a3e27c27f0bbef469f56fac94a89c6b, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: KitchenManager, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 8230238591877160805, guid: 3a3e27c27f0bbef469f56fac94a89c6b, type: 3}
       propertyPath: m_Name

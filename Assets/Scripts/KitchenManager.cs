@@ -5,24 +5,35 @@ using UnityEngine.UI;
 
 public class KitchenManager : MonoBehaviour
 {
+    [SerializeField] private Transform whatToDoPanel;
+
     [SerializeField] private Transform ingredientField1;
     [SerializeField] private Transform ingredientField2;
     private Transform actualIngredientField;
 
+    [SerializeField] private Transform potionField;
     [SerializeField] private Transform mixButton;
+
     private IngredientHolder ingredientHolder1;
     private IngredientHolder ingredientHolder2;
-    //private IngredientHolder ingredientHolder1
+    private PotionHolder potionHolder;
+    private Button potionHolderButton;
 
-    // Start is called before the first frame update
+    private void Awake()
+    {
+        ingredientHolder1 = ingredientField1.GetComponent<IngredientHolder>();
+        ingredientHolder2 = ingredientField2.GetComponent<IngredientHolder>();
+        potionHolder = potionField.GetComponent<PotionHolder>();
+        potionHolderButton = potionField.GetComponent<Button>();
+    }
+
     void Start()
     {
         mixButton.gameObject.SetActive(false);
-        ingredientHolder1 = ingredientField1.GetComponent<IngredientHolder>();
-        ingredientHolder2 = ingredientField2.GetComponent<IngredientHolder>();
+        whatToDoPanel.gameObject.SetActive(false);
+        potionHolderButton.interactable = false;
     }
 
-    // Update is called once per frame
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.F))
@@ -40,6 +51,8 @@ public class KitchenManager : MonoBehaviour
 
     public void IngredientFieldButton(int bttn)
     {
+        Debug.Log("ingredientFieldButton() / kitchenManager");
+
         UI_Inventory.Instance.ToggleInventoryButton();
         
         //passar es transform de s'ingredient field perquè al chooseIngredient s'hi pugui accedir
@@ -85,7 +98,7 @@ public class KitchenManager : MonoBehaviour
 
     private bool CanMix()
     {
-
+        Debug.Log("canMix() / kitchenManager");
 
         if (ingredientHolder1.ingredient.itemSO != null  && ingredientHolder2.ingredient.itemSO != null)
         {
@@ -101,10 +114,46 @@ public class KitchenManager : MonoBehaviour
 
     public void MixButton()
     {
-        //recipes
-        switch (ingredientHolder1.ingredient.itemSO)
-        {
+        mixButton.gameObject.SetActive(false); //hide the button
+        Debug.Log("mixButton() / kitchenManager");
+        Recollectable resultPotion = GameAssets.Instance.GetPotionFromIngredients(ingredientHolder1.ingredient.itemSO, ingredientHolder2.ingredient.itemSO);
+        potionHolder.potion = resultPotion;
+        potionHolderButton.image.sprite = resultPotion.sprite;
+        potionHolderButton.interactable = true;
+        //show explanation text of "you can click here to decide what to do
+    }
 
-        }
+    public void PotionFieldButton()
+    {
+        //show whatToDoPanel 
+        whatToDoPanel.gameObject.SetActive(true);
+    }
+
+    public void SavePotion()
+    {
+        DataPersistanceManager.Instance.AddOneItem(new Item { amount = 1, itemSO = potionHolder.potion });
+        whatToDoPanel.gameObject.SetActive(false);
+        //ResetAllFields();
+    }
+
+    public void ThrowPotion()
+    {
+        ResetAllFields();
+        whatToDoPanel.gameObject.SetActive(false);
+    }
+
+    private void ResetAllFields()
+    {
+        //reset all the fields
+        ingredientHolder1.ingredient = null;
+        Button ingredientFieldButton1 = ingredientField1.GetComponent<Button>();
+        ingredientFieldButton1.image.sprite = GameAssets.Instance.defaultEmptySprite;
+
+        ingredientHolder2.ingredient = null;
+        Button ingredientFieldButton2 = ingredientField2.GetComponent<Button>();
+        ingredientFieldButton2.image.sprite = GameAssets.Instance.defaultEmptySprite;
+
+        potionHolder.potion = null;
+        potionHolderButton.image.sprite = GameAssets.Instance.defaultEmptySprite;
     }
 }

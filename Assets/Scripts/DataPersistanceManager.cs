@@ -196,27 +196,23 @@ public class DataPersistanceManager : MonoBehaviour
 
         if (localItemList != null)
         {
-            if (localItemList.Count < 0)
-            {
-                Debug.Log("itemList.of the inventory is less than 0");
-            }
+            bool itemInInventory = false;
             Debug.Log("addOneItem / inventory");
-            for (int i = 1; i < localItemList.Count; i++)
+            foreach (Item inventoryItem in localItemList)
             {
-                //if the item was already, amount+ / true
-                if (item.itemSO == localItemList[i-1].itemSO)
+                if (item.itemSO == inventoryItem.itemSO)
                 {
-                    Debug.Log("the item was in the list, it's amount is increased");
-                    localItemList[i].amount = localItemList[i].amount + item.amount;
+                    Debug.Log("The item was already in the list; its amount is increased");
+                    inventoryItem.amount += item.amount;
+                    itemInInventory = true;
                     break;
                 }
-                else
-                {
-                    Debug.Log("the item was not in the list; item added");
+            }
 
-                    localItemList.Add(item);
-                    break;
-                }
+            if (!itemInInventory)
+            {
+                Debug.Log("The item was not in the list; item added");
+                localItemList.Add(item);
             }
         }
         else
