@@ -156,4 +156,5 @@ public class KitchenManager : MonoBehaviour
         potionHolder.potion = null;
         potionHolderButton.image.sprite = GameAssets.Instance.defaultEmptySprite;
     }
+    public void BackButton() { Loader.Load(SceneIndex.GamePlay); }
 }
