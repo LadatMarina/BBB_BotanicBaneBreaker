@@ -10,12 +10,10 @@ public class ExplanationManagerUI : MonoBehaviour
     public TextMeshProUGUI explanationText;
 
     private void Awake()
-    {
-        // If there is an instance, and it's not me, delete myself.
-
+    {   //singleton
         if (Instance != null)
         {
-            Destroy(this);
+            Destroy(this.gameObject);
         }
         else
         {
@@ -23,24 +21,21 @@ public class ExplanationManagerUI : MonoBehaviour
             DontDestroyOnLoad(gameObject);
         }
     }
-
     void Start()
     {
         explanationPanel.gameObject.SetActive(false);
     }
-
-    public void ShowAnExplanation(string explanation)
+    //show the explanation and hide after x seconds
+    public void ShowAnExplanation(string explanation, int seconds)
     {
         explanationPanel.gameObject.SetActive(true);
         explanationText.text = explanation;
-        ShowTime();
-        
+        StartCoroutine(RemoveAfterSeconds(seconds, explanationPanel.gameObject));
     }
     public void HideExplanation() { explanationPanel.gameObject.SetActive(false); }
-
-    private IEnumerator ShowTime()
+    private IEnumerator RemoveAfterSeconds(int seconds, GameObject obj)
     {
-        yield return new WaitForSeconds(5);
-        explanationPanel.gameObject.SetActive(false);
+        yield return new WaitForSeconds(2);
+        obj.SetActive(false);
     }
 }

@@ -13,7 +13,7 @@ public class SoundManager : MonoBehaviour
     [SerializeField] private AudioSource musicAudioSource;
     [SerializeField] private AudioSource sfxAudioSource;
 
-    public AudioClip sound1, sound2, sound3, sound4;
+    public AudioClip mainMenuMusic, gamePlayMusic, kitchenMusic, homeMusic, loadingSceneMusic, winMusic, toggleButtonSound, recolectSound, dropSound;
 
     private int scene;
 
@@ -35,8 +35,6 @@ public class SoundManager : MonoBehaviour
     private void Start()
     {
         //start playing at the begining of the game. 
-        //after this, make that depending of the scene (sceneIndex.scene) the background music will change
-        //en tenir resolt lo de s'inicialització dels scripts faré aquí a s'start es switch de ses escenes
         RefreshSceneMusic();
     }
 
@@ -60,27 +58,44 @@ public class SoundManager : MonoBehaviour
         {
             case (int)SceneIndex.MainMenu:
                 //play background music 1
-                musicAudioSource.clip = sound1;
+                musicAudioSource.clip = mainMenuMusic;
                 musicAudioSource.loop = true;
                 musicAudioSource.Play();
                 break;
             case (int)SceneIndex.GamePlay:
-                musicAudioSource.clip = sound2;
+                musicAudioSource.clip = gamePlayMusic;
                 musicAudioSource.loop = true;
                 musicAudioSource.Play();
                 break;
             case (int)SceneIndex.House:
                 //play background music 3
-                musicAudioSource.clip = sound1;
+                musicAudioSource.clip = homeMusic;
                 musicAudioSource.loop = true;
+                musicAudioSource.Play();
+                break;
+            case (int)SceneIndex.Kitchen:
+                //play background music 3
+                musicAudioSource.clip = kitchenMusic;
+                musicAudioSource.loop = true;
+                musicAudioSource.Play();
+                break;
+            case (int)SceneIndex.LoadingScene:
+                //play background music 3
+                musicAudioSource.clip = loadingSceneMusic;
+                musicAudioSource.loop = true;
+                musicAudioSource.Play();
+                break;
+            case (int)SceneIndex.WinScene:
+                //play background music 3
+                musicAudioSource.clip = winMusic;
                 musicAudioSource.Play();
                 break;
         }
     }
 
-    public void SetVolumeValue()
-    {
-        musicAudioSource.volume = PlayerPrefs.GetFloat(MUSIC_VOL);
-        sfxAudioSource.volume = PlayerPrefs.GetFloat(SFX_VOL);
-    }
+    //public void SetVolumeValue()
+    //{
+    //    musicAudioSource.volume = PlayerPrefs.GetFloat(MUSIC_VOL);
+    //    sfxAudioSource.volume = PlayerPrefs.GetFloat(SFX_VOL);
+    //}
 }

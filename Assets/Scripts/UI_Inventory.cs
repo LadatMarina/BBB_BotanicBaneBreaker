@@ -29,7 +29,6 @@ public class UI_Inventory : MonoBehaviour
     //private Transform containerTemplate;
 
     public GameObject popUpPanel;
-    private GameObject defaultSelectedButton;
     public IngredientsSpawner ingredientSpawner;
 
     public GameObject prefabInventoryButton;
@@ -39,8 +38,6 @@ public class UI_Inventory : MonoBehaviour
     private void Awake()
     {
         //singleton
-        // If there is an instance, and it's not me, delete myself.
-
         if (Instance != null)
         {
             Destroy(this);
@@ -51,16 +48,9 @@ public class UI_Inventory : MonoBehaviour
             DontDestroyOnLoad(gameObject);
         }
 
-        //-----------------------------
-
         player = FindAnyObjectByType<Player>();
-
         inventory = player.GetInventory();
-        
-
         DestroyAllChildren();
-
-        //inventoryButton.onClick.AddListener(() => EventSystem.current.SetSelectedGameObject(FindFirstButtonActive().gameObject));
     }
 
     private void Update()
@@ -137,7 +127,6 @@ public class UI_Inventory : MonoBehaviour
                     if (itemList[i].itemSO.recollectableType == RecollectableType.healthPotion)
                     {
                         Transform potionButton = Instantiate(prefabInventoryButton.transform, panelBackground.transform); //create the button
-
                         RefreshButton(itemList[i], potionButton);
                     }
                     else
@@ -156,12 +145,11 @@ public class UI_Inventory : MonoBehaviour
                     if (itemList[i].itemSO.recollectableType == RecollectableType.ingredients) //show only the ingredients avaliables
                     {
                         Transform potionButton = Instantiate(prefabInventoryButton.transform, panelBackground.transform); //create the button
-
                         RefreshButton(itemList[i], potionButton);
                     }
                     else
                     {
-                        Debug.Log("there's no ingredients to show");
+                        Debug.LogWarning("there's no ingredients to show");
                     }
                     break;
             }
@@ -190,7 +178,7 @@ public class UI_Inventory : MonoBehaviour
                 break;
 
             case (int)SceneIndex.GamePlay:
-                buttonComponent.onClick.AddListener(() => DropItem(item, recollectableButton)); //aqui anava localItem, mira si funciona
+                buttonComponent.onClick.AddListener(() => DropItem(item, recollectableButton)); 
                 break;
 
             case (int)SceneIndex.Kitchen:
@@ -206,10 +194,10 @@ public class UI_Inventory : MonoBehaviour
         int i = 0;
         foreach (Vector2 dropDirection in directions)
         {
-            if (!player.SomethingInFrontOf(dropDirection)) // si no hi ha res quant dropDirection, instancia i atura es bulce
+            if (!player.SomethingInFrontOf(dropDirection)) 
             {
                 //PLAY AN SFX WHEN RECOLLECT
-                SoundManager.Instance.PlaySFX(SoundManager.Instance.sound4); 
+                SoundManager.Instance.PlaySFX(SoundManager.Instance.dropSound); 
 
                 // Drop the item to the world
                 GameObject newItem = GameManager.Instance.CreateNewItem(item.itemSO, player.transform.position + (Vector3)dropDirection * 2, item.amount);
@@ -219,13 +207,10 @@ public class UI_Inventory : MonoBehaviour
                 player.RemoveItem(item); 
 
                 // Refresh the UI inventory by hiding the button where the element was 
-                //AQUI HAURIA DE FER UN REFRESH A TOT
-                //RefreshItems();
                 recollectableButton.gameObject.SetActive(false);
 
                 //everytime I drop an item, the selected button has to change
                 FindFirstButtonActive();
-                //EventSystem.current.SetSelectedGameObject(defaultSelectedButton);
 
                 break;
             }
@@ -234,9 +219,8 @@ public class UI_Inventory : MonoBehaviour
                 i++;
                 if(i>= directions.Length)
                 {
-                    //AQUÍ HE DE POSAR QUE QUANT DONI FALS A SES 4 DIRECCIONS, ARA ME DIU QUE NO HI HA ESPAI A SA PRIMERA QUE COMPROVA --> textMeshPro
                     // If no space is available in any direction, log an error message
-                    Debug.Log("The item could not be instantiated, there's no space");
+                    Debug.LogWarning("The item could not be instantiated, there's no space");
                 }
             }
         }
@@ -245,7 +229,7 @@ public class UI_Inventory : MonoBehaviour
     public void ToggleInventoryButton()
     {
         //PLAY AN SFX WHEN RECOLLECT
-        SoundManager.Instance.PlaySFX(SoundManager.Instance.sound3);
+        SoundManager.Instance.PlaySFX(SoundManager.Instance.toggleButtonSound);
 
         if (panelBackground.activeInHierarchy) //if it's true, will be closed so we have to destroy all the elements
         {

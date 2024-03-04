@@ -15,8 +15,6 @@ public class Player : MonoBehaviour
 
     private Inventory inventory;
 
-    //public bool listInitialized = false;
-
     public LayerMask collisionableLayer;
 
     public Village savedVillage;
@@ -38,7 +36,6 @@ public class Player : MonoBehaviour
 
             Vector3 lastPos = GameManager.Instance.GetLastPlayerPos();
             transform.position = new Vector3(lastPos.x, lastPos.y - 1, 0);
-            //Debug.Log("because the gameManager was storing a last player position, the player has moved to that last position " + transform.position);
         }
         else
         {
@@ -53,30 +50,14 @@ public class Player : MonoBehaviour
             Vector2 inputVector = gameInput.GetInputVectorNormalized();
             if ((Vector3)inputVector != Vector3.zero)
             {
-                //Vector3 moveDir = new Vector3(inputVector.x, inputVector.y, 0);
-                //transform.position += (Vector3)inputVector * moveSpeed * Time.deltaTime;
                 _rbPlayer.velocity = (Vector3)inputVector * moveSpeed;
                 isWalking = true;
                 lastMovement = inputVector;
             }
         }
-
-        //the player will be desabled and hidden if there's not in the gamePlay scene
-        if(SceneManager.GetActiveScene().buildIndex != (int)SceneIndex.GamePlay)
-        {
-            //gameInput.DisablePlayerInputActions();
-            //Debug.Log("Call disablePlayerInputActions from update / player");
-            //if (gameObject.activeInHierarchy) { gameObject.SetActive(false); }
-        }
-        else
-        {
-            //gameInput.EnablePlayerInputActions();
-            //if (!gameObject.activeInHierarchy) { gameObject.SetActive(true); }
-        }
     }
     private void LateUpdate()
     {
-        //other ways to write it down: _rbPlayer.velocity = isWalking ? _rbPlayer.velocity : Vector2.zero;
         if (isWalking == false) { _rbPlayer.velocity = Vector2.zero; }
     }
 
@@ -88,17 +69,15 @@ public class Player : MonoBehaviour
     public void InitializeInventory() 
     {
         inventory = new Inventory(); 
-        if(DataPersistanceManager.Instance.LoadInventory().Count < 0)
+        if(DataPersistanceManager.Instance.LoadInventory().Count >= 0)
         {
-            Debug.Log("No list JSON --> new emplty inicialized");
-
-            //there are no items saved in the inventory
+            //there are items saved in the inventory --> load this items to the new inventory.itemList();
+            inventory.SetItemList(DataPersistanceManager.Instance.LoadInventory());
         }
         else
         {
-            //there are items saved in the inventory --> load this items to the new inventory.itemList();
-            Debug.Log("bc there was elements saved before, the list is loaded from JSON");
-            inventory.SetItemList(DataPersistanceManager.Instance.LoadInventory());
+            Debug.Log("No list JSON --> new emplty inicialized");
+            //there are no items saved in the inventory
         }
     }
 

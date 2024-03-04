@@ -55,24 +55,11 @@ public class DataPersistanceManager : MonoBehaviour
         }
 
     }
-
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.G))
-        {
-            List<Item> newList = new List<Item>();
-            newList.Add(new Item() { amount = 1, itemSO = PotionManager.Instance.blitzir });
-            SaveGame(false, newList);
-            Debug.Log("saved the blitzir as the unlocked potion");
-        }
-    }
-
     public List<ConvertedItem> SaveInventory(List<Item> listToSave)
     {
-        //Debug.Log("SaveInventory / DataManager");
         int i = 0;
-        SaveObject saveObejct = new (); //create a new save object to store the inventory 
-        if(saveObejct != null)
+        SaveObject saveObejct = new(); //create a new save object to store the inventory 
+        if (saveObejct != null)
         {
             foreach (Item itemToSave in listToSave) //per cada item de sa llista, feim un item amb diferent tipus
             {
@@ -83,17 +70,12 @@ public class DataPersistanceManager : MonoBehaviour
                 }
                 i++;
             }
+
             string savedObjectJson = JsonUtility.ToJson(saveObejct, true);
-
-            // Ruta completa del archivo, se concatena con la ruta del directorio de datos persistente y el nombre del archivo
-
-
-            // Escribe la cadena JSON en el archivo
+            // write data to JSON
             File.WriteAllText(filePath, savedObjectJson);
 
-            Debug.Log("Inventory saved to: " + filePath);
             return saveObejct.saveItemList;
-
         }
         return null;
     }
@@ -114,8 +96,6 @@ public class DataPersistanceManager : MonoBehaviour
                 {
                     if(convertedItem != null)
                     {
-                        
-                        Debug.Log("item to convert :" + convertedItem.itemSO);
                         Item newItem = new Item
                         {
                             itemSO = GameAssets.Instance.GetRecollectableFromString(convertedItem.itemSO),
@@ -127,23 +107,16 @@ public class DataPersistanceManager : MonoBehaviour
             }
             else
             {
-                //Debug.Log("saveItemList == null");
+                Debug.LogWarning("SaveObject of the JSON file does not exist. Cannot load inventory.");
             }
         }
         else
         {
-            // Aquí no tendríamos que caer nunca
-            //Debug.LogError("No save file");
+            Debug.LogWarning("JSON file doesn't exist. Cannot load inventory.");
         }
-        if(newList == null)
+        if (newList == null)
         {
             //Debug.Log("newList null");
-        }
-        else
-        {
-            foreach (Item item in newList) { //Debug.Log("item of the newList returned " + item.itemSO.name);
-                                             }
-
         }
         return newList;
     }
@@ -170,20 +143,22 @@ public class DataPersistanceManager : MonoBehaviour
     public void RemoveOneItem(Item itemToRemove)
     {
         localItemList = LoadInventory();
-
-        foreach (Item item in localItemList)
+        if(localItemList != null)
         {
-            if(item.itemSO == itemToRemove.itemSO)
+            foreach (Item item in localItemList)
             {
-                if(item.amount != 1)
+                if (item.itemSO == itemToRemove.itemSO)
                 {
-                    item.amount--;
-                    break; 
-                }
-                else
-                {
-                    localItemList.Remove(item); //en teoria és lo mateix posar aquí itemToRemove que item tot sol asi que nice
-                    break;  
+                    if (item.amount != 1)
+                    {
+                        item.amount--;
+                        break;
+                    }
+                    else
+                    {
+                        localItemList.Remove(item); //en teoria és lo mateix posar aquí itemToRemove que item tot sol asi que nice
+                        break;
+                    }
                 }
             }
         }
@@ -197,27 +172,23 @@ public class DataPersistanceManager : MonoBehaviour
         if (localItemList != null)
         {
             bool itemInInventory = false;
-            Debug.Log("addOneItem / inventory");
             foreach (Item inventoryItem in localItemList)
             {
                 if (item.itemSO == inventoryItem.itemSO)
                 {
-                    Debug.Log("The item was already in the list; its amount is increased");
                     inventoryItem.amount += item.amount;
                     itemInInventory = true;
                     break;
                 }
             }
-
             if (!itemInInventory)
             {
-                Debug.Log("The item was not in the list; item added");
                 localItemList.Add(item);
             }
         }
         else
         {
-            Debug.Log("itemList NULL /inventory class");
+            Debug.LogWarning("ItemList null. Cannot add an item.");
         }
 
         SaveInventory(localItemList);
@@ -241,28 +212,34 @@ public class DataPersistanceManager : MonoBehaviour
 
     public Village LoadVillage()
     {
-        if (!File.Exists(filePath))
+        if (File.Exists(filePath))
         {
-            return null;
+            string savedObjectString = File.ReadAllText(filePath);
+            SaveObject saveObject = new SaveObject();
+            saveObject = JsonUtility.FromJson<SaveObject>(savedObjectString);
+            if (saveObject != null)
+            {
+                return GameAssets.Instance.GetVillageFromString(saveObject.villager);
+            }
+            else
+            {
+                Debug.LogWarning("The saveObject is null. Couldn't load the village");
+                return null;
+            }
         }
-
-        string savedObjectString = File.ReadAllText(filePath);
-
-        SaveObject saveObject = new SaveObject();
-        saveObject = JsonUtility.FromJson<SaveObject>(savedObjectString);
-
-        return GameAssets.Instance.GetVillageFromString(saveObject.villager);
+        Debug.LogWarning("JSON file does not exists. Could not load the village");
+        return null;
     }
 
     public void SaveGame(bool b, List<Item> unlockedPotions)
     {
         //initialze the object we store
-        SaveObject saveObject = new SaveObject
+        SaveObject saveObject = new SaveObject()
         {
             saveItemList = LoadSavedItemList(),
-            villager = LoadVillage().name,
+            villager = "", //not necessary save the village between the games
             isFirstGame = b,
-            //unlockedPotionsList = 
+            unlockedPotionsList = new List<ConvertedItem>()
         };
 
         //meanwhile there's unlocked potions to save, make the conversion
@@ -289,18 +266,25 @@ public class DataPersistanceManager : MonoBehaviour
     }
     public bool LoadIsFirstGame()
     {
-        if(!File.Exists(filePath))
+        if(File.Exists(filePath))
         {
-            Debug.LogError("the file JSON that stores 'isFirstGame' doesn't exists");
-            return false;
+            string savedObjectString = File.ReadAllText(filePath);
+            SaveObject saveObject = new SaveObject();
+            saveObject = JsonUtility.FromJson<SaveObject>(savedObjectString);
+            if(saveObject != null)
+            {
+                return saveObject.isFirstGame;
+            }
+            else
+            {
+                Debug.LogWarning("The saveObject is null. Couldn't load the bool isFirstGame");
+                return false;
+            }
         }
-
-        string savedObjectString = File.ReadAllText(filePath);
-
-        SaveObject saveObject = new SaveObject();
-        saveObject = JsonUtility.FromJson<SaveObject>(savedObjectString);
-
-        return saveObject.isFirstGame;
+        
+        Debug.LogError("the file JSON that stores 'isFirstGame' doesn't exists");
+        return false;
+        
     }
 
     public List<Item> LoadUnlockedList()
@@ -340,7 +324,7 @@ public class DataPersistanceManager : MonoBehaviour
     private void CreateFirstJsonFile()
     {
         //initialze the object we store
-        SaveObject saveObject = new SaveObject
+        SaveObject saveObject = new SaveObject()
         {
             saveItemList = new List<ConvertedItem>(),
             villager = "",

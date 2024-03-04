@@ -1918,7 +1918,7 @@ PrefabInstance:
       objectReference: {fileID: 1859479692}
     - target: {fileID: 3580617435229741918, guid: 3a3e27c27f0bbef469f56fac94a89c6b, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: QuitButton
+      value: QuitButtonConfirm
       objectReference: {fileID: 0}
     - target: {fileID: 8230238591877160805, guid: 3a3e27c27f0bbef469f56fac94a89c6b, type: 3}
       propertyPath: m_Name
@@ -3912,10 +3912,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   musicAudioSource: {fileID: 340420557}
   sfxAudioSource: {fileID: 1641459}
-  sound1: {fileID: 8300000, guid: a985437396af6f044875b18e2c885ed9, type: 3}
-  sound2: {fileID: 8300000, guid: 9d34a2b5c221e344382276d6b6b01e9b, type: 3}
-  sound3: {fileID: 8300000, guid: 10b1490e4a1488d438dad937d8e3bc3d, type: 3}
-  sound4: {fileID: 8300000, guid: b12d868430faa094389ef38ac255a5ed, type: 3}
+  mainMenuMusic: {fileID: 8300000, guid: a985437396af6f044875b18e2c885ed9, type: 3}
+  gamePlayMusic: {fileID: 8300000, guid: fba307bf5e79b0f4eaee61a0296374b4, type: 3}
+  kitchenMusic: {fileID: 8300000, guid: b88878d939831404fa00229296764468, type: 3}
+  homeMusic: {fileID: 8300000, guid: 0f45aaed1eb4f4d45a6e501c59413ceb, type: 3}
+  loadingSceneMusic: {fileID: 8300000, guid: c2339a7cdc6f04e4ea9f29a18d863b14, type: 3}
+  winMusic: {fileID: 8300000, guid: cee6a03056361194eb35a78110f574b5, type: 3}
+  toggleButtonSound: {fileID: 8300000, guid: 10b1490e4a1488d438dad937d8e3bc3d, type: 3}
+  recolectSound: {fileID: 8300000, guid: 1f3361b8fcb8c9946a0b95cb1a776a8d, type: 3}
+  dropSound: {fileID: 8300000, guid: 96b10fe16f48e204b862754add0f7372, type: 3}
 --- !u!4 &1337923251
 Transform:
   m_ObjectHideFlags: 0
@@ -5430,12 +5435,14 @@ MonoBehaviour:
   bean: {fileID: 11400000, guid: 207f929a3f36390448368a1db14f7660, type: 2}
   bluberry: {fileID: 11400000, guid: ff0be65b5f0e0184698281e6adcb7c26, type: 2}
   strawberry: {fileID: 11400000, guid: 6c5d80e752c812b4c8628f5aca044326, type: 2}
-  defaultIngredient: {fileID: 0}
+  defaultRecollectable: {fileID: 0}
   ingredients: []
   paco: {fileID: 11400000, guid: 22fa20da6d0e9834bb4e8574bd436a90, type: 2}
   maria: {fileID: 11400000, guid: b2f9c281fcf777548aff0a1968b4d8cb, type: 2}
   bel: {fileID: 11400000, guid: 2e0db67437892984d9ad0015d31b50ad, type: 2}
   toni: {fileID: 11400000, guid: 2cb7b0764e38eb5498588b9329daaf0e, type: 2}
+  defaultVillage: {fileID: 11400000, guid: 6971f0f83167746418f669652bce45f3, type: 2}
+  villagers: []
   defaultEmptySprite: {fileID: 7482667652216324306, guid: 756dcf97cf15be1469dbb812362c0259, type: 3}
 --- !u!4 &1827284397
 Transform:
@@ -5763,20 +5770,9 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'credits here   credits here   credits here
-
-    credits here   credits
-    here   credits here
-
-    credits here   credits here   credits here
-
-    credits
-    here   credits here   credits here
-
-    credits here   credits here   credits
-    here
-
-    credits here   credits here   credits here'
+  m_text: 'Al the sprites and assets are taken from https://opengameart.org/. The
+    music is taken from the unity asset store and https://pixabay.com/. Idea and
+    logic of this game: Marina Serra Payeras'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 9c7acb1a76237b74a9e26f7b99a78303, type: 2}
   m_sharedMaterial: {fileID: -1381620533079083018, guid: 9c7acb1a76237b74a9e26f7b99a78303, type: 2}

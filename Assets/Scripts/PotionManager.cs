@@ -39,6 +39,7 @@ public class PotionManager : MonoBehaviour
     public void UnlockPotion(Recollectable potion)
     {
         unlockedPotions.Add(new Item { amount = 1, itemSO = potion });
+        DataPersistanceManager.Instance.SaveGame(GameManager.Instance.isFirstGame, unlockedPotions); //after a change in the list, save it
     }
 
 
@@ -50,17 +51,12 @@ public class PotionManager : MonoBehaviour
 
         foreach (Recollectable potion in allPotions)
         {
-            Debug.Log("checking if there's a recipe compatible...");
-
             if (ingredient1 == potion.ingredientsForMakeThePotion[0] && ingredient2 == potion.ingredientsForMakeThePotion[1])
             {
-                Debug.Log("recipe founded!");
                 return potion;
             }
         }
-        Debug.Log(" NO recipe found");
-
-        //if there's not a recipe for this values, return null --> canviar a un simbol que sigui --> no possible recipe
+        ExplanationManagerUI.Instance.ShowAnExplanation("Theres no potion with with combiation. Try change other ingredients or diferent order.", 15);
         return defaultPotion;
     }
 
@@ -129,7 +125,7 @@ public class PotionManager : MonoBehaviour
                 return voicesip;
 
             default:
-                Debug.Log("the default is being returned");
+                Debug.LogWarning("the default is being returned");
                 return defaultPotion;
         }
     }

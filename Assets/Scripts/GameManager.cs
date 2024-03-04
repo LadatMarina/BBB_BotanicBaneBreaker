@@ -14,7 +14,9 @@ public enum SceneIndex //en teoria posar aquests valors o no és lo mateix.
     House = 2,
     Kitchen = 3,
     LoadingScene = 4,
+    WinScene = 5
 }
+
 public class GameManager : MonoBehaviour
 {
     //setted w the inspector
@@ -54,14 +56,12 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    private void OnDisable()
+    private void Update()
     {
-        //pensar a que quant acabi es joc per entregar, he de borrar s'on disable, o almanco l'he de comentar per posar que és només per quant editi es joc
-        //GameAssets.Instance.paco.isCured = false;
-        //GameAssets.Instance.maria.isCured = false;
-        //GameAssets.Instance.bel.isCured = false;
-        //GameAssets.Instance.toni.isCured = false;
-        //lastPlayerPosition = Vector3.zero;
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            StartCoroutine(GoToWinScene());
+        }
     }
 
     public void SetLastPLayerPos(Vector3 pos)
@@ -86,5 +86,28 @@ public class GameManager : MonoBehaviour
         newObject.GetComponent<RecollectableDisplay>().SetItem(item);
 
         return newObject;
+    }
+
+    public bool HasWon()
+    {
+        //check if all the villagers are cured --> if goes out of the foreach and enter in the if, are all cured
+        foreach(Village villager in GameAssets.Instance.villagers)
+        {
+            if (!villager.isCured) { return false; }
+        }
+        //check if all the potions has been unlocked (8)
+        if(DataPersistanceManager.Instance.LoadUnlockedList().Count >= 8)
+        {
+            StartCoroutine(GoToWinScene());
+            return true;
+        }
+        return false;
+    }
+
+    private IEnumerator GoToWinScene()
+    {
+        yield return new WaitForSeconds(2);
+        Loader.Load(SceneIndex.WinScene);
+        //
     }
 }

@@ -31,9 +31,6 @@ public class VillageDisplay : MonoBehaviour
     }
     private void SetVillage()
     {
-        Debug.Log("SetVillage() / VillageDisplay");
-
-        //village = Player.Instance.LoadVillage();
         village = DataPersistanceManager.Instance.LoadVillage();
 
         nameText.text = village.name;
@@ -53,22 +50,19 @@ public class VillageDisplay : MonoBehaviour
     //això és UI per tant se fa des de aquis
     public void RefreshPotionField(Recollectable recollectableToRefresh)
     {
-        Debug.Log($"RefreshPotionField({recollectableToRefresh}) / VillageDisplay");
-
         Image potionFieldImage = potionField.GetComponent<Image>();
         potionFieldImage.sprite = recollectableToRefresh.sprite;
     }
 
     public void ShowInventoryAndUnableButton(Button potionFieldButton)
     {
+        SoundManager.Instance.PlaySFX(SoundManager.Instance.toggleButtonSound);
         UI_Inventory.Instance.ToggleInventoryButton();
         potionFieldButton.interactable = false;
     }
 
     public void SetPotionField(Transform potionField, Village village)
     {
-        Debug.Log($"SetPotionField({potionField} , {village}) / Village Display");
-
         //if the npc is cured the button unables and the image of the button is the correct potion
         if (village.isCured == true)
         {
@@ -90,66 +84,49 @@ public class VillageDisplay : MonoBehaviour
             npcAnimator.SetBool("isCured", false);
         }
     }
-
     public void CheckPotion()
     {
-        Debug.Log("CheckPotion() / Village Display");
-
         //if the potion is the one that cures the village's disease,
         if (GetPotion() == PotionManager.Instance.GetHealthPotionFromDisease(village.disease))
         {
-            // play particle system with congrats
-            // unlock a new potion recipe 
             village.isCured = true;
             npcAnimator.SetBool("isCured", true);
-            Debug.Log($"CONGRAT'S YOU HAVE GIVE {village.name} THE CORRECT POTION");
-            PotionManager.Instance.UnlockPotion(PotionManager.Instance.GetAttackPotionFromHealthPotion(GetPotion())); //unlock the corresponent potion
-            //PotionManager.Instance.c
+            ExplanationManagerUI.Instance.ShowAnExplanation($"CONGRAT'S YOU HAVE GIVE {village.name} THE CORRECT POTION", 20);
             givePotionButton.gameObject.SetActive(false);
-
+            GameManager.Instance.HasWon();
         }
         else
         {
-            //play particle system with death
-            // npc animation of dying
-            //show message:
-            Debug.Log($"YOU ALMOST KILL {village.name}!!!");
+            ExplanationManagerUI.Instance.ShowAnExplanation($"YOU ALMOST KILL {village.name}!!!", 15);
         }
+
         UI_Inventory.Instance.HideInventory(); //--> mirar perquè aquí no me funciona, no se tanca quant se pitja es give
         SetPotion(null);
     }
     public void ChooseThePotionToGive(Item item)
     {
-        Debug.Log("ChooseThePotionToGive / villageDisplay --> from the onClick button of the potion");
-        DataPersistanceManager.Instance.RemoveOneItem(item); //remove the item directly from the saved list in the json file
+        //remove the item directly from the saved list in the json file
+        DataPersistanceManager.Instance.RemoveOneItem(item); 
 
-        //if the player has not selected a potion from the inventory, will add the
-        //item that the button represents to the field potion in the village display and hide the inventoy
+        ///if the player has not selected a potion from the inventory, will add the
+        ///item that the button represents to the field potion in the village display and hide the inventoy
         if (hasSelectedAPotion == false)
         {
-            SetPotion(item.itemSO); //mirar si basta es temps en què transcorre
-            RefreshPotionField(item.itemSO); //HO HE CANVIAT AQUI LO DE SA LINIA 127 --> Refresh the img
+            SetPotion(item.itemSO); 
+            RefreshPotionField(item.itemSO); 
             givePotionButton.gameObject.SetActive(true);
-            UI_Inventory.Instance.ToggleInventoryButton(); //--> close the inventory
+            UI_Inventory.Instance.HideInventory(); 
             hasSelectedAPotion = true;
         }
     }
 
     public void BackButton()
     {
+        SoundManager.Instance.PlaySFX(SoundManager.Instance.toggleButtonSound);
         UI_Inventory.Instance.HideInventory();
         Loader.Load(SceneIndex.GamePlay);
     }
 
-    public void SetPotion(Recollectable potionToSet)
-    {
-        Debug.Log("SetPotion() / villageDisplay");
-        potion = potionToSet;
-    }
-
-    public Recollectable GetPotion()
-    {
-        Debug.Log("GetPotion() / villageDisplay");
-        return potion;
-    }
+    public void SetPotion(Recollectable potionToSet) { potion = potionToSet; }
+    public Recollectable GetPotion() { return potion; }
 }

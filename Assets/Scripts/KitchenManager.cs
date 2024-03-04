@@ -15,6 +15,9 @@ public class KitchenManager : MonoBehaviour
     [SerializeField] private Transform mixButton;
     [SerializeField] private ParticleSystem blueExplosion;
 
+    [SerializeField] private Transform recipeButon;
+
+
     private IngredientHolder ingredientHolder1;
     private IngredientHolder ingredientHolder2;
     private PotionHolder potionHolder;
@@ -34,17 +37,14 @@ public class KitchenManager : MonoBehaviour
         mixButton.gameObject.SetActive(false);
         whatToDoPanel.gameObject.SetActive(false);
         potionHolderButton.interactable = false;
-
-        ExplanationManagerUI.Instance.ShowAnExplanation("Click on each field to decide what ingredient put of what to do with the result.");
+        RecipesManager.Instance.HideRecipeMenu();
+        ExplanationManagerUI.Instance.ShowAnExplanation("Click on each field to decide what ingredient put of what to do with the result.", 20);
     }
 
     public void IngredientFieldButton(int bttn)
     {
-        Debug.Log("ingredientFieldButton() / kitchenManager");
-
+        SoundManager.Instance.PlaySFX(SoundManager.Instance.toggleButtonSound);
         UI_Inventory.Instance.ToggleInventoryButton();
-        
-        //passar es transform de s'ingredient field perquè al chooseIngredient s'hi pugui accedir
         switch (bttn)
         {
             case 1:
@@ -56,10 +56,9 @@ public class KitchenManager : MonoBehaviour
         }
     }
 
-    public void ChooseIngredient(Item item) //només se n'ha de restar 1 i afegir 1!!
+    public void ChooseIngredient(Item item) 
     {
         ExplanationManagerUI.Instance.HideExplanation();
-        Debug.Log("ChooseIngredient() / KM");
 
         UI_Inventory.Instance.ToggleInventoryButton();
         IngredientHolder ingredientHolder = actualIngredientField.GetComponent<IngredientHolder>();
@@ -70,14 +69,11 @@ public class KitchenManager : MonoBehaviour
         //was already an ingredient in the button --> return this item to the list
         if (ingredientHolder.ingredient.itemSO != null)
         {
-            Debug.Log("there was already an ingredient, intercambio --> return the item to the inventory");
             //if the button had an intem, return to the inventory the item --> returnPreviousItem()
             DataPersistanceManager.Instance.AddOneItem(new Item { amount = 1, itemSO = ingredientHolder.ingredient.itemSO }); //create a new item w/amount 1
             ingredientFieldButton.image.sprite = GameAssets.Instance.defaultEmptySprite;
         }
          //if there wasn't an ingredient asigned, remove from the list the item we want to use (parameter one)
-        
-        Debug.Log("hi hagués asignat o no un item, hem de llevar de sa llista s'actual");
         DataPersistanceManager.Instance.RemoveOneItem(item); 
 
         //set the button ingredient as the field --> visuals and the item that represents
@@ -88,8 +84,7 @@ public class KitchenManager : MonoBehaviour
 
     private bool CanMix()
     {
-        Debug.Log("canMix() / kitchenManager");
-
+        SoundManager.Instance.PlaySFX(SoundManager.Instance.toggleButtonSound);
         if (ingredientHolder1.ingredient.itemSO != null  && ingredientHolder2.ingredient.itemSO != null)
         {
             mixButton.gameObject.SetActive(true);
@@ -104,16 +99,15 @@ public class KitchenManager : MonoBehaviour
 
     public void MixButton()
     {
-        
-
+        SoundManager.Instance.PlaySFX(SoundManager.Instance.toggleButtonSound);
         mixButton.gameObject.SetActive(false); //hide the button
-        Debug.Log("mixButton() / kitchenManager");
+        HideRecipeButton(); //after mix, hide the recipe book button
         Recollectable resultPotion = PotionManager.Instance.GetPotionFromIngredients(ingredientHolder1.ingredient.itemSO, ingredientHolder2.ingredient.itemSO);
         if(resultPotion != PotionManager.Instance.defaultPotion)
         {
             //it's an existing potion
             PlayParticles();
-            SoundManager.Instance.PlaySFX(SoundManager.Instance.sound1);
+            SoundManager.Instance.PlaySFX(SoundManager.Instance.mainMenuMusic);
             potionHolder.potion = resultPotion;
             potionHolderButton.image.sprite = resultPotion.sprite;
             potionHolderButton.interactable = true;
@@ -123,22 +117,22 @@ public class KitchenManager : MonoBehaviour
             {
                 PotionManager.Instance.UnlockPotion(resultPotion);
             }
-
-            //show explanation text of "you can click here to decide what to do
-            //check if the potion is in the lockedPotionList --> RecipeManager
         }
         else
         {
-            ExplanationManagerUI.Instance.ShowAnExplanation("There are not potions with this combination. Try new ingredients.");
+            ExplanationManagerUI.Instance.ShowAnExplanation("There are not potions with this combination. Try new ingredients.", 20);
             potionHolderButton.image.sprite = resultPotion.sprite;
         }
-
     }
 
-    public void PotionFieldButton() { whatToDoPanel.gameObject.SetActive(true); }
+    public void PotionFieldButton() {
+        SoundManager.Instance.PlaySFX(SoundManager.Instance.toggleButtonSound);
+        whatToDoPanel.gameObject.SetActive(true); }
     public void SavePotion()
-    {
+    {   
+        SoundManager.Instance.PlaySFX(SoundManager.Instance.toggleButtonSound);
         DataPersistanceManager.Instance.AddOneItem(new Item { amount = 1, itemSO = potionHolder.potion });
+        PotionManager.Instance.UnlockPotion(potionHolder.potion);
         ResetAllFields();
         whatToDoPanel.gameObject.SetActive(false);
         Loader.Load(SceneIndex.GamePlay); // return to the game after doing a potion
@@ -167,8 +161,13 @@ public class KitchenManager : MonoBehaviour
         potionHolderButton.image.sprite = GameAssets.Instance.defaultEmptySprite;
     }
     public void BackButton() {
+        SoundManager.Instance.PlaySFX(SoundManager.Instance.toggleButtonSound);
         RecipesManager.Instance.HideRecipeMenu();
         Loader.Load(SceneIndex.GamePlay); }
-    public void ToggleRecipeButton() { RecipesManager.Instance.ToggleRecipeMenu(); }
-    
+    public void ToggleRecipeButton() {  
+        SoundManager.Instance.PlaySFX(SoundManager.Instance.toggleButtonSound);
+        RecipesManager.Instance.ToggleRecipeMenu(); }
+ 
+    private void HideRecipeButton() { 
+        recipeButon.gameObject.SetActive(false); }
 }

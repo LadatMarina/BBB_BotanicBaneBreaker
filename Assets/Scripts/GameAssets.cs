@@ -9,7 +9,9 @@ public class GameAssets : MonoBehaviour
 
     public List<Recollectable> ingredients;
 
-    public Village paco, maria, bel, toni;
+    public Village paco, maria, bel, toni, defaultVillage;
+    public List<Village> villagers;
+
     public Sprite defaultEmptySprite;
     public static GameAssets Instance { get; private set; }
     private void Awake()
@@ -26,6 +28,7 @@ public class GameAssets : MonoBehaviour
         }
 
         ingredients = new List<Recollectable>() { apple, bean, bluberry, strawberry };
+        villagers = new List<Village>() { paco, maria, bel, toni };
     }
 
     public Recollectable GetRecollectableFromString(string recollectableName)
@@ -68,7 +71,7 @@ public class GameAssets : MonoBehaviour
                 return defaultRecollectable;
         }
     }
-    //******molt important; revisar que tots es noms dels villagers comencin en majúscula, perquè si no són iguals mos donarà null
+    
     public Village GetVillageFromString(string villagerName)
     {
         switch (villagerName)
@@ -81,9 +84,11 @@ public class GameAssets : MonoBehaviour
                 return bel;
             case "Toni":
                 return toni;
+            case "":
+                return defaultVillage;
             default:
-                Debug.Log("the default is being returned");
-                return null;
+                Debug.LogWarning("the default is being returned");
+                return defaultVillage;
         }
     }
 

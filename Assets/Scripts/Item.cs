@@ -7,7 +7,7 @@ using UnityEngine;
 public class Item
 {
     public int amount;
-    public Recollectable itemSO; //sa meva info estàtica
+    public Recollectable itemSO; 
     
     public void ResetAmount()
     {
@@ -22,7 +22,6 @@ public class Item
     public void AddOneToAmount()
     {
         amount++;
-        //Debug.Log($"THE AMOUNT HAS BEEN CHANGED!! the amount now is {amount}");
     }
 
     public void IncreaseDrecreaseAmount(int amountToUse)

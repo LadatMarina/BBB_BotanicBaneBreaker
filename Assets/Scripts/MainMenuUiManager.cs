@@ -26,16 +26,13 @@ public class MainMenuUiManager : MonoBehaviour
 
     public void QuitButton()
     {
-        if (!quitCheckerPanel.activeInHierarchy)
-        {
-            quitCheckerPanel.SetActive(true);
-            EventSystem.current.SetSelectedGameObject(backButton);
-        }
-        else
-        {
-            DataPersistanceManager.Instance.SaveGame(GameManager.Instance.isFirstGame, PotionManager.Instance.unlockedPotions); //when quit is saved
-            Application.Quit();
-        }
+        quitCheckerPanel.SetActive(true);
+        EventSystem.current.SetSelectedGameObject(backButton);
+        DataPersistanceManager.Instance.SaveGame(GameManager.Instance.isFirstGame, PotionManager.Instance.unlockedPotions); //when quit is saved
+    }
+
+    public void QuitButtonConfirm() {
+        Application.Quit();
     }
 
     public void BackButton()

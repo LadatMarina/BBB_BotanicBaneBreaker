@@ -6,19 +6,12 @@ using UnityEngine.SceneManagement;
 
 public class PlayerInteractions : MonoBehaviour
 {
-    public Inventory inventory;
-
-    public Item itemScript;
-    public GameInput gameInput;
-
     private Item otherItem;
     Player player;
 
     void Awake()
     {
         player = FindObjectOfType<Player>();
-        //inventory = player.GetInventory();
-        //gameInput = FindObjectOfType<GameInput>();  
     }
 
     private void OnTriggerEnter2D(Collider2D other)
@@ -52,19 +45,13 @@ public class PlayerInteractions : MonoBehaviour
                 break;
 
             case "recollectable":
-                Debug.Log(other.gameObject.GetComponent<RecollectableDisplay>().GetItem().itemSO.name);
-
-
                 otherItem = other.gameObject.GetComponent<RecollectableDisplay>().GetItem();
 
                 //if the list has less than 5 items, can recolect
                 if (player.GetInventory().GetItemList().Count <= 4) 
                 {
-                    Debug.Log("can recolect, the count list is under 4");
                     if (other != null) //&& (Input.GetKeyDown(KeyCode.X)))
                     {
-                        Debug.Log("HAS recolected");
-
                         RecollectAnItem(other);
                     }
                     else
@@ -75,18 +62,16 @@ public class PlayerInteractions : MonoBehaviour
                 //if the list has 5...
                 else 
                 {
-                    //but the item I want to recolect is in the list
+                    //but the item to recolect is in the list
                     if ((player.IsRecollectableInList(otherItem)) && (otherItem.itemSO.stackable))
                     {
-                        Debug.Log("can recolect, the count list is = 4, BUT!! --> The item is in the inventory");
                         Debug.Log(other.gameObject.GetComponent<RecollectableDisplay>().GetItem().itemSO.name);
 
                         RecollectAnItem(other);
                     }
-                    else
+                    else 
                     {
-                        Debug.Log("can'T recolect, list.count > 4 and the item is not in the inventory");
-                        ExplanationManagerUI.Instance.ShowAnExplanation("Your inventory is full, can't recollect more new objects.");
+                        ExplanationManagerUI.Instance.ShowAnExplanation("Your inventory is full, can't recollect more new objects.", 10);
                         //do not recolect the item --> let the player collision with it
                         Collider2D otherCollider = other.gameObject.GetComponent<Collider2D>();
                         otherCollider.isTrigger = false; 
@@ -98,15 +83,13 @@ public class PlayerInteractions : MonoBehaviour
             case "kitchen":
                 if(player.GetInventory().GetItemList().Count >= 5)
                 {
-                    Debug.LogWarning("you don't have space for a potion, your inventory is full");
-                    ExplanationManagerUI.Instance.ShowAnExplanation("Your inventory is full. Try to drop something in order to make space.");
+                    ExplanationManagerUI.Instance.ShowAnExplanation("Your inventory is full. Try to drop something in order to make space.", 15);
                 }
                 else
                 {
                     GameManager.Instance.SetLastPLayerPos(player.GetPlayerPos());
                     Loader.Load(SceneIndex.Kitchen);
                 }
-
                 break;
         }
     }
@@ -116,10 +99,8 @@ public class PlayerInteractions : MonoBehaviour
         Collider2D otherCollider = other.gameObject.GetComponent<Collider2D>();
         otherCollider.isTrigger = true;
 
-        SoundManager.Instance.PlaySFX(SoundManager.Instance.sound4); //PLAY AN SFX WHEN RECOLLECT
+        SoundManager.Instance.PlaySFX(SoundManager.Instance.recolectSound); //PLAY AN SFX WHEN RECOLLECT
         player.AddItem(otherItem);
         Destroy(other.gameObject);
     }
-
-
 }

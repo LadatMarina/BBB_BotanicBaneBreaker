@@ -23,8 +23,5 @@ public class Recollectable : ScriptableObject
     public Diseases cureOf;
     public ScriptableObject[] ingredientsForMakeThePotion;
     public ScriptableObject potionThatUnlocks;
-
-    public int damage;
-
     public bool stackable;
 }

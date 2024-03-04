@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum Diseases //ho posam fora de sa clase pq és usat per tot es projecte
+public enum Diseases 
 {
     stomachAge,
     cold,

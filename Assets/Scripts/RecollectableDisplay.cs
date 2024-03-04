@@ -1,10 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using static Recollectable;
-using UnityEngine.UI;
 using TMPro;
-using UnityEngine.Jobs;
 
 [RequireComponent (typeof(SpriteRenderer))]
 [RequireComponent (typeof(CircleCollider2D))]
@@ -18,11 +13,9 @@ public class RecollectableDisplay : MonoBehaviour
     [SerializeField] private new ParticleSystem particleSystem;
 
     [SerializeField] private TextMeshPro amountText;
-    //[SerializeField] private TextMeshPro recollectedText;
-
-
     private Item item;
-    //private Recollectable itemSO;
+
+
     private void Awake()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
@@ -34,29 +27,19 @@ public class RecollectableDisplay : MonoBehaviour
         SetAllTheValues();
     }
 
-    private void SetAllTheValues() //jo he de rebre sa info des de item, no de s'criptable object
+    private void SetAllTheValues() 
     {
         circleCollider.radius = 0.5f;
         circleCollider.isTrigger = true;
 
-        //recollectedText.gameObject.SetActive(false); //set it to false until the player go near
-        //recollectedText.text = item.itemSO.name; //set the name
-
         spriteRenderer.sprite = item.itemSO.sprite;
         this.name = item.itemSO.name;
         this.recollectableType = item.itemSO.recollectableType;
-        //particleSystem = scriptableObject.particleSystem;
 
         if (amountText != null)
         {
             amountText.text = $"{item.amount}";
-            //Debug.Log("amount changet succesfully");
         }
-        else
-        {
-            Debug.Log("text malament");
-        }
-
     }
 
     public Sprite GetRecollectableSprite() { return spriteRenderer.sprite; }

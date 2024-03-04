@@ -12,39 +12,12 @@ public class IngredientsSpawner : MonoBehaviour
     [SerializeField] private Vector2[] bluberrySpawner;
     [SerializeField] private Vector2[] strawberrySpawner;
 
-    private void Awake()
-    {
-        //ingredientsEnum = GameAssets.Instance.Ingredients;
-    }
+
     void Start()
     {
-        GameManager.Instance.CreateNewItem(PotionManager.Instance.coldir, Vector3.right,1);
-
-        //SpawnTheFruits(beanSpawner, GameAssets.Instance.bean);
-        //SpawnTheFruits(appleSpawner, GameAssets.Instance.apple);
-
+        //create two initial ingredients to help the player
         GameManager.Instance.CreateNewItem(GameAssets.Instance.bluberry, Vector3.zero, 1);
-        GameManager.Instance.CreateNewItem(GameAssets.Instance.strawberry, new Vector3(-5, -3, 0), 2);
-        //CreateNewItem(GameAssets.Instance.healthPotion1, new Vector3(-8, -2, 0), 1);
-
-        //string tag = gameObject.tag;
-
-        /*switch (tag)
-        {
-            case "BlueberryField":
-                for(int x= 0; x < 25; x=+5)
-                {
-                    for (int y = 0; y < 25; y=+5)
-                    {
-                        CreateNewItem(GameAssets.Instance.bluberry, new Vector3(transform.position.x + x,transform.position.y + y, 0), 1);
-                    }
-                }
-                break;
-
-            case "Example2":
-                //do something
-                break;
-        }*/
+        GameManager.Instance.CreateNewItem(GameAssets.Instance.strawberry, new Vector3(-5, -3, 0), 1);
     }
 
     public void Spawn(string fruit)
@@ -74,6 +47,5 @@ public class IngredientsSpawner : MonoBehaviour
             GameManager.Instance.CreateNewItem(recollectableToSpawn, arrayOfPositions[i], 1);
             i++;
         }
-        //Debug.Log($"all the {recollectableToSpawn.name} has been spawned");
     }
 }

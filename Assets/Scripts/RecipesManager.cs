@@ -25,7 +25,6 @@ public class RecipesManager : MonoBehaviour
     private void Awake()
     {
         // If there is an instance, and it's not me, delete myself.
-
         if (Instance != null)
         {
             Destroy(this);
@@ -37,25 +36,19 @@ public class RecipesManager : MonoBehaviour
         }
     }
 
-        // Start is called before the first frame update
     void Start()
     {
         pageR.gameObject.SetActive(false);
         pageL.gameObject.SetActive(false);
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 
     public void BeforeButton() { actualPage--; }
     public void AfterButton() { actualPage++; }
 
     public void ToggleRecipeMenu() 
     {
-        Debug.Log("ToggleRecipeButton() / kitchen manager");
+        SoundManager.Instance.PlaySFX(SoundManager.Instance.toggleButtonSound);
         recipeMenu.gameObject.SetActive(!recipeMenu.gameObject.activeInHierarchy);
         ShowRecipes();
          }
@@ -86,7 +79,7 @@ public class RecipesManager : MonoBehaviour
             }
             else
             {
-                ExplanationManagerUI.Instance.ShowAnExplanation("There are not more unlocked potions!");
+                ExplanationManagerUI.Instance.ShowAnExplanation("There are not more unlocked potions!", 15);
                 pageR.gameObject.SetActive(false);
             }
         }
