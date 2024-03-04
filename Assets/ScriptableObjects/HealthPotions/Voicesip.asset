@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2da60bd550eea6849b0c0fb3b7af832c, type: 3}
+  m_Name: Voicesip
+  m_EditorClassIdentifier: 
+  name: Voicesip
+  recollectableType: 1
+  sprite: {fileID: 938191292, guid: ec1a99e5c9a15c64fb2999037695bc65, type: 3}
+  explanation: The Voicesip is capable of cure the diarrea. Is made of a blueberry
+    and a bean.
+  cureOf: 0
+  ingredientsForMakeThePotion:
+  - {fileID: 11400000, guid: ff0be65b5f0e0184698281e6adcb7c26, type: 2}
+  - {fileID: 11400000, guid: 207f929a3f36390448368a1db14f7660, type: 2}
+  potionThatUnlocks: {fileID: 11400000, guid: 5c0cd68c4c8570a41a49800176685471, type: 2}
+  damage: 0
+  stackable: 0

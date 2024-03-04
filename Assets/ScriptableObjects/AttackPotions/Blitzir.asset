@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2da60bd550eea6849b0c0fb3b7af832c, type: 3}
+  m_Name: Blitzir
+  m_EditorClassIdentifier: 
+  name: Blitzir
+  recollectableType: 0
+  sprite: {fileID: 1159372473, guid: 632b3750cebbf4946af2b2145ea3f7db, type: 3}
+  explanation: This potion is made from two blueberries
+  cureOf: 0
+  ingredientsForMakeThePotion:
+  - {fileID: 11400000, guid: ff0be65b5f0e0184698281e6adcb7c26, type: 2}
+  - {fileID: 11400000, guid: ff0be65b5f0e0184698281e6adcb7c26, type: 2}
+  potionThatUnlocks: {fileID: 0}
+  damage: 0
+  stackable: 0

@@ -21,6 +21,8 @@ public class GameManager : MonoBehaviour
     //public Village village;
     public bool hasLoaded;
 
+    public int numOfGames; //0/false : 1/true
+
     //setted w the inspector
     [SerializeField] private GameObject itemWorld;
 
@@ -35,7 +37,7 @@ public class GameManager : MonoBehaviour
 
     private Vector2 lastPlayerPosition;
 
-    //private List<Item> savedItemList;
+    //private List<Recollectable> lockedItemList;
 
     //inventory
     //public Inventory inventory;
@@ -54,7 +56,11 @@ public class GameManager : MonoBehaviour
             DontDestroyOnLoad(gameObject);
         }
 
-        //savedItemList = new List<Item>();
+        //if (PlayerPrefs.GetInt("numOfGames") == null)
+        //{
+        //    //if the before game was the first game, 
+        //}
+        //PlayerPrefs.SetInt("numOfGames", 1);
     }
 
     //public void DisplayInventoryItemList(List<Item> itemList)

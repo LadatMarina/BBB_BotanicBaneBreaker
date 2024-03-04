@@ -128,6 +128,7 @@ public class KitchenManager : MonoBehaviour
             potionHolderButton.image.sprite = resultPotion.sprite;
             potionHolderButton.interactable = true;
             //show explanation text of "you can click here to decide what to do
+            //check if the potion is in the lockedPotionList --> RecipeManager
         }
         else
         {
@@ -137,12 +138,7 @@ public class KitchenManager : MonoBehaviour
 
     }
 
-    public void PotionFieldButton()
-    {
-        //show whatToDoPanel 
-        whatToDoPanel.gameObject.SetActive(true);
-    }
-
+    public void PotionFieldButton() { whatToDoPanel.gameObject.SetActive(true); }
     public void SavePotion()
     {
         DataPersistanceManager.Instance.AddOneItem(new Item { amount = 1, itemSO = potionHolder.potion });
@@ -172,4 +168,6 @@ public class KitchenManager : MonoBehaviour
         potionHolderButton.image.sprite = GameAssets.Instance.defaultEmptySprite;
     }
     public void BackButton() { Loader.Load(SceneIndex.GamePlay); }
+    public void ToggleRecipeButton() { RecipesManager.Instance.ToggleRecipeMenu(); }
+    
 }

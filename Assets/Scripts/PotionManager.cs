@@ -9,9 +9,9 @@ using UnityEngine.SceneManagement;
 
 public class PotionManager : MonoBehaviour
 {
-    private Recollectable potion = null;
-    public bool hasSelectedAPotion;
-
+    public List<Recollectable> lockedPotionsList;
+    public List<Recollectable> unlockedHealthPotions;
+    public List<Recollectable> unlockedAttackPotions;
     public static PotionManager Instance { get; private set; }
     private void Awake()
     {
@@ -27,33 +27,15 @@ public class PotionManager : MonoBehaviour
             DontDestroyOnLoad(gameObject);
         }
 
-        potion = null;
+        lockedPotionsList = new List<Recollectable>();
+        unlockedAttackPotions = new List<Recollectable>();
+        unlockedHealthPotions = new List<Recollectable>();
     }
 
-    public Recollectable GetHealthPotionFromDisease(Diseases disease)
+    private void InicializeLockedPotionsList()
     {
-        Debug.Log($"GetHealthPotionFromDisease({disease}) / PotionManager");
-
-        switch (disease)
-        {
-            case Diseases.cold:
-                return GameAssets.Instance.healthPotion1;
-            case Diseases.constipated:
-                return GameAssets.Instance.healthPotion2;
-            case Diseases.diarrea:
-                return GameAssets.Instance.healthPotion3;
-            case Diseases.stomachAge:
-                return GameAssets.Instance.healthPotion4;
-        }
-        return null;
+        //if( firstGame)
+        lockedPotionsList = GameAssets.Instance.potions;
     }
 
-    public Recollectable GetPotion() {
-        Debug.Log("GetPotion() / PotionManager");
-        return potion; }
-
-    public void SetPotion(Recollectable potionToSet) { 
-        Debug.Log("SetPotion() / PotionManager");
-        potion = potionToSet; }
-   
 }

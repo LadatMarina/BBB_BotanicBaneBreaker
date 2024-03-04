@@ -15,6 +15,7 @@ public class DataPersistanceManager : MonoBehaviour
     public List<Item> localItemList;
     public string village;
 
+
     [System.Serializable]
     public class ConvertedItem
     {
@@ -258,9 +259,7 @@ public class DataPersistanceManager : MonoBehaviour
         SaveObject saveObject = new SaveObject();
         saveObject = JsonUtility.FromJson<SaveObject>(savedObjectString);
 
-        Debug.Log(GameAssets.Instance.GetVillageFromString(saveObject.villager));
-
-        return GameAssets.Instance.paco;
+        return GameAssets.Instance.GetVillageFromString(saveObject.villager);
     }
 
 }

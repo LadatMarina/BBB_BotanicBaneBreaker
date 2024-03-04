@@ -1114,10 +1114,13 @@ MonoBehaviour:
   healthPotion2: {fileID: 0}
   healthPotion3: {fileID: 0}
   healthPotion4: {fileID: 0}
+  defaultPotion: {fileID: 0}
+  potions: []
   paco: {fileID: 0}
   maria: {fileID: 0}
   bel: {fileID: 0}
   toni: {fileID: 0}
+  defaultEmptySprite: {fileID: 0}
 --- !u!4 &600477650
 Transform:
   m_ObjectHideFlags: 0
@@ -2810,55 +2813,6 @@ Transform:
   - {fileID: 1726766095}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1538006734
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1538006736}
-  - component: {fileID: 1538006735}
-  m_Layer: 0
-  m_Name: GameManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1538006735
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1538006734}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7021d0c16f1fc0e4da084ac76ebf7b7a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  hasLoaded: 0
-  isPaused: 0
-  pausePanel: {fileID: 0}
-  pauseButton: {fileID: 0}
-  pocioQueHaElegit: {fileID: 0}
---- !u!4 &1538006736
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1538006734}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1003.8095, y: 650.5887, z: -13.723584}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1720469345
 GameObject:
   m_ObjectHideFlags: 0
@@ -3570,6 +3524,5 @@ SceneRoots:
   - {fileID: 1869552535}
   - {fileID: 341651331}
   - {fileID: 488963118}
-  - {fileID: 1538006736}
   - {fileID: 600477650}
   - {fileID: 1768838662}

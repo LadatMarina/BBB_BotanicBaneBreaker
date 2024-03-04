@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class GameAssets : MonoBehaviour
 {
-    public Recollectable apple, bean, bluberry, strawberry, attackPotion1, healthPotion1, healthPotion2, healthPotion3, healthPotion4, defaultPotion;
+    public Recollectable apple, bean, bluberry, strawberry, gloombreach, blitzir, chaosCore, furyfume, lifesip, stomachHealth, coldir, voicesip, defaultPotion;
     public List<Recollectable> potions;
 
     public Village paco, maria, bel, toni;
@@ -25,7 +25,7 @@ public class GameAssets : MonoBehaviour
             DontDestroyOnLoad(gameObject);
         }
 
-        potions = new List<Recollectable>() { attackPotion1, healthPotion1, healthPotion2, healthPotion3,healthPotion4 };
+        potions = new List<Recollectable>() { gloombreach, blitzir, chaosCore, furyfume, lifesip, stomachHealth, coldir, voicesip };
     }
 
     public Recollectable GetRecollectableFromString(string recollectableName) 
@@ -40,12 +40,27 @@ public class GameAssets : MonoBehaviour
                 return bluberry;
             case "Strawberry":
                 return strawberry;
-            case "AttackPotion1":
-                return attackPotion1;
-            case "HealthPotion1":
-                return healthPotion1;
-            case "HealthPotion2":
-                return healthPotion2;
+
+            //attackPotions:
+            case "Gloombreach":
+                return gloombreach;
+            case "Blitzir":
+                return blitzir;
+            case "ChaosCore":
+                return chaosCore;
+            case "Furyfume":
+                return furyfume;
+
+            //healthPotions:
+            case "Lifesip":
+                return lifesip;
+            case "StomachHealth":
+                return stomachHealth;
+            case "Coldir":
+                return coldir;
+            case "Voicesip":
+                return voicesip;
+
             default:
                 Debug.Log("the default is being returned");
                 return apple;
@@ -86,6 +101,24 @@ public class GameAssets : MonoBehaviour
         Debug.Log(" NO recipe found");
 
         //if there's not a recipe for this values, return null --> canviar a un simbol que sigui --> no possible recipe
+        return null;
+    }
+
+    public Recollectable GetHealthPotionFromDisease(Diseases disease)
+    {
+        Debug.Log($"GetHealthPotionFromDisease({disease}) / PotionManager");
+
+        switch (disease)
+        {
+            case Diseases.cold:
+                return coldir;
+            case Diseases.constipated:
+                return lifesip;
+            case Diseases.diarrea:
+                return voicesip;
+            case Diseases.stomachAge:
+                return stomachHealth;
+        }
         return null;
     }
 }

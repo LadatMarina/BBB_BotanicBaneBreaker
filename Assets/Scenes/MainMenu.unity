@@ -2732,6 +2732,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hasLoaded: 0
+  numOfGames: 0
   itemWorld: {fileID: 3430717703935992697, guid: 1c08dbb2e77a1ea4d9240fe9f8e6df78, type: 3}
   isPaused: 0
   pausePanel: {fileID: 1220645440}
@@ -5405,12 +5406,15 @@ MonoBehaviour:
   bean: {fileID: 11400000, guid: 207f929a3f36390448368a1db14f7660, type: 2}
   bluberry: {fileID: 11400000, guid: ff0be65b5f0e0184698281e6adcb7c26, type: 2}
   strawberry: {fileID: 11400000, guid: 6c5d80e752c812b4c8628f5aca044326, type: 2}
-  attackPotion1: {fileID: 11400000, guid: c8fd804378a37ef43af269e52d0b49a8, type: 2}
-  healthPotion1: {fileID: 11400000, guid: cb0f7e666501f864ea7151469baf94d7, type: 2}
-  healthPotion2: {fileID: 0}
-  healthPotion3: {fileID: 0}
-  healthPotion4: {fileID: 0}
-  defaultPotion: {fileID: 0}
+  gloombreach: {fileID: 11400000, guid: c8fd804378a37ef43af269e52d0b49a8, type: 2}
+  blitzir: {fileID: 11400000, guid: 1d4a8335b1586c749a44290edde2bf6a, type: 2}
+  chaosCore: {fileID: 11400000, guid: a7d1c88795db34e45a0177eeb3d4ce6f, type: 2}
+  furyfume: {fileID: 11400000, guid: 5c0cd68c4c8570a41a49800176685471, type: 2}
+  lifesip: {fileID: 11400000, guid: ef1e9be57ce3a3e41a283bd79ba94f97, type: 2}
+  stomachHealth: {fileID: 11400000, guid: 6d33ff9755c1dc648a8e2484450960b9, type: 2}
+  coldir: {fileID: 11400000, guid: cb0f7e666501f864ea7151469baf94d7, type: 2}
+  voicesip: {fileID: 11400000, guid: 808c2bf9150e679488dda7761fcf4722, type: 2}
+  defaultPotion: {fileID: 11400000, guid: e34bc8d1834e9864f86433a9d43cf519, type: 2}
   potions: []
   paco: {fileID: 11400000, guid: 22fa20da6d0e9834bb4e8574bd436a90, type: 2}
   maria: {fileID: 11400000, guid: b2f9c281fcf777548aff0a1968b4d8cb, type: 2}
@@ -5481,7 +5485,6 @@ MonoBehaviour:
   playButton: {fileID: 1089489674}
   creditsPanel: {fileID: 556582982}
   controllsPanel: {fileID: 1549012945}
-  blueExplosion: {fileID: 8466879634426260115, guid: 3e4ba3e62f9bb534fb920aa8d42313bb, type: 3}
 --- !u!1 &1950690606
 GameObject:
   m_ObjectHideFlags: 0

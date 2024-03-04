@@ -18,10 +18,10 @@ public class IngredientsSpawner : MonoBehaviour
     }
     void Start()
     {
-        GameManager.Instance.CreateNewItem(GameAssets.Instance.healthPotion1, Vector3.right,1);
+        GameManager.Instance.CreateNewItem(GameAssets.Instance.coldir, Vector3.right,1);
 
-        SpawnTheFruits(beanSpawner, GameAssets.Instance.bean);
-        SpawnTheFruits(appleSpawner, GameAssets.Instance.apple);
+        //SpawnTheFruits(beanSpawner, GameAssets.Instance.bean);
+        //SpawnTheFruits(appleSpawner, GameAssets.Instance.apple);
 
         GameManager.Instance.CreateNewItem(GameAssets.Instance.bluberry, Vector3.zero, 1);
         GameManager.Instance.CreateNewItem(GameAssets.Instance.strawberry, new Vector3(-5, -3, 0), 2);
@@ -47,7 +47,24 @@ public class IngredientsSpawner : MonoBehaviour
         }*/
     }
 
-
+    public void Spawn(string fruit)
+    {
+        switch (fruit)
+        {
+            case "bean":
+                SpawnTheFruits(beanSpawner, GameAssets.Instance.bean);
+                break;
+            case "apple":
+                SpawnTheFruits(appleSpawner, GameAssets.Instance.apple);
+                break;
+            case "blueberry":
+                SpawnTheFruits(bluberrySpawner, GameAssets.Instance.bluberry);
+                break;
+            case "strawberry":
+                SpawnTheFruits(strawberrySpawner, GameAssets.Instance.strawberry);
+                break;
+        }
+    }
 
     private void SpawnTheFruits(Vector2[] arrayOfPositions, Recollectable recollectableToSpawn)
     {

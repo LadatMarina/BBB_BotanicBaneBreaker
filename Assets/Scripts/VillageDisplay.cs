@@ -25,10 +25,14 @@ public class VillageDisplay : MonoBehaviour
     public bool hasSelectedAPotion;
     Animator npcAnimator;
 
+    private Recollectable potion = null;
+
     void Start()
     {
         SetVillage();
         hasSelectedAPotion = false; //això tampoc se exactament on me conve més, si aqui o a nes potionmanger
+        givePotionButton.gameObject.SetActive(false);
+        potion = null;
     }
     private void SetVillage()
     {
@@ -36,12 +40,12 @@ public class VillageDisplay : MonoBehaviour
 
         //village = Player.Instance.LoadVillage();
         village = DataPersistanceManager.Instance.LoadVillage();
-        
+
         nameText.text = village.name;
         diseaseText.text = "Disease: " + village.disease;
         potionText.text = "Potion needed: " + village.potion.name;
         potionImage.sprite = village.potion.sprite;
-        npcAnimator = npcImage.GetComponent<Animator>(); 
+        npcAnimator = npcImage.GetComponent<Animator>();
         npcAnimator.runtimeAnimatorController = village.animator.runtimeAnimatorController;
 
         Image imageBackground = background.GetComponent<Image>();
@@ -70,7 +74,6 @@ public class VillageDisplay : MonoBehaviour
     {
         Debug.Log($"SetPotionField({potionField} , {village}) / Village Display");
 
-        givePotionButton.gameObject.SetActive(false);
         //if the npc is cured the button unables and the image of the button is the correct potion
         if (village.isCured == true)
         {
@@ -80,7 +83,7 @@ public class VillageDisplay : MonoBehaviour
             potionFieldButton.interactable = false; //if it's cured, there's no option to choose again the potion
 
             Image potionFieldImage = potionField.GetComponent<Image>();
-            potionFieldImage.sprite = PotionManager.Instance.GetHealthPotionFromDisease(village.disease).sprite; //set the sprite of the potion 
+            potionFieldImage.sprite = GameAssets.Instance.GetHealthPotionFromDisease(village.disease).sprite; //set the sprite of the potion 
         }
         //if the npc isn't cured the button is able and a function is set to it
         else
@@ -98,7 +101,7 @@ public class VillageDisplay : MonoBehaviour
         Debug.Log("CheckPotion() / Village Display");
 
         //if the potion is the one that cures the village's disease,
-        if (PotionManager.Instance.GetPotion() == PotionManager.Instance.GetHealthPotionFromDisease(village.disease))
+        if (GetPotion() == GameAssets.Instance.GetHealthPotionFromDisease(village.disease))
         {
             // play particle system with congrats
             // unlock a new potion recipe 
@@ -112,24 +115,22 @@ public class VillageDisplay : MonoBehaviour
         {
             //play particle system with death
             // npc animation of dying
-            // --> pensar que fer
+            //show message:
             Debug.Log($"YOU ALMOST KILL {village.name}!!!");
         }
         UI_Inventory.Instance.HideInventory(); //--> mirar perquè aquí no me funciona, no se tanca quant se pitja es give
-        PotionManager.Instance.SetPotion(null);
+        SetPotion(null);
     }
-    public void ChooseThePotionToGive(Item item) 
+    public void ChooseThePotionToGive(Item item)
     {
         Debug.Log("ChooseThePotionToGive / villageDisplay --> from the onClick button of the potion");
-        //Player.Instance.RemoveOneItemFromList(item);
         DataPersistanceManager.Instance.RemoveOneItem(item); //remove the item directly from the saved list in the json file
 
-        //Recollectable recollectableOfThisButton = item.itemSO; //perquè no posar només item.itemSO=
         //if the player has not selected a potion from the inventory, will add the
         //item that the button represents to the field potion in the village display and hide the inventoy
         if (hasSelectedAPotion == false)
         {
-            PotionManager.Instance.SetPotion(item.itemSO); //mirar si basta es temps en què transcorre
+            SetPotion(item.itemSO); //mirar si basta es temps en què transcorre
             RefreshPotionField(item.itemSO); //HO HE CANVIAT AQUI LO DE SA LINIA 127 --> Refresh the img
             givePotionButton.gameObject.SetActive(true);
             UI_Inventory.Instance.ToggleInventoryButton(); //--> close the inventory
@@ -139,6 +140,19 @@ public class VillageDisplay : MonoBehaviour
 
     public void BackButton()
     {
+        UI_Inventory.Instance.HideInventory();
         Loader.Load(SceneIndex.GamePlay);
+    }
+
+    public void SetPotion(Recollectable potionToSet)
+    {
+        Debug.Log("SetPotion() / villageDisplay");
+        potion = potionToSet;
+    }
+
+    public Recollectable GetPotion()
+    {
+        Debug.Log("GetPotion() / villageDisplay");
+        return potion;
     }
 }

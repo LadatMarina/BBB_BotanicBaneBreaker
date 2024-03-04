@@ -17,6 +17,7 @@ public class Recollectable : ScriptableObject
     public new string name;
     public RecollectableType recollectableType;
     public Sprite sprite;
+    public string explanation;
 
     //HEALTH POTION && ATTACK POTION
     public Diseases cureOf;

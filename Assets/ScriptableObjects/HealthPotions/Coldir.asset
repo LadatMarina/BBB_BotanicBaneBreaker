@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2da60bd550eea6849b0c0fb3b7af832c, type: 3}
+  m_Name: Coldir
+  m_EditorClassIdentifier: 
+  name: Coldir
+  recollectableType: 1
+  sprite: {fileID: -651350434, guid: 46ff553f0edfcd54e9ca3633237f792a, type: 3}
+  explanation: The coldir is fantastic to cure the cold. Is made of a bean and a
+    strawberry.
+  cureOf: 1
+  ingredientsForMakeThePotion:
+  - {fileID: 11400000, guid: 207f929a3f36390448368a1db14f7660, type: 2}
+  - {fileID: 11400000, guid: 6c5d80e752c812b4c8628f5aca044326, type: 2}
+  potionThatUnlocks: {fileID: 11400000, guid: a7d1c88795db34e45a0177eeb3d4ce6f, type: 2}
+  damage: 0
+  stackable: 0

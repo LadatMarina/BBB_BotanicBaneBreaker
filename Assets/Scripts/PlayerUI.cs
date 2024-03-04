@@ -6,23 +6,25 @@ using TMPro;
 
 public class PlayerUI : MonoBehaviour
 {
-    [SerializeField] private TextMeshPro recollectedText;
-    private Player player;
+    //[SerializeField] private TextMeshPro recollectedText;
+    //private Player player;
 
     // Start is called before the first frame update
     void Start()
     {
-        recollectedText.gameObject.SetActive(false); //set it to false until the player go near
-        player = gameObject.GetComponentInParent<Player>();
+        //recollectedText.gameObject.SetActive(false); //set it to false until the player go near
+        ////player = gameObject.GetComponentInParent<Player>();
     }
 
     public void ShowRecollectableNameText(string text, Vector2 pos)
     {
-        //recollectedText.transform.position = pos;
-        recollectedText.gameObject.SetActive(true);
-        recollectedText.text = text; //set the name
+        ////recollectedText.transform.position = pos;
+        //recollectedText.gameObject.SetActive(true);
+        //recollectedText.text = text; //set the name
     }
-    public void HideRecollectableNameText() { recollectedText.gameObject.SetActive(false); }
+    public void HideRecollectableNameText() { 
+        //recollectedText.gameObject.SetActive(false); 
+    }
     //private Vector2 SetTextPos()
     //{
     //    Vector2[] directions = { Vector2.up, Vector2.right, Vector2.down, Vector2.left };
