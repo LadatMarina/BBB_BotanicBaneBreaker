@@ -16,6 +16,8 @@ public class DataPersistanceManager : MonoBehaviour
     public List<Item> localItemList;
     public string village;
 
+    private string filePath;
+
     [System.Serializable]
     public class ConvertedItem
     {
@@ -34,6 +36,8 @@ public class DataPersistanceManager : MonoBehaviour
 
     private void Awake()
     {
+        filePath = Application.persistentDataPath + DATA_FILE_PATH; 
+
         // If there is an instance, and it's not me, delete myself.
         if (Instance != null)
         {
@@ -44,18 +48,22 @@ public class DataPersistanceManager : MonoBehaviour
             Instance = this;
             DontDestroyOnLoad(gameObject);
         }
+
+        if (!File.Exists(filePath))
+        {
+            CreateFirstJsonFile();
+        }
+
     }
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.O))
+        if (Input.GetKeyDown(KeyCode.G))
         {
-            AddOneItem(new Item
-            {
-                amount = 1,
-                itemSO =
-                GameAssets.Instance.apple
-            });
+            List<Item> newList = new List<Item>();
+            newList.Add(new Item() { amount = 1, itemSO = PotionManager.Instance.blitzir });
+            SaveGame(false, newList);
+            Debug.Log("saved the blitzir as the unlocked potion");
         }
     }
 
@@ -78,7 +86,7 @@ public class DataPersistanceManager : MonoBehaviour
             string savedObjectJson = JsonUtility.ToJson(saveObejct, true);
 
             // Ruta completa del archivo, se concatena con la ruta del directorio de datos persistente y el nombre del archivo
-            string filePath = Application.persistentDataPath + DATA_FILE_PATH;
+
 
             // Escribe la cadena JSON en el archivo
             File.WriteAllText(filePath, savedObjectJson);
@@ -94,11 +102,6 @@ public class DataPersistanceManager : MonoBehaviour
     {
         List<Item> newList = new();
 
-        //Debug.Log("LoadInventory() / DataManager");
-        //we make a new inventory for create a new list with all loaded elements
-
-        string filePath = Application.persistentDataPath + DATA_FILE_PATH;
-        //int i = 0;
         if (File.Exists(filePath))
         {
             string savedObjectString = File.ReadAllText(filePath);
@@ -111,15 +114,14 @@ public class DataPersistanceManager : MonoBehaviour
                 {
                     if(convertedItem != null)
                     {
-                        //Debug.Log("item to convert :" + convertedItem.itemSO);
+                        
+                        Debug.Log("item to convert :" + convertedItem.itemSO);
                         Item newItem = new Item
                         {
                             itemSO = GameAssets.Instance.GetRecollectableFromString(convertedItem.itemSO),
                             amount = convertedItem.amount
                         };
-
                         newList.Add(newItem);
-                        //i++;
                     }
                 }
             }
@@ -147,8 +149,6 @@ public class DataPersistanceManager : MonoBehaviour
     }
     private List<ConvertedItem> LoadSavedItemList()
     {
-        string filePath = Application.persistentDataPath + DATA_FILE_PATH;
-
         if (File.Exists(filePath))
         {
             string savedObjectString = File.ReadAllText(filePath);
@@ -234,24 +234,15 @@ public class DataPersistanceManager : MonoBehaviour
         {
             string savedObjectJson = JsonUtility.ToJson(saveObject,true);
 
-            string filePath = Application.persistentDataPath + DATA_FILE_PATH;
-
-            //Escribe la cadena JSON en el archivo
+            //write values in the JSON file 
             File.WriteAllText(filePath, savedObjectJson);
-
-            //Debug.Log("the villager saved is " + saveObject.villager);
-
-            //Debug.Log("villager saved to: " + filePath);
         }
     }
 
     public Village LoadVillage()
     {
-        string filePath = Application.persistentDataPath + DATA_FILE_PATH;
-
         if (!File.Exists(filePath))
         {
-            //Debug.LogWarning("Save file not found at: " + filePath);
             return null;
         }
 
@@ -292,16 +283,12 @@ public class DataPersistanceManager : MonoBehaviour
         {
             string savedObjectJson = JsonUtility.ToJson(saveObject, true);
 
-            string filePath = Application.persistentDataPath + DATA_FILE_PATH;
-
             //write the JSON file
             File.WriteAllText(filePath, savedObjectJson);
         }
     }
     public bool LoadIsFirstGame()
     {
-        string filePath = Application.persistentDataPath + DATA_FILE_PATH;
-
         if(!File.Exists(filePath))
         {
             Debug.LogError("the file JSON that stores 'isFirstGame' doesn't exists");
@@ -320,8 +307,6 @@ public class DataPersistanceManager : MonoBehaviour
     {
         List<Item> newList = new();
 
-        string filePath = Application.persistentDataPath + DATA_FILE_PATH;
-
         if (File.Exists(filePath))
         {
             string savedObjectString = File.ReadAllText(filePath);
@@ -336,7 +321,7 @@ public class DataPersistanceManager : MonoBehaviour
                     {
                         Item newItem = new Item
                         {
-                            itemSO = GameAssets.Instance.GetRecollectableFromString(convertedItem.itemSO),
+                            itemSO = PotionManager.Instance.GetPotionFromString(convertedItem.itemSO),
                             amount = 1
                         };
                         newList.Add(newItem);
@@ -350,6 +335,27 @@ public class DataPersistanceManager : MonoBehaviour
             return null;
         }
         return newList;
+    }
+    
+    private void CreateFirstJsonFile()
+    {
+        //initialze the object we store
+        SaveObject saveObject = new SaveObject
+        {
+            saveItemList = new List<ConvertedItem>(),
+            villager = "",
+            isFirstGame = true,
+            unlockedPotionsList = new List<ConvertedItem>()
+        };
+
+        //save all in the JSON file
+        if (saveObject != null)
+        {
+            string savedObjectJson = JsonUtility.ToJson(saveObject, true);
+
+            //write the JSON file
+            File.WriteAllText(filePath, savedObjectJson);
+        }
     }
 
 }

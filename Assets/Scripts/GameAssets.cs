@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class GameAssets : MonoBehaviour
 {
-    public Recollectable apple, bean, bluberry, strawberry, defaultIngredient;
+    public Recollectable apple, bean, bluberry, strawberry, defaultRecollectable;
 
     public List<Recollectable> ingredients;
 
@@ -41,9 +41,31 @@ public class GameAssets : MonoBehaviour
                 return bluberry;
             case "Strawberry":
                 return strawberry;
+
+            //attackPotions:
+            case "Gloombreach":
+                return PotionManager.Instance.gloombreach;
+            case "Blitzir":
+                return PotionManager.Instance.blitzir;
+            case "ChaosCore":
+                return PotionManager.Instance.chaosCore;
+            case "Furyfume":
+                return PotionManager.Instance.furyfume;
+
+            //healthPotions:
+            case "Lifesip":
+                return PotionManager.Instance.lifesip;
+            case "StomachHealth":
+                return PotionManager.Instance.stomachHealth;
+            case "Coldir":
+                return PotionManager.Instance.coldir;
+            case "Voicesip":
+                return PotionManager.Instance.voicesip;
+
             default:
+                Debug.Log("anyone matches with: " + recollectableName);
                 Debug.LogWarning("the default ingredient is being returned");
-                return defaultIngredient;
+                return defaultRecollectable;
         }
     }
     //******molt important; revisar que tots es noms dels villagers comencin en majúscula, perquè si no són iguals mos donarà null

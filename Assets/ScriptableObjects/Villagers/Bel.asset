@@ -15,8 +15,8 @@ MonoBehaviour:
   name: Bel
   age: 28
   disease: 3
-  potion: {fileID: 11400000, guid: cb0f7e666501f864ea7151469baf94d7, type: 2}
-  sprite: {fileID: 0}
+  potion: {fileID: 11400000, guid: 808c2bf9150e679488dda7761fcf4722, type: 2}
+  sprite: {fileID: -970402932, guid: 55c6086098dfc6246a00b529ecda9e36, type: 3}
   backgroundColor: {r: 0.745283, g: 0.60114807, b: 0.639584, a: 0}
   isCured: 0
   animator: {fileID: 2458321066932527986, guid: 7b83d0489912faa46a66598d55300dea, type: 3}

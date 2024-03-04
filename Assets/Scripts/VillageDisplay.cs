@@ -1,12 +1,7 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
-using UnityEngine.Video;
-using System;
-using UnityEngine.SceneManagement;
-using static UnityEditor.Progress;
+
 
 public class VillageDisplay : MonoBehaviour
 {

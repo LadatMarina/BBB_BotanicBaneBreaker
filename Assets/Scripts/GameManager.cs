@@ -11,29 +11,17 @@ public enum SceneIndex //en teoria posar aquests valors o no és lo mateix.
 {
     MainMenu = 0,
     GamePlay = 1,
-    Witch = 5,
     House = 2,
     Kitchen = 3,
     LoadingScene = 4,
 }
 public class GameManager : MonoBehaviour
 {
-    //public Village village;
-    public bool hasLoaded;
-
-    public int numOfGames; //0/false : 1/true
-
     //setted w the inspector
     [SerializeField] private GameObject itemWorld;
-
-
     public bool isPaused = false;
-    [SerializeField] private GameObject pausePanel;
-    [SerializeField] private GameObject pauseButton;
 
     public static GameManager Instance { get; private set; }
-
-    public Recollectable pocioQueHaElegit = null;
 
     private Vector2 lastPlayerPosition;
 

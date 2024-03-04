@@ -61,7 +61,7 @@ public class PotionManager : MonoBehaviour
         Debug.Log(" NO recipe found");
 
         //if there's not a recipe for this values, return null --> canviar a un simbol que sigui --> no possible recipe
-        return null;
+        return defaultPotion;
     }
 
     public Recollectable GetHealthPotionFromDisease(Diseases disease)

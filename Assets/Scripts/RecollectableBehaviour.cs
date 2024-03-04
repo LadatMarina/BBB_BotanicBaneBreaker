@@ -17,7 +17,7 @@ public class RecollectableBehaviour :MonoBehaviour
 
     private LayerMask playerLayer;
     private RecollectableDisplay recollectableDisplay;
-    private Collider2D collider;
+    private new Collider2D collider;
     private Player player;
     private Item item;
     private void Awake()

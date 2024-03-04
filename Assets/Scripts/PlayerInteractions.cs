@@ -86,6 +86,7 @@ public class PlayerInteractions : MonoBehaviour
                     else
                     {
                         Debug.Log("can'T recolect, list.count > 4 and the item is not in the inventory");
+                        ExplanationManagerUI.Instance.ShowAnExplanation("Your inventory is full, can't recollect more new objects.");
                         //do not recolect the item --> let the player collision with it
                         Collider2D otherCollider = other.gameObject.GetComponent<Collider2D>();
                         otherCollider.isTrigger = false; 
@@ -95,10 +96,17 @@ public class PlayerInteractions : MonoBehaviour
 
                 break;
             case "kitchen":
-                GameManager.Instance.SetLastPLayerPos(player.GetPlayerPos());
-                Loader.Load(SceneIndex.Kitchen);
+                if(player.GetInventory().GetItemList().Count >= 5)
+                {
+                    Debug.LogWarning("you don't have space for a potion, your inventory is full");
+                    ExplanationManagerUI.Instance.ShowAnExplanation("Your inventory is full. Try to drop something in order to make space.");
+                }
+                else
+                {
+                    GameManager.Instance.SetLastPLayerPos(player.GetPlayerPos());
+                    Loader.Load(SceneIndex.Kitchen);
+                }
 
-                //GameManager.Instance.LoadKitchen();
                 break;
         }
     }

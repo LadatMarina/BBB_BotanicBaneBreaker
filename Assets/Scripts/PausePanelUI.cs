@@ -21,4 +21,5 @@ public class PausePanelUI : MonoBehaviour
         }
     }
     public void GoToMainMenuButton() { Loader.Load(SceneIndex.MainMenu); }
+
 }

@@ -11,8 +11,8 @@ public class PlayerPreferences_UI : MonoBehaviour
     public const string MUSIC_VOL = "musicVolume";
     public const string SFX_VOL = "sfxVolume";
 
-    private float musicVolume;
-    private float sfxVolume;
+    private float musicVolume = 0;
+    private float sfxVolume = 0;
 
     // Start is called before the first frame update
     void Start()
@@ -41,9 +41,9 @@ public class PlayerPreferences_UI : MonoBehaviour
     }
     public void RefreshValues()
     {
-        musicSlider.value = PlayerPrefs.GetFloat(MUSIC_VOL, musicVolume);
+        musicSlider.value = PlayerPrefs.GetFloat(MUSIC_VOL,musicVolume); //if is nothing stored returns the musicVolume value
 
-        sfxSlider.value = PlayerPrefs.GetFloat(SFX_VOL, sfxVolume);
+        sfxSlider.value = PlayerPrefs.GetFloat(SFX_VOL,sfxVolume);
     }
 
     private void SetDefaultValues()

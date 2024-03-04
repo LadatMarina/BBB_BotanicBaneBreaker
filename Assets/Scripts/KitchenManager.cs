@@ -34,21 +34,8 @@ public class KitchenManager : MonoBehaviour
         mixButton.gameObject.SetActive(false);
         whatToDoPanel.gameObject.SetActive(false);
         potionHolderButton.interactable = false;
-    }
 
-    void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.F))
-        {
-            IngredientHolder ingredientHolder = ingredientField1.GetComponent<IngredientHolder>();
-            if(ingredientHolder.ingredient == null){
-                Debug.Log("ingredientHolder.ingredient == null");
-            }
-            else
-            {
-                Debug.Log("ingredientHolder.ingredient != null");
-            }
-        }
+        ExplanationManagerUI.Instance.ShowAnExplanation("Click on each field to decide what ingredient put of what to do with the result.");
     }
 
     public void IngredientFieldButton(int bttn)
@@ -71,6 +58,7 @@ public class KitchenManager : MonoBehaviour
 
     public void ChooseIngredient(Item item) //només se n'ha de restar 1 i afegir 1!!
     {
+        ExplanationManagerUI.Instance.HideExplanation();
         Debug.Log("ChooseIngredient() / KM");
 
         UI_Inventory.Instance.ToggleInventoryButton();
@@ -116,6 +104,8 @@ public class KitchenManager : MonoBehaviour
 
     public void MixButton()
     {
+        
+
         mixButton.gameObject.SetActive(false); //hide the button
         Debug.Log("mixButton() / kitchenManager");
         Recollectable resultPotion = PotionManager.Instance.GetPotionFromIngredients(ingredientHolder1.ingredient.itemSO, ingredientHolder2.ingredient.itemSO);
@@ -139,7 +129,7 @@ public class KitchenManager : MonoBehaviour
         }
         else
         {
-            //there's not a recipe for this combination --> change the ingredients
+            ExplanationManagerUI.Instance.ShowAnExplanation("There are not potions with this combination. Try new ingredients.");
             potionHolderButton.image.sprite = resultPotion.sprite;
         }
 
@@ -149,14 +139,16 @@ public class KitchenManager : MonoBehaviour
     public void SavePotion()
     {
         DataPersistanceManager.Instance.AddOneItem(new Item { amount = 1, itemSO = potionHolder.potion });
+        ResetAllFields();
         whatToDoPanel.gameObject.SetActive(false);
-        //ResetAllFields();
+        Loader.Load(SceneIndex.GamePlay); // return to the game after doing a potion
     }
 
     public void ThrowPotion()
     {
         ResetAllFields();
         whatToDoPanel.gameObject.SetActive(false);
+        Loader.Load(SceneIndex.GamePlay); // return to the game after doing a potion
     }
 
     public void PlayParticles() { blueExplosion.Play(); }
@@ -174,7 +166,9 @@ public class KitchenManager : MonoBehaviour
         potionHolder.potion = null;
         potionHolderButton.image.sprite = GameAssets.Instance.defaultEmptySprite;
     }
-    public void BackButton() { Loader.Load(SceneIndex.GamePlay); }
+    public void BackButton() {
+        RecipesManager.Instance.HideRecipeMenu();
+        Loader.Load(SceneIndex.GamePlay); }
     public void ToggleRecipeButton() { RecipesManager.Instance.ToggleRecipeMenu(); }
     
 }

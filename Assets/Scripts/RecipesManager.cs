@@ -55,26 +55,44 @@ public class RecipesManager : MonoBehaviour
 
     public void ToggleRecipeMenu() 
     {
+        Debug.Log("ToggleRecipeButton() / kitchen manager");
+        recipeMenu.gameObject.SetActive(!recipeMenu.gameObject.activeInHierarchy);
         ShowRecipes();
-        recipeMenu.gameObject.SetActive(!recipeMenu.gameObject.activeInHierarchy); }
+         }
 
     private void ShowRecipes()
     {
         List<Item> unlockedPotionsList = PotionManager.Instance.unlockedPotions;
 
-        if (actualPage < 0) //if it's out of range - lower
+        if (actualPage < 0) // if it's out of range - lower
         {
             pageL.gameObject.SetActive(false);
         }
-        else if (actualPage > unlockedPotionsList.Count) //if it's out of range - greater
+        else if (actualPage >= unlockedPotionsList.Count) // if it's out of range - greater or equal
         {
             pageR.gameObject.SetActive(false);
         }
-            
-        SetPage("left", PotionManager.Instance.unlockedPotions[actualPage].itemSO);
-        SetPage("right", PotionManager.Instance.unlockedPotions[actualPage+1].itemSO);
+        else // if it's within range
+        {
+            pageL.gameObject.SetActive(true);
+            pageR.gameObject.SetActive(true);
+
+            SetPage("left", PotionManager.Instance.unlockedPotions[actualPage].itemSO);
+
+            // Check if there's a next page available
+            if (actualPage + 1 < unlockedPotionsList.Count)
+            {
+                SetPage("right", PotionManager.Instance.unlockedPotions[actualPage + 1].itemSO);
+            }
+            else
+            {
+                ExplanationManagerUI.Instance.ShowAnExplanation("There are not more unlocked potions!");
+                pageR.gameObject.SetActive(false);
+            }
+        }
     }
 
+    public void HideRecipeMenu() { recipeMenu.gameObject.SetActive(false); }
     private void SetPage(string page, Recollectable potion)
     {
         switch (page)
@@ -96,4 +114,5 @@ public class RecipesManager : MonoBehaviour
                 break;
         }
     }
+
 }

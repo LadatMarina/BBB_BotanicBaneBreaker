@@ -75,9 +75,6 @@ public class SoundManager : MonoBehaviour
                 musicAudioSource.loop = true;
                 musicAudioSource.Play();
                 break;
-            case (int)SceneIndex.Witch:
-                //play background music 4
-                break;
         }
     }
 

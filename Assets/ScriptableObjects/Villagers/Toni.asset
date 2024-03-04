@@ -15,7 +15,7 @@ MonoBehaviour:
   name: Toni
   age: 37
   disease: 0
-  potion: {fileID: 11400000, guid: cb0f7e666501f864ea7151469baf94d7, type: 2}
+  potion: {fileID: 11400000, guid: 6d33ff9755c1dc648a8e2484450960b9, type: 2}
   sprite: {fileID: 468665917, guid: 25d6762d8b3812748afadbc3db9ad9d8, type: 3}
   backgroundColor: {r: 0.56381273, g: 0.56381273, b: 0.6603774, a: 0}
   isCured: 0
