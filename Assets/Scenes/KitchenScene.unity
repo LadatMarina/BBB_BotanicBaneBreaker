@@ -2840,7 +2840,7 @@ MonoBehaviour:
   potionField: {fileID: 1579124856}
   mixButton: {fileID: 1120012740}
   blueExplosion: {fileID: 647792973}
-  recipeButon: {fileID: 0}
+  recipeButon: {fileID: 462426212}
 --- !u!4 &950925663
 Transform:
   m_ObjectHideFlags: 0
