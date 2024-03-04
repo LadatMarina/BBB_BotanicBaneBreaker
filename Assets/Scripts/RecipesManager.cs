@@ -7,7 +7,7 @@ using UnityEngine.UI;
 public class RecipesManager : MonoBehaviour
 {
     public static RecipesManager Instance { get; private set; }
-
+    private int actualPage = 0;
     //left
     public Image potionImageL;
     public TextMeshProUGUI potionNameL;
@@ -50,12 +50,32 @@ public class RecipesManager : MonoBehaviour
         
     }
 
-    public void BeforeButton() { }
-    public void AfterButton() { }
+    public void BeforeButton() { actualPage--; }
+    public void AfterButton() { actualPage++; }
 
-    public void ToggleRecipeMenu() { recipeMenu.gameObject.SetActive(!recipeMenu.gameObject.activeInHierarchy); }
+    public void ToggleRecipeMenu() 
+    {
+        ShowRecipes();
+        recipeMenu.gameObject.SetActive(!recipeMenu.gameObject.activeInHierarchy); }
 
-    public void SetPage(string page, Recollectable potion)
+    private void ShowRecipes()
+    {
+        List<Item> unlockedPotionsList = PotionManager.Instance.unlockedPotions;
+
+        if (actualPage < 0) //if it's out of range - lower
+        {
+            pageL.gameObject.SetActive(false);
+        }
+        else if (actualPage > unlockedPotionsList.Count) //if it's out of range - greater
+        {
+            pageR.gameObject.SetActive(false);
+        }
+            
+        SetPage("left", PotionManager.Instance.unlockedPotions[actualPage].itemSO);
+        SetPage("right", PotionManager.Instance.unlockedPotions[actualPage+1].itemSO);
+    }
+
+    private void SetPage(string page, Recollectable potion)
     {
         switch (page)
         {

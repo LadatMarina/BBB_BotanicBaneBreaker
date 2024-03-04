@@ -118,8 +118,8 @@ public class KitchenManager : MonoBehaviour
     {
         mixButton.gameObject.SetActive(false); //hide the button
         Debug.Log("mixButton() / kitchenManager");
-        Recollectable resultPotion = GameAssets.Instance.GetPotionFromIngredients(ingredientHolder1.ingredient.itemSO, ingredientHolder2.ingredient.itemSO);
-        if(resultPotion != GameAssets.Instance.defaultPotion)
+        Recollectable resultPotion = PotionManager.Instance.GetPotionFromIngredients(ingredientHolder1.ingredient.itemSO, ingredientHolder2.ingredient.itemSO);
+        if(resultPotion != PotionManager.Instance.defaultPotion)
         {
             //it's an existing potion
             PlayParticles();
@@ -127,6 +127,13 @@ public class KitchenManager : MonoBehaviour
             potionHolder.potion = resultPotion;
             potionHolderButton.image.sprite = resultPotion.sprite;
             potionHolderButton.interactable = true;
+
+            //if the potion was not unlocked yet, unlock
+            if (!PotionManager.Instance.CheckIfPotionUnlocked(resultPotion))
+            {
+                PotionManager.Instance.UnlockPotion(resultPotion);
+            }
+
             //show explanation text of "you can click here to decide what to do
             //check if the potion is in the lockedPotionList --> RecipeManager
         }

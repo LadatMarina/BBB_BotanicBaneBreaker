@@ -4,17 +4,21 @@ using UnityEngine;
 
 public class PausePanelUI : MonoBehaviour
 {
+    public Transform pausePanel;
+    public Transform howToPlayPanel;
+
     public void TogglePauseButton()
     {
-        if (this.gameObject.activeInHierarchy)
+        if (pausePanel.gameObject.activeInHierarchy)
         {
-            this.gameObject.SetActive(false);
+            pausePanel.gameObject.SetActive(false);
             GameManager.Instance.isPaused = false;
         }
         else
         {
-            this.gameObject.SetActive(true);
+            pausePanel.gameObject.SetActive(true);
             GameManager.Instance.isPaused = true;
         }
     }
+    public void GoToMainMenuButton() { Loader.Load(SceneIndex.MainMenu); }
 }

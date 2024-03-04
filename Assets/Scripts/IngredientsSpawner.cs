@@ -18,7 +18,7 @@ public class IngredientsSpawner : MonoBehaviour
     }
     void Start()
     {
-        GameManager.Instance.CreateNewItem(GameAssets.Instance.coldir, Vector3.right,1);
+        GameManager.Instance.CreateNewItem(PotionManager.Instance.coldir, Vector3.right,1);
 
         //SpawnTheFruits(beanSpawner, GameAssets.Instance.bean);
         //SpawnTheFruits(appleSpawner, GameAssets.Instance.apple);

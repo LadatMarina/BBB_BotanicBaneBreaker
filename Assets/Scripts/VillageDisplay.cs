@@ -83,7 +83,7 @@ public class VillageDisplay : MonoBehaviour
             potionFieldButton.interactable = false; //if it's cured, there's no option to choose again the potion
 
             Image potionFieldImage = potionField.GetComponent<Image>();
-            potionFieldImage.sprite = GameAssets.Instance.GetHealthPotionFromDisease(village.disease).sprite; //set the sprite of the potion 
+            potionFieldImage.sprite = PotionManager.Instance.GetHealthPotionFromDisease(village.disease).sprite; //set the sprite of the potion 
         }
         //if the npc isn't cured the button is able and a function is set to it
         else
@@ -101,13 +101,15 @@ public class VillageDisplay : MonoBehaviour
         Debug.Log("CheckPotion() / Village Display");
 
         //if the potion is the one that cures the village's disease,
-        if (GetPotion() == GameAssets.Instance.GetHealthPotionFromDisease(village.disease))
+        if (GetPotion() == PotionManager.Instance.GetHealthPotionFromDisease(village.disease))
         {
             // play particle system with congrats
             // unlock a new potion recipe 
             village.isCured = true;
             npcAnimator.SetBool("isCured", true);
             Debug.Log($"CONGRAT'S YOU HAVE GIVE {village.name} THE CORRECT POTION");
+            PotionManager.Instance.UnlockPotion(PotionManager.Instance.GetAttackPotionFromHealthPotion(GetPotion())); //unlock the corresponent potion
+            //PotionManager.Instance.c
             givePotionButton.gameObject.SetActive(false);
 
         }

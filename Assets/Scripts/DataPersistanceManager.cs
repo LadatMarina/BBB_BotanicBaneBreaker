@@ -11,15 +11,14 @@ public class DataPersistanceManager : MonoBehaviour
     public bool inventoryUploaded = false;
 
     public List<ConvertedItem> convertedItemList;
-    //public List<string> stringList;
+    public List<ConvertedItem> unlockedPotionsList;
+
     public List<Item> localItemList;
     public string village;
-
 
     [System.Serializable]
     public class ConvertedItem
     {
-        //public Recollectable jsonItemSO;
         public string itemSO;
         public int amount;
     }
@@ -27,8 +26,10 @@ public class DataPersistanceManager : MonoBehaviour
     [System.Serializable]
     public class SaveObject
     {
-        public List<ConvertedItem> saveItemList = new ();
+        public List<ConvertedItem> saveItemList = new List<ConvertedItem>();
         public string villager;
+        public bool isFirstGame;
+        public List<ConvertedItem> unlockedPotionsList = new List<ConvertedItem>();
     }
 
     private void Awake()
@@ -97,7 +98,7 @@ public class DataPersistanceManager : MonoBehaviour
         //we make a new inventory for create a new list with all loaded elements
 
         string filePath = Application.persistentDataPath + DATA_FILE_PATH;
-        int i = 0;
+        //int i = 0;
         if (File.Exists(filePath))
         {
             string savedObjectString = File.ReadAllText(filePath);
@@ -118,7 +119,7 @@ public class DataPersistanceManager : MonoBehaviour
                         };
 
                         newList.Add(newItem);
-                        i++;
+                        //i++;
                     }
                 }
             }
@@ -169,8 +170,6 @@ public class DataPersistanceManager : MonoBehaviour
     public void RemoveOneItem(Item itemToRemove)
     {
         localItemList = LoadInventory();
-        Debug.Log("removeOneItem(item) / dataManager");
-        Debug.Log("localItemList count" + localItemList.Count);
 
         foreach (Item item in localItemList)
         {
@@ -228,7 +227,9 @@ public class DataPersistanceManager : MonoBehaviour
     {
         SaveObject saveObject = new SaveObject {
             saveItemList = LoadSavedItemList(),
-            villager = village.name };
+            villager = village.name,
+            isFirstGame = LoadIsFirstGame()
+        };
         if(saveObject != null)
         {
             string savedObjectJson = JsonUtility.ToJson(saveObject,true);
@@ -260,6 +261,95 @@ public class DataPersistanceManager : MonoBehaviour
         saveObject = JsonUtility.FromJson<SaveObject>(savedObjectString);
 
         return GameAssets.Instance.GetVillageFromString(saveObject.villager);
+    }
+
+    public void SaveGame(bool b, List<Item> unlockedPotions)
+    {
+        //initialze the object we store
+        SaveObject saveObject = new SaveObject
+        {
+            saveItemList = LoadSavedItemList(),
+            villager = LoadVillage().name,
+            isFirstGame = b,
+            //unlockedPotionsList = 
+        };
+
+        //meanwhile there's unlocked potions to save, make the conversion
+        if(unlockedPotions.Count != 0)
+        {
+            foreach (Item attackPotion in unlockedPotions) //per cada item de sa llista, feim un item amb diferent tipus
+            {
+                ConvertedItem convertedItem = new() { itemSO = attackPotion.itemSO.name, amount = 1 };
+                if (convertedItem != null)
+                {
+                    saveObject.unlockedPotionsList.Add(convertedItem);
+                }
+            };
+        }
+        
+        //save all in the JSON file
+        if (saveObject != null)
+        {
+            string savedObjectJson = JsonUtility.ToJson(saveObject, true);
+
+            string filePath = Application.persistentDataPath + DATA_FILE_PATH;
+
+            //write the JSON file
+            File.WriteAllText(filePath, savedObjectJson);
+        }
+    }
+    public bool LoadIsFirstGame()
+    {
+        string filePath = Application.persistentDataPath + DATA_FILE_PATH;
+
+        if(!File.Exists(filePath))
+        {
+            Debug.LogError("the file JSON that stores 'isFirstGame' doesn't exists");
+            return false;
+        }
+
+        string savedObjectString = File.ReadAllText(filePath);
+
+        SaveObject saveObject = new SaveObject();
+        saveObject = JsonUtility.FromJson<SaveObject>(savedObjectString);
+
+        return saveObject.isFirstGame;
+    }
+
+    public List<Item> LoadUnlockedList()
+    {
+        List<Item> newList = new();
+
+        string filePath = Application.persistentDataPath + DATA_FILE_PATH;
+
+        if (File.Exists(filePath))
+        {
+            string savedObjectString = File.ReadAllText(filePath);
+
+            SaveObject saveObject = JsonUtility.FromJson<SaveObject>(savedObjectString);
+
+            if (saveObject.saveItemList != null)
+            {
+                foreach (ConvertedItem convertedItem in saveObject.unlockedPotionsList)
+                {
+                    if (convertedItem != null)
+                    {
+                        Item newItem = new Item
+                        {
+                            itemSO = GameAssets.Instance.GetRecollectableFromString(convertedItem.itemSO),
+                            amount = 1
+                        };
+                        newList.Add(newItem);
+                    }
+                }
+            }
+        }
+        else
+        {
+            Debug.LogError("the file JSON that stores 'isFirstGame' doesn't exists");
+            return null;
+        }
+        return newList;
     }
 
 }

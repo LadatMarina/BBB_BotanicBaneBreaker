@@ -33,6 +33,7 @@ public class MainMenuUiManager : MonoBehaviour
         }
         else
         {
+            DataPersistanceManager.Instance.SaveGame(GameManager.Instance.isFirstGame, PotionManager.Instance.unlockedPotions); //when quit is saved
             Application.Quit();
         }
     }

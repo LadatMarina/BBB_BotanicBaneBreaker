@@ -5,16 +5,16 @@ using UnityEngine.UI;
 
 public class GameAssets : MonoBehaviour
 {
-    public Recollectable apple, bean, bluberry, strawberry, gloombreach, blitzir, chaosCore, furyfume, lifesip, stomachHealth, coldir, voicesip, defaultPotion;
-    public List<Recollectable> potions;
+    public Recollectable apple, bean, bluberry, strawberry, defaultIngredient;
+
+    public List<Recollectable> ingredients;
 
     public Village paco, maria, bel, toni;
     public Sprite defaultEmptySprite;
     public static GameAssets Instance { get; private set; }
     private void Awake()
-    {
-        // If there is an instance, and it's not me, delete myself.
-
+    {   
+        //singleton
         if (Instance != null)
         {
             Destroy(this);
@@ -25,13 +25,14 @@ public class GameAssets : MonoBehaviour
             DontDestroyOnLoad(gameObject);
         }
 
-        potions = new List<Recollectable>() { gloombreach, blitzir, chaosCore, furyfume, lifesip, stomachHealth, coldir, voicesip };
+        ingredients = new List<Recollectable>() { apple, bean, bluberry, strawberry };
     }
 
-    public Recollectable GetRecollectableFromString(string recollectableName) 
+    public Recollectable GetRecollectableFromString(string recollectableName)
     {
         switch (recollectableName)
         {
+            //ingredients
             case "Apple":
                 return apple;
             case "Bean":
@@ -40,33 +41,11 @@ public class GameAssets : MonoBehaviour
                 return bluberry;
             case "Strawberry":
                 return strawberry;
-
-            //attackPotions:
-            case "Gloombreach":
-                return gloombreach;
-            case "Blitzir":
-                return blitzir;
-            case "ChaosCore":
-                return chaosCore;
-            case "Furyfume":
-                return furyfume;
-
-            //healthPotions:
-            case "Lifesip":
-                return lifesip;
-            case "StomachHealth":
-                return stomachHealth;
-            case "Coldir":
-                return coldir;
-            case "Voicesip":
-                return voicesip;
-
             default:
-                Debug.Log("the default is being returned");
-                return apple;
+                Debug.LogWarning("the default ingredient is being returned");
+                return defaultIngredient;
         }
     }
-
     //******molt important; revisar que tots es noms dels villagers comencin en majúscula, perquè si no són iguals mos donarà null
     public Village GetVillageFromString(string villagerName)
     {
@@ -86,39 +65,4 @@ public class GameAssets : MonoBehaviour
         }
     }
 
-    public Recollectable GetPotionFromIngredients(Recollectable ingredient1, Recollectable ingredient2)
-    {
-        foreach(Recollectable potion in potions)
-        {
-            Debug.Log("checking if there's a recipe compatible...");
-
-            if(ingredient1 == potion.ingredientsForMakeThePotion[0] && ingredient2 == potion.ingredientsForMakeThePotion[1])
-            {
-                Debug.Log("recipe founded!");
-                return potion;
-            }
-        }
-        Debug.Log(" NO recipe found");
-
-        //if there's not a recipe for this values, return null --> canviar a un simbol que sigui --> no possible recipe
-        return null;
-    }
-
-    public Recollectable GetHealthPotionFromDisease(Diseases disease)
-    {
-        Debug.Log($"GetHealthPotionFromDisease({disease}) / PotionManager");
-
-        switch (disease)
-        {
-            case Diseases.cold:
-                return coldir;
-            case Diseases.constipated:
-                return lifesip;
-            case Diseases.diarrea:
-                return voicesip;
-            case Diseases.stomachAge:
-                return stomachHealth;
-        }
-        return null;
-    }
 }

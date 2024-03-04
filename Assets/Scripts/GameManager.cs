@@ -37,10 +37,8 @@ public class GameManager : MonoBehaviour
 
     private Vector2 lastPlayerPosition;
 
-    //private List<Recollectable> lockedItemList;
-
-    //inventory
-    //public Inventory inventory;
+    //this variable is duplicated for store it's value during the game, for not being all the time saving and load
+    public bool isFirstGame; 
 
     private void Awake()
     {
@@ -56,87 +54,16 @@ public class GameManager : MonoBehaviour
             DontDestroyOnLoad(gameObject);
         }
 
-        //if (PlayerPrefs.GetInt("numOfGames") == null)
-        //{
-        //    //if the before game was the first game, 
-        //}
-        //PlayerPrefs.SetInt("numOfGames", 1);
+        isFirstGame = DataPersistanceManager.Instance.LoadIsFirstGame();
     }
 
-    //public void DisplayInventoryItemList(List<Item> itemList)
-    //{
-    //    foreach (Item item in itemList)
-    //    {
-    //        Debug.Log(itemList.IndexOf(item) + " " + item.itemSO.name + " amount " + item.amount);
-    //    }
-    //}
-
-# region LOAD THINGS TO DELETE WHEN JSON IS DONE
-    //public void LoadHouseScene(Village village)
-    //{
-    //    this.village = village;
-
-    //    savedItemList = inventory.itemList;
-
-    //    LoadScene((int)SceneIndex.House);
-    //}
-
-    //public void LoadKitchen()
-    //{
-    //    SceneManager.LoadScene((int)SceneIndex.Kitchen);
-
-    //}
-
-    //// VULL QUE FUNCIONI AIXÍ, PERÒ DE MENTRES FUNCIONARÀ NOMÉS AMB UN INT
-    ///*public void LoadScene(SceneIndex index)
-    //{
-    //    SceneManager.LoadScene((int)index);
-    //}*/
-    //public void LoadScene(int index)
-    //{
-    //    Debug.Log("LoadScene() / GameManager");
-    //    if(SceneManager.GetActiveScene().buildIndex != (int)SceneIndex.MainMenu)
-    //    {
-    //        if (savedItemList != null)
-    //        {
-    //            RefreshItemList(savedItemList);
-
-    //        }
-    //        else
-    //        {
-    //            Debug.Log("the saved item list is null");
-    //        }
-            
-    //    }
-
-    //    SceneManager.LoadScene(index);
-    //}
-
-    #endregion
-    private void Update()
+    private void Start()
     {
-        //if (Input.GetKeyDown(KeyCode.N))
-        //{
-        //    DebugItemList(inventory.itemList);
-        //}
-        
-        //if (Input.GetKeyDown(KeyCode.G))
-        //{
-        //    DebugItemList(savedItemList);
-        //}
-        
-        if (Input.GetKeyDown(KeyCode.I))
+        //if it's true, turn it false
+        if (isFirstGame)
         {
-            Debug.Log(DataPersistanceManager.Instance.LoadInventory().Count);
+            isFirstGame = false;
         }
-        
-        if (Input.GetKeyDown(KeyCode.T))
-        {
-            DataPersistanceManager.Instance.SaveVillage(GameAssets.Instance.maria);
-
-            Debug.Log("the village is saved, now press I for prove if the list count is under 1");
-        }
-
     }
 
     private void OnDisable()
@@ -159,29 +86,6 @@ public class GameManager : MonoBehaviour
     {
         return lastPlayerPosition;
     }
-
-
-
-    //    public void DebugItemList(List<Item> list)
-    //    {
-    //        foreach (Item item in list)
-    //        {
-    //            Debug.Log(item.itemSO.name);
-    //        }
-    //    }
-
-    //    public void RefreshItemList(List<Item> list)
-    //    {
-    //        inventory.itemList = list;
-
-    //        //Debug.Log("item list passed from GM is:");
-    //        DebugItemList(list);
-
-    //        //Debug.Log("item list refreshed from inventory is:");
-    //        DebugItemList(inventory.itemList);
-
-    //        //Debug.Log("item list refreshed / inventory");
-    //    }
 
     public GameObject CreateNewItem(Recollectable itemSO, Vector3 position, int amount)
     {
