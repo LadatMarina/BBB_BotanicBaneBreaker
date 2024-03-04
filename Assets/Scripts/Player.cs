@@ -25,8 +25,6 @@ public class Player : MonoBehaviour
 
         _rbPlayer = GetComponent<Rigidbody2D>();
         lastMovement = Vector2.down;
-
-
     }
     private void Start()
     {
@@ -40,6 +38,11 @@ public class Player : MonoBehaviour
         else
         {
             transform.position = defaultStartPosition;
+        }
+
+        if (GameManager.Instance.isFirstGame)
+        {
+            ExplanationManagerUI.Instance.ShowAnExplanation("Hi! A witch has set a malefition in Búger. Now, you have to found ingredients to make health potions to each villager.", 30);
         }
     }
     void Update()
